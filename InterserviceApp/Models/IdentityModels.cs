@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using MySql.Data.Entity;
 
 namespace InterserviceApp.Models
 {
@@ -18,10 +19,11 @@ namespace InterserviceApp.Models
         }
     }
 
+    [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("Connection", throwIfV1Schema: false)
         {
         }
 
