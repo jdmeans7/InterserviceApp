@@ -1,0 +1,58 @@
+﻿@model InterserviceApp.Models.is_staffDetails
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>is_staffDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dept)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dept)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.birthdate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.birthdate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.badgeID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
