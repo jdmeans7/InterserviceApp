@@ -23,14 +23,15 @@ namespace InterserviceApp.Models
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
         public virtual DbSet<is_staffDetails> is_staffDetails { get; set; }
-        public virtual DbSet<Class> Classes { get; set; }
-        public virtual DbSet<Course> Courses { get; set; }
-        public virtual DbSet<StaffClass> StaffClasses { get; set; }
+        public virtual DbSet<is_Class> Classes { get; set; }
+        public virtual DbSet<is_Course> Courses { get; set; }
+        public virtual DbSet<is_StaffClass> StaffClasses { get; set; }
     }
 
     public class is_staffDetails
     {
         [Key]
+        public int detailsID { get; set; }
         public int badgeID { get; set; }
         public string fName { get; set; }
         public string lName { get; set; }
@@ -39,7 +40,7 @@ namespace InterserviceApp.Models
         public DateTime birthdate { get; set; }
     }
 
-    public class Class
+    public class is_Class
     {
         [Key]
         public int classID { get; set; }
@@ -51,10 +52,10 @@ namespace InterserviceApp.Models
         public string fees { get; set; }
 
         public int courseID { get; set; }
-        public virtual Course Courses { get; set; }
+        public virtual is_Course Courses { get; set; }
     }
 
-    public class Course
+    public class is_Course
     {
         [Key]
         public int courseID { get; set; }
@@ -62,7 +63,7 @@ namespace InterserviceApp.Models
         public string desc { get; set; }
     }
 
-    public class StaffClass
+    public class is_StaffClass
     {
         [Key]
         public int badgeID { get; set; }
