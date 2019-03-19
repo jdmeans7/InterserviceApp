@@ -12,12 +12,12 @@ namespace InterserviceApp.Controllers
 {
     public class StaffDetailsController : Controller
     {
-        private InterserviceModels db = new InterserviceModels();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: StaffDetails
         public ActionResult Index()
         {
-            return View(db.is_staffDetails.ToList());
+            return View(db.StaffDetails.ToList());
         }
 
         // GET: StaffDetails/Details/5
@@ -27,7 +27,7 @@ namespace InterserviceApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            is_staffDetails is_staffDetails = db.is_staffDetails.Find(id);
+            is_staffDetails is_staffDetails = db.StaffDetails.Find(id);
             if (is_staffDetails == null)
             {
                 return HttpNotFound();
@@ -50,7 +50,7 @@ namespace InterserviceApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.is_staffDetails.Add(is_staffDetails);
+                db.StaffDetails.Add(is_staffDetails);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace InterserviceApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            is_staffDetails is_staffDetails = db.is_staffDetails.Find(id);
+            is_staffDetails is_staffDetails = db.StaffDetails.Find(id);
             if (is_staffDetails == null)
             {
                 return HttpNotFound();
@@ -96,7 +96,7 @@ namespace InterserviceApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            is_staffDetails is_staffDetails = db.is_staffDetails.Find(id);
+            is_staffDetails is_staffDetails = db.StaffDetails.Find(id);
             if (is_staffDetails == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            is_staffDetails is_staffDetails = db.is_staffDetails.Find(id);
-            db.is_staffDetails.Remove(is_staffDetails);
+            is_staffDetails is_staffDetails = db.StaffDetails.Find(id);
+            db.StaffDetails.Remove(is_staffDetails);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

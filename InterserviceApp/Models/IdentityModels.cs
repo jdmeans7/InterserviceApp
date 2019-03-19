@@ -25,7 +25,13 @@ namespace InterserviceApp.Models
         public ApplicationDbContext()
             : base("Connection", throwIfV1Schema: false)
         {
+            Database.SetInitializer<ApplicationDbContext>(null);
         }
+
+        public virtual DbSet<is_Class> Classes { get; set; }
+        public virtual DbSet<is_Course> Courses { get; set; }
+        public virtual DbSet<is_StaffClass> StaffClasses { get; set; }
+        public virtual DbSet<is_staffDetails> StaffDetails { get; set; }
 
         public static ApplicationDbContext Create()
         {
