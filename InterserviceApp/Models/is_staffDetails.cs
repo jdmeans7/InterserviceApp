@@ -16,6 +16,8 @@ namespace InterserviceApp.Models
         public string lName { get; set; }
         public string dept { get; set; }
         public string phone { get; set; }
+
+        [DisplayFormat(DataFormatString ="{0:d}")]
         public DateTime birthdate { get; set; }
 
         public ICollection<is_StaffClass> staffClasses { get; set; }

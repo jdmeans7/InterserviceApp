@@ -13,6 +13,7 @@ namespace InterserviceApp.Models
         public int courseID { get; set; }
         public string courseCode { get; set; }
         public string desc { get; set; }
+        public bool required { get; set; }
 
         public ICollection<is_Class> Classes { get; set; }
     }

@@ -19,8 +19,8 @@ namespace InterserviceApp.Models
         public double fees { get; set; }
 
         public int courseID { get; set; }
-        public is_Course Course { get; set; }
+        //public virtual is_Course Course { get; set; }
 
-        public ICollection<is_StaffClass> staffClasses { get; set; }
+        public virtual ICollection<is_StaffClass> staffClasses { get; set; }
     }
 }

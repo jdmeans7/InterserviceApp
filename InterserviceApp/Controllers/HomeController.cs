@@ -1,13 +1,20 @@
 ﻿using System;
+using System.Data;
+using System.Data.Entity;
+using System.Collections;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using InterserviceApp.Models;
 
 namespace InterserviceApp.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Index()
         {
             return View();
@@ -26,5 +33,12 @@ namespace InterserviceApp.Controllers
 
             return View();
         }
+
+        public ActionResult ClassPortal()
+        {
+            return View();
+        }
+
+        
     }
 }

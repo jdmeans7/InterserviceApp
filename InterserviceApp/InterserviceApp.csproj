@@ -187,6 +187,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClassController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
@@ -272,6 +274,18 @@
     <Content Include="Views\StaffDetails\Details.cshtml" />
     <Content Include="Views\StaffDetails\Edit.cshtml" />
     <Content Include="Views\StaffDetails\Index.cshtml" />
+    <Content Include="Views\Course\Create.cshtml" />
+    <Content Include="Views\Course\Delete.cshtml" />
+    <Content Include="Views\Course\Details.cshtml" />
+    <Content Include="Views\Course\Edit.cshtml" />
+    <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\Class\Create.cshtml" />
+    <Content Include="Views\Class\Delete.cshtml" />
+    <Content Include="Views\Class\Details.cshtml" />
+    <Content Include="Views\Class\Edit.cshtml" />
+    <Content Include="Views\Class\Index.cshtml" />
+    <Content Include="Views\Home\ClassPortal.cshtml" />
+    <Content Include="Views\Class\HomeRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
