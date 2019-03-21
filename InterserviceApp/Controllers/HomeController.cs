@@ -26,5 +26,10 @@ namespace InterserviceApp.Controllers
 
             return View();
         }
+
+        public ActionResult ClassPortal()
+        {
+            return View();
+        }
     }
 }
