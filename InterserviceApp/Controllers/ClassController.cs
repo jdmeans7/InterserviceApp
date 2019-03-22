@@ -37,15 +37,24 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: Class/Create
+        [Authorize]
         public ActionResult Create()
         {
-            ViewBag.courseID = new SelectList(db.Courses, "courseID", "desc");
-            return View();
+            if (User.IsInRole("Secretary") || User.IsInRole("Admin") || User.IsInRole("Training Staff"))
+            {
+                ViewBag.courseID = new SelectList(db.Courses, "courseID", "desc");
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Class/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "classID,date,startTime,room,capacity,justification,fees,courseID")] is_Class is_Class)
@@ -62,6 +71,7 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: Class/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,6 +90,7 @@ namespace InterserviceApp.Controllers
         // POST: Class/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "classID,date,startTime,room,capacity,justification,fees,courseID")] is_Class is_Class)
@@ -95,6 +106,7 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: Class/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -110,6 +122,7 @@ namespace InterserviceApp.Controllers
         }
 
         // POST: Class/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
