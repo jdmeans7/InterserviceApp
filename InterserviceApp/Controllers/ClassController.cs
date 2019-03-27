@@ -37,18 +37,11 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: Class/Create
-        [Authorize]
+        [Authorize(Roles = "IS_Admin, IS_Training, IS_Secretary")]
         public ActionResult Create()
         {
-            if (User.IsInRole("Secretary") || User.IsInRole("Admin") || User.IsInRole("Training Staff"))
-            {
-                ViewBag.courseID = new SelectList(db.Courses, "courseID", "desc");
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            ViewBag.courseID = new SelectList(db.Courses, "courseID", "desc");
+            return View();
         }
 
         // POST: Class/Create
