@@ -17,8 +17,8 @@ namespace InterserviceApp.Controllers
         // GET: Class
         public ActionResult Index()
         {
-            //var classes = db.Classes.Include(i => i.Course);
-            return View(db.Classes.ToList());
+            var classes = db.Classes.Include(i => i.Course);
+            return View(classes.ToList());
         }
 
         // GET: Class/Details/5
@@ -37,6 +37,7 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: Class/Create
+        [Authorize(Roles = "IS_Admin, IS_Training, IS_Secretary")]
         public ActionResult Create()
         {
             ViewBag.courseID = new SelectList(db.Courses, "courseID", "desc");
@@ -46,6 +47,7 @@ namespace InterserviceApp.Controllers
         // POST: Class/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "classID,date,startTime,room,capacity,justification,fees,courseID")] is_Class is_Class)
@@ -62,6 +64,7 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: Class/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,6 +83,7 @@ namespace InterserviceApp.Controllers
         // POST: Class/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "classID,date,startTime,room,capacity,justification,fees,courseID")] is_Class is_Class)
@@ -95,6 +99,7 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: Class/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -110,6 +115,7 @@ namespace InterserviceApp.Controllers
         }
 
         // POST: Class/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -119,40 +125,6 @@ namespace InterserviceApp.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        // GET: HomeRegister
-        public ActionResult HomeRegister()
-        {
-            //var RequiredCourses = db.Courses.Where(c => c.required == true).Select(c => c.courseID).ToList();
-            //ArrayList ReqClasses = new ArrayList();
-            //foreach (var x in RequiredCourses)
-            //{
-            //    ReqClasses.Add(db.Classes.Where(a => a.courseID == x).FirstOrDefault());
-            //}
-            //ViewBag.RequiredClasses = ReqClasses;
-            //db.Classes.Join(db.Courses.Where(x => x.required), a => a.courseID, b => b.courseID, (a, b) => a).ToList()
-            
-            var result = (from is_Class in db.Classes
-                          join is_Course in db.Courses
-                          on is_Class.courseID equals is_Course.courseID
-                          select new
-                          {
-                              classID = is_Class.classID
-                              //courseID = is_Class.courseID,
-                              //req = is_Course.required
-                          }).ToList();
-            var ids = new List<Object>();
-            foreach (var r in result)
-            {
-                ids.Add(r.classID);
-            }
-            ViewBag.ReqClasses = ids;
-            
-            //var classes = (from is_Class in db.Classes where ids.Contains(is_Class.classID) select is_Class).ToList();
-            //var classes = db.Classes.Include(i => i.Course);
-            return View(db.Classes.ToList());
-        }
-
 
         protected override void Dispose(bool disposing)
         {
