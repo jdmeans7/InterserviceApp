@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using InterserviceApp.Models;
 using System.Data.Entity;
+using System.Net;
 
 namespace InterserviceApp.Controllers
 {
@@ -61,6 +62,39 @@ namespace InterserviceApp.Controllers
         public ActionResult Classes()
         {
             return PartialView(db.Classes.Include(i => i.Course).ToList());
+        }
+
+        // GET: Class/Details/5
+        public ActionResult Register(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            is_Class is_Class = db.Classes.Find(id);
+            if (is_Class == null)
+            {
+                return HttpNotFound();
+            }
+            return View(is_Class);
+        }
+
+        [HttpPost]
+        public ActionResult Register(String BadgeID, int classID)
+        {
+            var badge = Int32.Parse(BadgeID);
+            is_staffDetails Staff = db.StaffDetails.Find(badge);
+            is_Class Class = db.Classes.Find(classID);
+            is_StaffClass StaffClass = new is_StaffClass{
+                                                            badgeID = badge,
+                                                            classID = classID,
+                                                            approved = false,
+                                                            endDate = DateTime.Parse("01/01/2001"),
+                                                            status = false
+                                                        };
+            db.StaffClasses.Add(StaffClass);
+            db.SaveChanges();
+            return RedirectToAction("HomeRegister");
         }
     }
 }

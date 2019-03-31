@@ -200,6 +200,10 @@
     <Compile Include="Migrations\201903191804363_InitialCreate.Designer.cs">
       <DependentUpon>201903191804363_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903312307065_Updatev1.cs" />
+    <Compile Include="Migrations\201903312307065_Updatev1.Designer.cs">
+      <DependentUpon>201903312307065_Updatev1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\is_Class.cs" />
@@ -287,6 +291,7 @@
     <Content Include="Views\Class\Index.cshtml" />
     <Content Include="Views\Home\HomeRegister.cshtml" />
     <Content Include="Views\Home\Classes.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -307,6 +312,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903191804363_InitialCreate.resx">
       <DependentUpon>201903191804363_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903312307065_Updatev1.resx">
+      <DependentUpon>201903312307065_Updatev1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

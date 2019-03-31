@@ -9,8 +9,10 @@ namespace InterserviceApp.Models
 {
     public class is_staffDetails
     {
+
+        //public int detailsID { get; set; }
         [Key]
-        public int detailsID { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int badgeID { get; set; }
         public string fName { get; set; }
         public string lName { get; set; }
