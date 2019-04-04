@@ -39,21 +39,7 @@ namespace InterserviceApp.Controllers
 
         public ActionResult HomeRegister()
         {
-            /*
-            var result = (from Class in db.Classes
-                          join Course in db.Courses
-                          on Class.courseID equals Course.courseID
-                          select new
-                          {
-                              classID = Class.classID
-                          }).ToList();
-            List<int> ids = new List<int>();
-            foreach(var item in result)
-            {
-                ids.Add(item.classID);
-            }
-            ViewBag.Req = ids;
-            */
+            
             var classes = db.Classes.Include(i => i.Course).Where(a => a.Course.required == true);
             return View(classes);
         }

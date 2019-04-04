@@ -9,10 +9,8 @@ namespace InterserviceApp.Models
 {
     public class is_staffDetails
     {
-
-        //public int detailsID { get; set; }
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)] //Stops auto-increment
         [Display(Name = "Badge ID")]
         public int badgeID { get; set; }
 
