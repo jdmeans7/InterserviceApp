@@ -11,11 +11,23 @@ namespace InterserviceApp.Models
     {
         [Key]
         public int classID { get; set; }
+
+        [Display(Name = "Date", Description = "Date of Class")]
         public DateTime date { get; set; }
+
+        [Display(Name = "Start Time")]
         public TimeSpan? startTime { get; set; }
+
+        [Display(Name = "Room")]
         public string room { get; set; }
+
+        [Display(Name = "Capacity")]
         public string capacity { get; set; }
+
+        [Display(Name = "Justification")]
         public string justification { get; set; }
+
+        [Display(Name = "Fees")]
         public double fees { get; set; }
 
         public int courseID { get; set; }
