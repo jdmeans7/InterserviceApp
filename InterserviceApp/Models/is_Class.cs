@@ -15,7 +15,8 @@ namespace InterserviceApp.Models
 
         [Required]
         [Display(Name = "Date", Description = "Date of Class")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode=true ,DataFormatString = "{0:MM-dd-yyyy}")]
         public DateTime date { get; set; }
 
         [Required]

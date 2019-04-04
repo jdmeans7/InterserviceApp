@@ -53,9 +53,7 @@
             @Html.DisplayFor(modelItem => item.fees)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.classID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.classID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.classID })
+            @Html.ActionLink("Register", "Register", new { id = item.classID })
         </td>
     </tr>
 }
