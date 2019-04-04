@@ -14,11 +14,17 @@ namespace InterserviceApp.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int badgeID { get; set; }
+        [Required]
         public string fName { get; set; }
+        [Required]
         public string lName { get; set; }
+        [Required]
         public string dept { get; set; }
+        [Required]
+        [Phone]
         public string phone { get; set; }
 
+        [Required]
         [DisplayFormat(DataFormatString ="{0:d}")]
         public DateTime birthdate { get; set; }
 

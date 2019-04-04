@@ -10,12 +10,19 @@ namespace InterserviceApp.Models
     public class is_Class
     {
         [Key]
+        [Required]
         public int classID { get; set; }
+        [Required]
         public DateTime date { get; set; }
+        [Required]
         public TimeSpan? startTime { get; set; }
+        [Required]
         public string room { get; set; }
+        [Required]
         public string capacity { get; set; }
+        [Required]
         public string justification { get; set; }
+        [Required]
         public double fees { get; set; }
 
         public int courseID { get; set; }
