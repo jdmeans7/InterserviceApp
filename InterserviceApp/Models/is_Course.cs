@@ -12,12 +12,19 @@ namespace InterserviceApp.Models
         [Key]
         [Required]
         public int courseID { get; set; }
+
         [Required]
         [Range(0,10000)]
+        [Display(Name = "Course Code")]
         public string courseCode { get; set; }
+
         [Required]
+        [Display(Name = "Description")]
         public string desc { get; set; }
+
+        [Display(Name = "Required")]
         public bool required { get; set; }
+
         public ICollection<is_Class> Classes { get; set; }
     }
 }

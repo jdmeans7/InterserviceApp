@@ -13,28 +13,29 @@ namespace InterserviceApp.Models
         [Required]
         public int classID { get; set; }
 
-        [Display(Name = "Date", Description = "Date of Class")]
         [Required]
+        [Display(Name = "Date", Description = "Date of Class")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime date { get; set; }
 
-        [Display(Name = "Start Time")]
         [Required]
+        [Display(Name = "Start Time")]
         public TimeSpan? startTime { get; set; }
 
-        [Display(Name = "Room")]
         [Required]
+        [Display(Name = "Room")]
         public string room { get; set; }
 
-        [Display(Name = "Capacity")]
         [Required]
+        [Display(Name = "Capacity")]
         public string capacity { get; set; }
 
-        [Display(Name = "Justification")]
         [Required]
+        [Display(Name = "Justification")]
         public string justification { get; set; }
 
-        [Display(Name = "Fees")]
         [Required]
+        [Display(Name = "Fees")]
         public double fees { get; set; }
 
         public int courseID { get; set; }
