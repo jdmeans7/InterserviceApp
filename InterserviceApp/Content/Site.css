@@ -1,12 +1,18 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿html {
+    min-height: 100%;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    background-color: rgba(0,0,0,0.2);
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    padding-bottom: 40px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -21,4 +27,20 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: white;
+    background-color: #337ab7 !important;
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    line-height: 40px;
+}
+
+.navbar {
+    background-color: #337ab7 !important;
 }
