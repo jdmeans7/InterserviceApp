@@ -31,17 +31,18 @@
             </div>
         </div>
     </div>
+
     <div class="container body-content">
         @RenderBody()
+    </div>
+
+    <div class="footer" align="center">
+        &copy; @DateTime.Now.Year - Interservice Application
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
-    <div class="footer" align="center">
-        &copy; @DateTime.Now.Year - Interservice Application
-    </div>
 </body>
 
 </html>

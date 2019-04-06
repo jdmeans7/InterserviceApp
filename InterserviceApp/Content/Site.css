@@ -5,15 +5,17 @@
 body {
     position: relative;
     min-height: 100vh;
-    background-color: rgba(0,0,0,0.2);
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    height: 100%;
+    padding-top: 50px;
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 40px;
 }
+
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 

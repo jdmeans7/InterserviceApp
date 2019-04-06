@@ -3,8 +3,17 @@
     ViewBag.Title = "ClassPortal";
 }
 
+<head>
+    <link href="~/Content/classportal.css" rel="stylesheet" type="text/css" />
+</head>
+
 <h2>Class Portal</h2>
-<p>@Html.ActionLink("Class", "Index", "Class")</p>
-<p>@Html.ActionLink("Course", "Index", "Course")</p>
+<div>
+    @Html.ActionLink("Class", "Index", "Class", new { @class = "btn btn-primary register" })
+    @Html.ActionLink("Course", "Index", "Course", new { @class = "btn btn-primary register" })
+</div>
 
 
+@{
+    Html.RenderAction("Index", "Class");
+}
