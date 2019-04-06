@@ -7,13 +7,20 @@
     <link href="~/Content/classportal.css" rel="stylesheet" type="text/css" />
 </head>
 
-<h2>Class Portal</h2>
-<div>
-    @Html.ActionLink("Class", "Index", "Class", new { @class = "btn btn-primary register" })
-    @Html.ActionLink("Course", "Index", "Course", new { @class = "btn btn-primary register" })
+<div class="classPortalNav">
+    <span>Class Portal</span>
+    <ul>
+        <li>
+            <a href="~/Home/ClassPortal" class="btn btn-primary classBtn">Class</a>
+        </li>
+        <li>
+            <a href="~/Course" class="btn btn-primary">Course</a>
+        </li>
+    </ul>
 </div>
 
-
-@{
-    Html.RenderAction("Index", "Class");
-}
+<div class="currentContentClass">
+    @{
+        Html.RenderAction("Index", "Class");
+    }
+</div>
