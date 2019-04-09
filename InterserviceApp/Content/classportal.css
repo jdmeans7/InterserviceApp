@@ -1,0 +1,61 @@
+﻿.classPortalNav {
+    position: absolute;
+    background-color: #455A64;
+    padding: 10px;
+    width: 100%;
+    left: 0;
+    color: white;
+    text-align: center;
+    height: 55px;
+}
+
+.classPortalNav ul {
+    display: inline;
+}
+
+.classPortalNav li {
+    margin-top: -5px;
+    display: inline;
+}
+
+.currentContentClass {
+    margin-top: 20px;
+    margin-left: -15px;
+    padding: 0px !important;
+}
+
+.currentContentCourse {
+    margin-top: 85px;
+}
+
+span {
+    font-size: 26px;
+}
+
+.createClassBtn {
+    position: absolute;
+    margin-top: -60px;
+    border: 1px solid #ECEFF1 !important;
+}
+
+.createCourseBtn {
+    position: absolute;
+    margin-top: -75px;
+    border: 1px solid #ECEFF1 !important;
+}
+
+.btnNav {
+    color: #263238 !important;
+    background-color: #ECEFF1 !important;
+    border-color: #ECEFF1 !important;
+    width: 90px !important;
+    margin-top: -10px !important;
+}
+
+.classBtn {
+    background-color: #B0BEC5 !important;
+}
+
+.btnNav:hover {
+    background-color: #B0BEC5 !important;
+}

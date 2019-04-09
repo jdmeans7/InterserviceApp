@@ -24,24 +24,34 @@
             </div>
 
             <div class="middleBar">
-                @Html.DisplayNameFor(model => model.date)
-                @Html.DisplayFor(modelItem => item.date)
+                <div class="dateContainer">
+                    @Html.DisplayNameFor(model => model.date)
+                    @Html.DisplayFor(modelItem => item.date)
+                </div>
+                <div class="startTimeContainer">
+                    @Html.DisplayNameFor(model => model.startTime)
+                    @Html.DisplayFor(modelItem => item.startTime)
+                </div>
 
-                @Html.DisplayNameFor(model => model.startTime)
-                @Html.DisplayFor(modelItem => item.startTime)
+                <div class="roomContainer">
+                    @Html.DisplayNameFor(model => model.room)
+                    @Html.DisplayFor(modelItem => item.room)
+                </div>
 
-                @Html.DisplayNameFor(model => model.room)
-                @Html.DisplayFor(modelItem => item.room)
+                <div class="capacityContainer">
+                    @Html.DisplayNameFor(model => model.capacity)
+                    @Html.DisplayFor(modelItem => item.capacity)
+                </div>
 
-                @Html.DisplayNameFor(model => model.capacity)
-                @Html.DisplayFor(modelItem => item.capacity)
+                <div class="justificationContainer">
+                    @Html.DisplayNameFor(model => model.justification)
+                    @Html.DisplayFor(modelItem => item.justification)
+                </div>
 
-                @Html.DisplayNameFor(model => model.justification)
-                @Html.DisplayFor(modelItem => item.justification)
-
-                @Html.DisplayNameFor(model => model.fees)
-                @Html.DisplayFor(modelItem => item.fees)
-
+                <div class="feesContainer">
+                    @Html.DisplayNameFor(model => model.fees)
+                    @Html.DisplayFor(modelItem => item.fees)$
+                </div>
 
                 @*@Html.ActionLink("Details", "Details", new { id = item.classID }, new { @class = "btn btn-primary btn-large" })*@
             </div>
