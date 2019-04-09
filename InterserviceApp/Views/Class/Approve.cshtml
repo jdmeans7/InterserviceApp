@@ -68,7 +68,11 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.classID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+@using (Html.BeginForm("Approve", "Class", FormMethod.Post))
+{
+    <input type="hidden" name ="classID" value="@Model.classID"/>
+    <input type="submit" name="approve" id="approve" value="Approve" />
+    <input type="submit" name="deny" id="deny" value="Deny"/>
+}
+

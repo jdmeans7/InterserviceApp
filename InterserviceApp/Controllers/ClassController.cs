@@ -22,7 +22,7 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: Class/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Approve(int? id)
         {
             if (id == null)
             {
@@ -34,6 +34,29 @@ namespace InterserviceApp.Controllers
                 return HttpNotFound();
             }
             return View(is_Class);
+        }
+
+        [HttpPost]
+        public ActionResult Approve(String approve, String deny, int classID)
+        {
+            if(approve != null) //If the approve button was selected
+            {
+                is_Class cl = db.Classes.Find(classID);
+                cl.approved = true;
+                db.Entry(cl).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Class");
+            }
+            else if (deny != null) //If the deny button was selected
+            {
+                is_Class cl = db.Classes.Find(classID);
+                cl.approved = false;
+                db.Entry(cl).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Class");
+            }
+
+            return View();
         }
 
         // GET: Class/Create

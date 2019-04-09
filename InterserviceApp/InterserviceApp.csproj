@@ -286,7 +286,7 @@
     <Content Include="Views\Home\ClassPortal.cshtml" />
     <Content Include="Views\Class\Create.cshtml" />
     <Content Include="Views\Class\Delete.cshtml" />
-    <Content Include="Views\Class\Details.cshtml" />
+    <Content Include="Views\Class\Approve.cshtml" />
     <Content Include="Views\Class\Edit.cshtml" />
     <Content Include="Views\Class\Index.cshtml" />
     <Content Include="Views\Home\HomeRegister.cshtml" />

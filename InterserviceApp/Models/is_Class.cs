@@ -39,6 +39,8 @@ namespace InterserviceApp.Models
         [Display(Name = "Fees")]
         public double fees { get; set; }
 
+        public bool? approved { get; set; }
+
         public int courseID { get; set; }
         public virtual is_Course Course { get; set; }
 
