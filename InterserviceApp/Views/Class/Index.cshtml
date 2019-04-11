@@ -32,38 +32,44 @@
         <th>
             @Html.DisplayNameFor(model => model.fees)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.approved)
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Course.courseCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.startTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.room)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.capacity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.justification)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fees)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.classID }) |
-            @Html.ActionLink("Approve", "Approve", new { id=item.classID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.classID })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Course.courseCode)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.date)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.startTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.room)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.capacity)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.justification)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.fees)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.approved)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.classID }) |
+        @Html.ActionLink("Approve", "Approve", new { id = item.classID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.classID })
+    </td>
+</tr>
 }
 
 </table>

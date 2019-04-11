@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,6 +20,8 @@ namespace InterserviceApp.Models
         [Display(Name = "Last Name")]
         public string lName { get; set; }
 
+        public string email { get; set; }
+
         [Required]
         [Display(Name = "Department")]
         public string dept { get; set; }
@@ -33,8 +33,10 @@ namespace InterserviceApp.Models
 
         [Required]
         [Display(Name = "Birthdate")]
-        [DisplayFormat(DataFormatString ="{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime birthdate { get; set; }
+
+        public bool? flag { get; set; }
 
         public ICollection<is_StaffClass> staffClasses { get; set; }
     }

@@ -17,7 +17,7 @@ namespace InterserviceApp.Controllers
         // GET: Class
         public ActionResult Index()
         {
-            var classes = db.Classes.Include(i => i.Course);
+            var classes = db.Classes.Include(i => i.Course).OrderBy(x => x.approved);
             return View(classes.ToList());
         }
 

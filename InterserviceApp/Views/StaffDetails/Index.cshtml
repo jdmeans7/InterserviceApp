@@ -21,6 +21,9 @@
             @Html.DisplayNameFor(model => model.lName)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.dept)
         </th>
         <th>
@@ -33,31 +36,34 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.badgeID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.dept)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.birthdate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.badgeID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.badgeID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.badgeID })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.badgeID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.fName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.lName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.dept)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.phone)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.birthdate)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.badgeID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.badgeID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.badgeID })
+    </td>
+</tr>
 }
 
 </table>

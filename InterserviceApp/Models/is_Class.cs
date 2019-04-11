@@ -41,6 +41,10 @@ namespace InterserviceApp.Models
 
         public bool? approved { get; set; }
 
+        public string hyperlink { get; set; }
+
+        public bool? blackboard { get; set; }
+
         public int courseID { get; set; }
         public virtual is_Course Course { get; set; }
 
