@@ -4,38 +4,44 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<head>
+    <link href="~/Content/tables.css" rel="stylesheet" type="text/css" />
+</head>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@Html.ActionLink("Create a New Class", "Create", null, new { @class = "btn btn-primary register createClassBtn" })
+
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Course.courseCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.startTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.room)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.capacity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.justification)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fees)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Course.courseCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.startTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.capacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.justification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fees)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.approved)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+        @foreach (var item in Model)
+        {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Course.courseCode)
@@ -59,11 +65,14 @@
             @Html.DisplayFor(modelItem => item.fees)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.classID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.classID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.classID })
+            @Html.DisplayFor(modelItem => item.approved)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.classID }) |
+            @Html.ActionLink("Approve", "Approve", new { id = item.classID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.classID })
         </td>
     </tr>
-}
+        }
 
 </table>

@@ -4,60 +4,71 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<head>
+    <link href="~/Content/tables.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/classportal.css" rel="stylesheet" type="text/css" />
+</head>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.badgeID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.lName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.dept)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.birthdate)
-        </th>
-        <th></th>
-    </tr>
+<div class="classPortalNav">
+    <span>User Portal</span>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.badgeID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.dept)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.birthdate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.badgeID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.badgeID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.badgeID })
-        </td>
-    </tr>
-}
+<div class="currentContentUser">
+    @Html.ActionLink("Create a New User", "Create", null, new { @class = "btn btn-primary register createCourseBtn" })
 
-</table>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.badgeID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.lName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.dept)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.birthdate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.badgeID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dept)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.birthdate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.badgeID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.badgeID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.badgeID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

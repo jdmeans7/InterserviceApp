@@ -15,7 +15,8 @@ namespace InterserviceApp.Models
 
         [Required]
         [Display(Name = "Date", Description = "Date of Class")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode=true ,DataFormatString = "{0:MM-dd-yyyy}")]
         public DateTime date { get; set; }
 
         [Required]
@@ -37,6 +38,12 @@ namespace InterserviceApp.Models
         [Required]
         [Display(Name = "Fees")]
         public double fees { get; set; }
+
+        public bool? approved { get; set; }
+
+        public string hyperlink { get; set; }
+
+        public bool? blackboard { get; set; }
 
         public int courseID { get; set; }
         public virtual is_Course Course { get; set; }

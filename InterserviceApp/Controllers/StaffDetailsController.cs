@@ -50,7 +50,7 @@ namespace InterserviceApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "badgeID,fName,lName,dept,phone,birthdate")] is_staffDetails is_staffDetails)
+        public ActionResult Create([Bind(Include = "badgeID,fName,lName,email,dept,phone,birthdate")] is_staffDetails is_staffDetails)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace InterserviceApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "detailsID,badgeID,fName,lName,dept,phone,birthdate")] is_staffDetails is_staffDetails)
+        public ActionResult Edit([Bind(Include = "detailsID,badgeID,fName,lName,email,dept,phone,birthdate")] is_staffDetails is_staffDetails)
         {
             if (ModelState.IsValid)
             {
