@@ -45,7 +45,7 @@ namespace InterserviceApp.Controllers
                 cl.approved = true;
                 db.Entry(cl).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", "Class");
+                return RedirectToAction("ClassPortal", "Home");
             }
             else if (deny != null) //If the deny button was selected
             {
@@ -53,7 +53,7 @@ namespace InterserviceApp.Controllers
                 cl.approved = false;
                 db.Entry(cl).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", "Class");
+                return RedirectToAction("ClassPortal", "Home");
             }
 
             return View();
