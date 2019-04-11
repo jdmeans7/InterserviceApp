@@ -1,0 +1,129 @@
+﻿.reqClassContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+    padding-bottom: 20px;
+    padding-top: 5px;
+}
+
+.reqClassDiv {
+    background-color: #E8E8E8;
+    padding: 15px;
+    -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    -moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    min-height: 250px;
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.register {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.topHR {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: rgba(0,0,0,0.18);
+    -moz-use-text-color: rgba(0,0,0,0.18);
+    border-style: solid none;
+    border-width: 0.5px 0;
+    margin: 10px 0px;
+}
+
+h2 {
+    font-size: 20px !important;
+}
+
+.topBar {
+    background-color: #337ab7;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    height: 40px;
+    color: white;
+}
+
+.middleBar {
+    margin-top: 30px;
+}
+
+.dateContainer {
+    
+}
+
+.startTimeContainer {
+
+}
+
+.feesContainer {
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .reqClassContainer {
+        display: -ms-grid;
+        -ms-grid-columns: 1fr 1fr 1fr;
+        -ms-grid-row: 1fr 1fr 1fr;
+    }
+
+    .reqClassDiv:nth-child(2) {
+        -ms-grid-column: 2;
+        margin-left: 10px;
+    }
+
+    .reqClassDiv:nth-child(3) {
+        -ms-grid-column: 3;
+        margin-left: 10px;
+    }
+
+    .reqClassDiv:nth-child(4) {
+        -ms-grid-column: 1;
+        -ms-grid-row: 2;
+        margin-top: 10px;
+    }
+
+    .reqClassDiv:nth-child(5) {
+        -ms-grid-column: 2;
+        -ms-grid-row: 2;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    .reqClassDiv:nth-child(6) {
+        -ms-grid-column: 3;
+        -ms-grid-row: 2;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    .reqClassDiv:nth-child(7) {
+        -ms-grid-column: 1;
+        -ms-grid-row: 3;
+        margin-top: 10px;
+    }
+
+    .reqClassDiv:nth-child(8) {
+        -ms-grid-column: 2;
+        -ms-grid-row: 3;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    .reqClassDiv:nth-child(9) {
+        -ms-grid-column: 3;
+        -ms-grid-row: 3;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+}

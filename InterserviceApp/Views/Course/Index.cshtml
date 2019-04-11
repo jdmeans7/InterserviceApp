@@ -4,36 +4,53 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<head>
+    <link href="~/Content/classportal.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/tables.css" rel="stylesheet" type="text/css" />
+</head>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.courseCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.desc)
-        </th>
-        <th></th>
-    </tr>
+<div class="classPortalNav">
+    <span>Class Portal</span>
+    <ul>
+        <li>
+            <a href="~/Home/ClassPortal" class="btn btn-primary btnNav">Class</a>
+        </li>
+        <li>
+            <a href="~/Course" class="btn btn-primary btnNav classBtn">Course</a>
+        </li>
+    </ul>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.courseCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.desc)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.courseID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.courseID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.courseID })
-        </td>
-    </tr>
-}
+<div class="currentContentCourse">
+    @Html.ActionLink("Create a New Course", "Create", null, new { @class = "btn btn-primary register createCourseBtn" })
 
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.courseCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.desc)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.courseCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.desc)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.courseID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.courseID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.courseID })
+                    </td>
+                </tr>
+            }
 </table>
+</div>

@@ -1,58 +1,71 @@
 ﻿@model IEnumerable<InterserviceApp.Models.is_Class>
 
+<head>
+    <link href="~/Content/home.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/tables.css" rel="stylesheet" type="text/css" />
+</head>
+
+<h2>Additional Classes</h2>
+
+<hr class="topHR" />
+
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Course.courseCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.startTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.room)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.capacity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.justification)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fees)
-        </th>
-        <th></th>
-    </tr>
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Course.courseCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.startTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.capacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.justification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fees)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.courseCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.startTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.room)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.capacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.justification)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fees)
+                </td>
+                <td>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Course.courseCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.startTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.room)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.capacity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.justification)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fees)
-        </td>
-        <td>
-            @Html.ActionLink("Register", "Register", new { id = item.classID })
-        </td>
-    </tr>
-}
-
+                    @Html.ActionLink("Edit", "Edit", new { id = item.classID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.classID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.classID }) |
+                </td>
+            </tr>
+        }
 </table>

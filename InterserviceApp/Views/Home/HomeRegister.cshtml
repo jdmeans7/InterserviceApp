@@ -4,66 +4,64 @@
     ViewBag.Title = "HomeRegister";
 }
 
-<h2>HomeRegister</h2>
+<head>
+    <link href="~/Content/home.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/classportal.css" rel="stylesheet" type="text/css" />
+</head>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Course.courseCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.startTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.room)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.capacity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.justification)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fees)
-        </th>
-        <th></th>
-    </tr>
+<h2>Required Classes</h2>
+<hr class="topHR" />
 
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Course.courseCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.startTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.room)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.capacity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.justification)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fees)
-        </td>
-        <td>
-            @Html.ActionLink("Register", "Register", new { id = item.classID })
+<div class="reqClassContainer">
+    @foreach (var item in Model)
+    {
+        <div class="reqClassDiv">
+            @*@Html.DisplayNameFor(model => model.Course.courseCode)*@
+            <div class="topBar">
+                <p style="text-align:left;">
+                    Class Name/Title here  
+                    <span style="float:right;">@Html.DisplayFor(modelItem => item.Course.courseCode)</span>
+                </p>
+            </div>
 
-        </td>
-    </tr>
-}
+            <div class="middleBar">
+                <div class="dateContainer">
+                    @Html.DisplayNameFor(model => model.date)
+                    @Html.DisplayFor(modelItem => item.date)
+                </div>
+                <div class="startTimeContainer">
+                    @Html.DisplayNameFor(model => model.startTime)
+                    @Html.DisplayFor(modelItem => item.startTime)
+                </div>
 
-</table>
+                <div class="roomContainer">
+                    @Html.DisplayNameFor(model => model.room)
+                    @Html.DisplayFor(modelItem => item.room)
+                </div>
+
+                <div class="capacityContainer">
+                    @Html.DisplayNameFor(model => model.capacity)
+                    @Html.DisplayFor(modelItem => item.capacity)
+                </div>
+
+                <div class="justificationContainer">
+                    @Html.DisplayNameFor(model => model.justification)
+                    @Html.DisplayFor(modelItem => item.justification)
+                </div>
+
+                <div class="feesContainer">
+                    @Html.DisplayNameFor(model => model.fees)
+                    @Html.DisplayFor(modelItem => item.fees)$
+                </div>
+
+                @*@Html.ActionLink("Details", "Details", new { id = item.classID }, new { @class = "btn btn-primary btn-large" })*@
+            </div>
+          
+            @Html.ActionLink("Register", "Register", new { id = item.classID }, new { @class = "btn btn-primary register" })
+
+        </div>
+    }
+</div>
 
 @{
     Html.RenderAction("Classes", "Home");
