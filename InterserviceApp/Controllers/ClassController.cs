@@ -158,9 +158,9 @@ namespace InterserviceApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Attendance(int[] checkedboxes, int? id)
+        public ActionResult Attendance(IEnumerable<is_StaffClass> staffClasses, int? id)
         {
-            foreach (var s in checkedboxes)
+            foreach (var s in staffClasses)
             {
                 Console.WriteLine(s);
             }

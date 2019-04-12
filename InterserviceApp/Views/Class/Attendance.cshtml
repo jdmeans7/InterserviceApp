@@ -56,7 +56,8 @@
                     @Html.DisplayFor(modelItem => item.Staff.birthdate)
                 </td>
                 <td>
-                    <input type="checkbox" name="checkedboxes" value="@item.badgeID" />
+                    <!--<input type="checkbox" name="checkedboxes" value="item.badgeID" />-->
+                    @Html.CheckBoxFor(model => item.approved)
                 </td>
             </tr>
 
