@@ -1,0 +1,73 @@
+﻿@model IEnumerable<InterserviceApp.Models.is_StaffClass>
+
+@{
+    ViewBag.Title = "Attendance";
+}
+
+<h2>Attendance</h2>
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Staff.fName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Staff.lName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Staff.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Staff.dept)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Staff.phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Staff.birthdate)
+            </th>
+            <th>
+                Approve
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff.fName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff.lName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff.dept)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff.phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff.birthdate)
+                </td>
+                <td>
+                    <input type="checkbox" name="checkedboxes" value="@item.badgeID" />
+                </td>
+            </tr>
+
+        }
+    </table>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+
+

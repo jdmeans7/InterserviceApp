@@ -149,6 +149,24 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Attendance(int? id)
+        {
+            ViewBag.ClassID = id;
+            //var Staff = db.StaffClasses.Where(x => x.classID == id).ToList();
+            //return View(db.StaffDetails.Where(x => Staff.Contains(x.badgeID)).Include(a => a.staffClasses).ToList());
+            return View(db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult Attendance(int[] checkedboxes, int? id)
+        {
+            foreach (var s in checkedboxes)
+            {
+                Console.WriteLine(s);
+            }
+            return View(db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id).ToList());
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
