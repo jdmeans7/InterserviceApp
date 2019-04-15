@@ -69,8 +69,9 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.classID }) |
-            @Html.ActionLink("Approve", "Approve", new { id = item.classID }) |
-            @Html.ActionLink("Attendance", "Attendance", new { id = item.classID })
+            @Html.ActionLink("Approve Class", "Approve", new { id = item.classID }) |
+            @Html.ActionLink("Attendance", "Attendance", new { id = item.classID }) |
+            @Html.ActionLink("Approve Staff", "ApproveStaffClass", new { id=item.classID })
             @Html.ActionLink("Delete", "Delete", new { id = item.classID })
         </td>
     </tr>

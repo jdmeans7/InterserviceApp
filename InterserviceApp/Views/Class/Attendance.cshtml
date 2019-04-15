@@ -1,74 +1,70 @@
-﻿@model IEnumerable<InterserviceApp.Models.is_StaffClass>
+﻿@model InterserviceApp.Models.ApprovingModel
+<!DOCTYPE html>
 
-@{
-    ViewBag.Title = "Attendance";
-}
+<html>
+<body>
+    <div>
 
-<h2>Attendance</h2>
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Staff.fName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Staff.lName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Staff.email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Staff.dept)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Staff.phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Staff.birthdate)
-            </th>
-            <th>
-                Approve
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
+        @using (Html.BeginForm())
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Staff.fName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Staff.lName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Staff.email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Staff.dept)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Staff.phone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Staff.birthdate)
-                </td>
-                <td>
-                    <!--<input type="checkbox" name="checkedboxes" value="item.badgeID" />-->
-                    @Html.CheckBoxFor(model => item.approved)
-                </td>
-            </tr>
 
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(x => x.StaffClasses[0].Staff.fName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(x => x.StaffClasses[0].Staff.lName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(x => x.StaffClasses[0].Staff.email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(x => x.StaffClasses[0].Staff.dept)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(x => x.StaffClasses[0].Staff.phone)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(x => x.StaffClasses[0].Staff.birthdate)
+                    </th>
+                    <th>
+                        Present
+                    </th>
+                    <th></th>
+                </tr>
+                @for (int i = 0; i < Model.StaffClasses.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(x => x.StaffClasses[i].Staff.fName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.StaffClasses[i].Staff.lName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.StaffClasses[i].Staff.email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.StaffClasses[i].Staff.dept)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.StaffClasses[i].Staff.phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.StaffClasses[i].Staff.birthdate)
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(x => x.StaffClasses[i].status)
+
+                            @Html.HiddenFor(x => x.StaffClasses[i].badgeID)
+                            @Html.HiddenFor(x => x.StaffClasses[i].classID)
+                        </td>
+                    </tr>
+                }
+            </table>
+            <input type="submit" class="btn btn-outline-primary rounded-0" value="Submit" />
         }
-    </table>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
     </div>
-}
-
-
-
+</body>
+</html>  
