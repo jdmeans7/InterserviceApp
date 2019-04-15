@@ -4,12 +4,16 @@
     ViewBag.Title = "Register";
 }
 
+<head>
+    <link href="~/Content/register.css" rel="stylesheet" type="text/css" />
+</head>
+
 <h2>Register</h2>
 
 <div>
     <h4>is_Class</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl>
         <dt>
             @Html.DisplayNameFor(model => model.Course.courseCode)
         </dt>

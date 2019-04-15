@@ -10,6 +10,13 @@ using InterserviceApp.Models;
 
 namespace InterserviceApp.Controllers
 {
+
+    using System.Configuration;
+    using System.Data.SqlClient;
+    using System.IO;
+    using System.Net.Mail;
+    using System.Web.UI;
+
     public class StaffDetailsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -123,6 +130,37 @@ namespace InterserviceApp.Controllers
             is_staffDetails is_staffDetails = db.StaffDetails.Find(id);
             db.StaffDetails.Remove(is_staffDetails);
             db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult EmailSend(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            is_staffDetails x = db.StaffDetails.Find(id);
+            String email = x.email;
+            MailMessage mail = new MailMessage();
+            mail.To.Add(email);
+            //   mail.To.Add("Another Email ID where you wanna send same email");
+            mail.From = new MailAddress("EncompassingSol@gmail.com");
+            // mail.Subject = staffDetails.EmailSubject;
+            mail.Subject = "Classes";
+            //string Body = staffDetails.SendEmail;
+            mail.Body = "Please take your required classes.";
+            //mail.Body = "<h1>Hello</h1>";
+            //mail.Attachments.Add(new Attachment("C:\\file.zip"));
+            mail.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+            smtp.Credentials = new System.Net.NetworkCredential
+                 ("InterserviceApplication@gmail.com", "Admin123!");
+
+
+            //Or your Smtp Email ID and Password
+            smtp.EnableSsl = true;
+            smtp.Send(mail);
             return RedirectToAction("Index");
         }
 

@@ -37,6 +37,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.birthdate)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.email)
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -63,9 +66,13 @@
                     @Html.DisplayFor(modelItem => item.birthdate)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.badgeID }) |
                     @Html.ActionLink("Details", "Details", new { id = item.badgeID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.badgeID })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.badgeID }) |
+                    @Html.ActionLink("Email", "EmailSend", new { id = item.badgeID })
                 </td>
             </tr>
         }
