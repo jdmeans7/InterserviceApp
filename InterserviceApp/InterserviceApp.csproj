@@ -299,6 +299,7 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Class\Attendance.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
+    <Content Include="Views\Class\ApproveStaffClass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

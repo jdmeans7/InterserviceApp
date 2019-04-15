@@ -34,4 +34,9 @@ namespace InterserviceApp.Models
         [Display(Name = "Status")]
         public Boolean status { get; set; }
     }
+
+    public class ApprovingModel
+    {
+        public List<is_StaffClass> StaffClasses { get; set; }
+    }
 }

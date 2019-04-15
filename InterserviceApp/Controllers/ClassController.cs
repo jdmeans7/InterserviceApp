@@ -149,22 +149,33 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Attendance(int? id)
+        public ActionResult ApproveStaffClass(int? id)
         {
             ViewBag.ClassID = id;
             //var Staff = db.StaffClasses.Where(x => x.classID == id).ToList();
             //return View(db.StaffDetails.Where(x => Staff.Contains(x.badgeID)).Include(a => a.staffClasses).ToList());
-            return View(db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id).ToList());
+            ApprovingModel ap = new ApprovingModel();
+            ap.StaffClasses = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id).ToList();
+            return View(ap);
         }
 
         [HttpPost]
-        public ActionResult Attendance(IEnumerable<is_StaffClass> staffClasses, int? id)
+        public ActionResult ApproveStaffClass(ApprovingModel ap, int? id)
         {
-            foreach (var s in staffClasses)
+            foreach (var s in ap.StaffClasses)
             {
-                Console.WriteLine(s);
+                //if (s.approved != db.StaffClasses.Where(x => x.badgeID == s.badgeID && x.classID == s.classID).Select(a => a.approved).ToList()[0])
+                //{
+                //
+                //}
+
+                is_StaffClass sc = db.StaffClasses.First(x => x.badgeID == s.badgeID && x.classID == s.classID);
+                sc.approved = s.approved;
+                db.Entry(sc).State = EntityState.Modified;
+                db.SaveChanges();
             }
-            return View(db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id).ToList());
+           
+            return View(ap);
         }
 
         protected override void Dispose(bool disposing)
