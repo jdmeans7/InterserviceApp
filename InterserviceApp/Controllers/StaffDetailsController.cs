@@ -126,6 +126,58 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("Index");
         }
 
+        //Find users that need to take classes
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
+        public ActionResult Notify()
+        {
+            //get current date, and convert to numeric value
+            string[] sArr = System.DateTime.Now.ToString().Split(' ');
+            sArr = sArr = sArr[0].Split('/');
+
+            int month = Int32.Parse(sArr[0]) * 100;
+            int day = Int32.Parse(sArr[1]);
+
+            int currentMonthDay = month + day;
+            //end
+
+            List<is_staffDetails> staffList = db.StaffDetails.ToList();
+            List<is_staffDetails> toNotify = new List<is_staffDetails>();
+            List<is_staffDetails> toRedFlag = new List<is_staffDetails>();
+
+            foreach (is_staffDetails i in staffList)
+            {
+                string s = i.birthdate.ToString();
+
+                sArr = s.Split(' ');
+                sArr = sArr[0].Split('/');
+
+                //Combined birth month and day are turned into numeric value. 
+                //Ex: April 1st becomes 401
+                month = Int32.Parse(sArr[0]) * 100;
+                day = Int32.Parse(sArr[1]);
+
+                int bDay = month + day;
+
+                //If today is your birthday, receive email
+                if (bDay == currentMonthDay)
+                {
+                    toNotify.Add(i);
+                }
+                //If you are a month overdue, get a warning email
+                else if (bDay <= (currentMonthDay - 100))
+                {
+                    toRedFlag.Add(i);
+                }
+                //If your birthday is in December, check for month overdue 
+                else if ((bDay - 1100) == currentMonthDay)
+                {
+                    toRedFlag.Add(i);
+                }
+            }
+
+            return View(toNotify);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<InterserviceApp.Models.is_staffDetails>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Notify";
 }
 
 <head>
@@ -10,18 +10,11 @@
 </head>
 
 <div class="classPortalNav">
-    <span>User Portal</span>
+    <span>These Users Were Notified</span>
 </div>
 
-
-
 <div class="currentContentUser">
-    @Html.ActionLink("Create a New User", "Create", null, new { @class = "btn btn-primary register createCourseBtn" })
-
-    <input type="button"
-           value="Alert users who need to take classes"
-           onclick="location.href='@Url.Action("Notify", "StaffDetails")'" 
-           class = "btn btn-primary register createCourseBtn" />
+    @Html.ActionLink("Back to Staff List", "Index", null, new { @class = "btn btn-primary register createCourseBtn" })
 
     <table class="table">
         <thead class="thead-dark">
@@ -68,11 +61,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.birthdate)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.badgeID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.badgeID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.badgeID })
                 </td>
             </tr>
         }
