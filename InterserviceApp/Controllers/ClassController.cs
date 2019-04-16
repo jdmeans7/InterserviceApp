@@ -168,7 +168,7 @@ namespace InterserviceApp.Controllers
                 db.SaveChanges();
             }
            
-            return View(ap);
+            return RedirectToAction("Home/ClassPortal");
         }
 
         public ActionResult Attendance(int? id)
@@ -190,7 +190,7 @@ namespace InterserviceApp.Controllers
                 db.SaveChanges();
             }
 
-            return View(ap);
+            return RedirectToAction("Home/ClassPortal");
         }
 
         protected override void Dispose(bool disposing)
