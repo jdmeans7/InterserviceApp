@@ -201,6 +201,36 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("Home/ClassPortal");
         }
 
+        public ActionResult ApproveStaffClassSingle(int? classID, int? badgeID)
+        {
+            //var scid = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == classID && x.badgeID == badgeID).Select(i => i.id).ToList()[0];
+            //is_StaffClass sc = db.StaffClasses.Find(scid);
+            return View(db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == classID && x.badgeID == badgeID).ToList()[0]);
+        }
+
+        [HttpPost]
+        public ActionResult ApproveStaffClassSingle(String approve, String deny, int? id)
+        {
+            if (approve != null) //If the approve button was selected
+            {
+                is_StaffClass sc = db.StaffClasses.Find(id);
+                sc.approved = true;
+                db.Entry(sc).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ClassPortal", "Home");
+            }
+            else if (deny != null) //If the deny button was selected
+            {
+                is_StaffClass sc = db.StaffClasses.Find(id);
+                sc.approved = false;
+                db.Entry(sc).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ClassPortal", "Home");
+            }
+
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -303,6 +303,7 @@
     <Content Include="Views\Class\ApproveStaffClass.cshtml" />
     <Content Include="Views\StaffDetails\Notify.cshtml" />
     <Content Include="Views\StaffDetails\SendEmail.cshtml" />
+    <Content Include="Views\Class\ApproveStaffClassSingle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
