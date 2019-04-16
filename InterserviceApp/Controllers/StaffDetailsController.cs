@@ -133,7 +133,8 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult EmailSend(int? id)
+        [Authorize]
+        public ActionResult SendEmail(int? id, string subject, string body)
         {
             if (id == null)
             {
@@ -146,9 +147,9 @@ namespace InterserviceApp.Controllers
             //   mail.To.Add("Another Email ID where you wanna send same email");
             mail.From = new MailAddress("EncompassingSol@gmail.com");
             // mail.Subject = staffDetails.EmailSubject;
-            mail.Subject = "Classes";
+            mail.Subject = subject;
             //string Body = staffDetails.SendEmail;
-            mail.Body = "Please take your required classes.";
+            mail.Body = body;
             //mail.Body = "<h1>Hello</h1>";
             //mail.Attachments.Add(new Attachment("C:\\file.zip"));
             mail.IsBodyHtml = true;
@@ -161,7 +162,11 @@ namespace InterserviceApp.Controllers
             //Or your Smtp Email ID and Password
             smtp.EnableSsl = true;
             smtp.Send(mail);
-            return RedirectToAction("Index");
+            if (x == null)
+            {
+                return HttpNotFound();
+            }
+            return View(x);
         }
 
         protected override void Dispose(bool disposing)
