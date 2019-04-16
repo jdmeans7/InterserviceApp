@@ -15,14 +15,14 @@ namespace InterserviceApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: StaffDetails
-        [Authorize]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Index()
         {
             return View(db.StaffDetails.ToList());
         }
 
         // GET: StaffDetails/Details/5
-        [Authorize]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,7 +38,7 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: StaffDetails/Create
-        [Authorize]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Create()
         {
             return View();
@@ -47,7 +47,7 @@ namespace InterserviceApp.Controllers
         // POST: StaffDetails/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "badgeID,fName,lName,email,dept,phone,birthdate")] is_staffDetails is_staffDetails)
@@ -66,7 +66,7 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: StaffDetails/Edit/5
-        [Authorize]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -84,7 +84,7 @@ namespace InterserviceApp.Controllers
         // POST: StaffDetails/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "detailsID,badgeID,fName,lName,email,dept,phone,birthdate")] is_staffDetails is_staffDetails)
@@ -99,7 +99,7 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: StaffDetails/Delete/5
-        [Authorize]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -115,7 +115,7 @@ namespace InterserviceApp.Controllers
         }
 
         // POST: StaffDetails/Delete/5
-        [Authorize]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

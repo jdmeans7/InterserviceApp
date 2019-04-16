@@ -15,12 +15,14 @@ namespace InterserviceApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Course
+        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         public ActionResult Index()
         {
             return View(db.Courses.ToList());
         }
 
         // GET: Course/Details/5
+        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: Course/Create
+        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +47,7 @@ namespace InterserviceApp.Controllers
         // POST: Course/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "courseID,courseCode,desc")] is_Course is_Course)
@@ -59,6 +63,7 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: Course/Edit/5
+        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,6 +81,7 @@ namespace InterserviceApp.Controllers
         // POST: Course/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "courseID,courseCode,desc")] is_Course is_Course)
@@ -90,6 +96,7 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: Course/Delete/5
+        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +112,7 @@ namespace InterserviceApp.Controllers
         }
 
         // POST: Course/Delete/5
+        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
