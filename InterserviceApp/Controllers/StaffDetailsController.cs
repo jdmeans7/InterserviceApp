@@ -23,9 +23,17 @@ namespace InterserviceApp.Controllers
 
         // GET: StaffDetails
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            return View(db.StaffDetails.ToList());
+            var staffDetails = from s in db.StaffDetails select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                staffDetails = staffDetails.Where(s => s.lName.Contains(searchString)
+                                       || s.fName.Contains(searchString)
+                                       || s.dept.Contains(searchString)
+                                       || s.badgeID.ToString().Contains(searchString));
+            }
+            return View(staffDetails.ToList());
         }
 
         // GET: StaffDetails/Details/5

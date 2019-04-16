@@ -15,9 +15,15 @@ namespace InterserviceApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Class
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            var classes = db.Classes.Include(i => i.Course).OrderBy(x => x.approved);
+            var classes = from s in db.Classes.Include(i => i.Course).OrderBy(x => x.approved) select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                classes = classes.Where(s => s.Course.courseCode.ToString().Contains(searchString)
+                                        || s.justification.Contains(searchString)
+                                        || s.room.Contains(searchString));
+            }
             return View(classes.ToList());
         }
 
@@ -79,7 +85,7 @@ namespace InterserviceApp.Controllers
             {
                 db.Classes.Add(is_Class);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ClassPortal", "Home");
             }
 
             ViewBag.courseID = new SelectList(db.Courses, "courseID", "courseCode", is_Class.courseID);
@@ -115,7 +121,7 @@ namespace InterserviceApp.Controllers
             {
                 db.Entry(is_Class).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ClassPortal", "Home");
             }
             ViewBag.courseID = new SelectList(db.Courses, "courseID", "courseCode", is_Class.courseID);
             return View(is_Class);
@@ -146,7 +152,7 @@ namespace InterserviceApp.Controllers
             is_Class is_Class = db.Classes.Find(id);
             db.Classes.Remove(is_Class);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ClassPortal", "Home");
         }
 
         protected override void Dispose(bool disposing)

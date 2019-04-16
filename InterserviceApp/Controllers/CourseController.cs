@@ -15,9 +15,16 @@ namespace InterserviceApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Course
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            return View(db.Courses.ToList());
+            var courses = from s in db.Courses select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                courses = courses.Where(s => s.courseCode.Contains(searchString)
+                                       || s.desc.Contains(searchString));
+            }
+            return View(courses.ToList());
         }
 
         // GET: Course/Details/5
