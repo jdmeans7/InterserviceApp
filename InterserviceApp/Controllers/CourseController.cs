@@ -15,10 +15,16 @@ namespace InterserviceApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Course
-        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            return View(db.Courses.ToList());
+            var courses = from s in db.Courses select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                courses = courses.Where(s => s.courseCode.Contains(searchString)
+                                       || s.desc.Contains(searchString));
+            }
+            return View(courses.ToList());
         }
 
         // GET: Course/Details/5

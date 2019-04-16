@@ -10,6 +10,14 @@
 
 @Html.ActionLink("Create a New Class", "Create", null, new { @class = "btn btn-primary register createClassBtn" })
 
+@using (Html.BeginForm())
+{
+    <p>
+        <input type="text" name="searchString" value="" />
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table">
     <thead class="thead-dark">
         <tr>

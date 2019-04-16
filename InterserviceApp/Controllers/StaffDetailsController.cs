@@ -10,15 +10,30 @@ using InterserviceApp.Models;
 
 namespace InterserviceApp.Controllers
 {
+
+    using System.Configuration;
+    using System.Data.SqlClient;
+    using System.IO;
+    using System.Net.Mail;
+    using System.Web.UI;
+
     public class StaffDetailsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: StaffDetails
-        [Authorize(Roles = "IS_Admin, IS_Secretary")]
-        public ActionResult Index()
+        [Authorize]
+        public ActionResult Index(string searchString)
         {
-            return View(db.StaffDetails.ToList());
+            var staffDetails = from s in db.StaffDetails select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                staffDetails = staffDetails.Where(s => s.lName.Contains(searchString)
+                                       || s.fName.Contains(searchString)
+                                       || s.dept.Contains(searchString)
+                                       || s.badgeID.ToString().Contains(searchString));
+            }
+            return View(staffDetails.ToList());
         }
 
         // GET: StaffDetails/Details/5
@@ -176,6 +191,42 @@ namespace InterserviceApp.Controllers
             }
 
             return View(toNotify);
+        }
+
+        [Authorize]
+        public ActionResult SendEmail(int? id, string subject, string body)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            is_staffDetails x = db.StaffDetails.Find(id);
+            String email = x.email;
+            MailMessage mail = new MailMessage();
+            mail.To.Add(email);
+            //   mail.To.Add("Another Email ID where you wanna send same email");
+            mail.From = new MailAddress("EncompassingSol@gmail.com");
+            // mail.Subject = staffDetails.EmailSubject;
+            mail.Subject = subject;
+            //string Body = staffDetails.SendEmail;
+            mail.Body = body;
+            //mail.Body = "<h1>Hello</h1>";
+            //mail.Attachments.Add(new Attachment("C:\\file.zip"));
+            mail.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+            smtp.Credentials = new System.Net.NetworkCredential
+                 ("InterserviceApplication@gmail.com", "Admin123!");
+
+
+            //Or your Smtp Email ID and Password
+            smtp.EnableSsl = true;
+            smtp.Send(mail);
+            if (x == null)
+            {
+                return HttpNotFound();
+            }
+            return View(x);
         }
 
         protected override void Dispose(bool disposing)

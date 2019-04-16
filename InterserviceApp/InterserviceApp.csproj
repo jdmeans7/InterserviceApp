@@ -226,6 +226,7 @@
     <Content Include="Content\classportal.css" />
     <Content Include="Content\home.css" />
     <Content Include="Content\login.css" />
+    <Content Include="Content\register.css" />
     <Content Include="Content\tables.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -301,6 +302,7 @@
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
     <Content Include="Views\Class\ApproveStaffClass.cshtml" />
     <Content Include="Views\StaffDetails\Notify.cshtml" />
+    <Content Include="Views\StaffDetails\SendEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

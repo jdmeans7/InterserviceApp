@@ -18,6 +18,15 @@
 <div class="currentContentUser">
     @Html.ActionLink("Create a New User", "Create", null, new { @class = "btn btn-primary register createCourseBtn" })
 
+    @using (Html.BeginForm())
+    {
+        <p>
+            <input type="text" name="searchString" value="" />
+            <input type="submit" value="Search" />
+        </p>
+    }
+
+
     <input type="button"
            value="Alert users who need to take classes"
            onclick="location.href='@Url.Action("Notify", "StaffDetails")'" 
@@ -43,6 +52,9 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.birthdate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.email)
                 </th>
                 <th></th>
             </tr>
@@ -70,9 +82,13 @@
                     @Html.DisplayFor(modelItem => item.birthdate)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.badgeID }) |
                     @Html.ActionLink("Details", "Details", new { id = item.badgeID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.badgeID })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.badgeID }) |
+                    @Html.ActionLink("Email", "SendEmail", new { id = item.badgeID })
                 </td>
             </tr>
         }

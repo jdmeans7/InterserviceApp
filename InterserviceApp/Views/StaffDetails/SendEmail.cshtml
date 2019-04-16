@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "SendEmail";
+}
+
+<h2>Send Email</h2>
+
+@using (Html.BeginForm())
+{
+    <span>Subject</span>
+    <input type="text" name="subject" value=""/>
+    <br />
+    <span>Body</span>
+    <input type="text" name="body" />
+    <br />
+    <input type="submit" value="Send Email"/>
+}
