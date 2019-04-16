@@ -1,0 +1,70 @@
+﻿@model InterserviceApp.Models.ApprovingModel
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div>
+
+        @using (Html.BeginForm())
+        {
+
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(x => x.StaffClasses[0].Staff.fName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(x => x.StaffClasses[0].Staff.lName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(x => x.StaffClasses[0].Staff.email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(x => x.StaffClasses[0].Staff.dept)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(x => x.StaffClasses[0].Staff.phone)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(x => x.StaffClasses[0].Staff.birthdate)
+                    </th>
+                    <th>
+                        Present
+                    </th>
+                    <th></th>
+                </tr>
+                @for (int i = 0; i < Model.StaffClasses.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(x => x.StaffClasses[i].Staff.fName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.StaffClasses[i].Staff.lName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.StaffClasses[i].Staff.email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.StaffClasses[i].Staff.dept)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.StaffClasses[i].Staff.phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.StaffClasses[i].Staff.birthdate)
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(x => x.StaffClasses[i].status)
+
+                            @Html.HiddenFor(x => x.StaffClasses[i].badgeID)
+                            @Html.HiddenFor(x => x.StaffClasses[i].classID)
+                        </td>
+                    </tr>
+                }
+            </table>
+            <input type="submit" class="btn btn-outline-primary rounded-0" value="Submit" />
+        }
+    </div>
+</body>
+</html>  

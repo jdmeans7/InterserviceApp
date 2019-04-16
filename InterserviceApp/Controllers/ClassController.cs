@@ -151,6 +151,50 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult ApproveStaffClass(int? id)
+        {
+            ViewBag.ClassID = id;
+            ApprovingModel ap = new ApprovingModel();
+            ap.StaffClasses = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id).ToList();
+            return View(ap);
+        }
+
+        [HttpPost]
+        public ActionResult ApproveStaffClass(ApprovingModel ap, int? id)
+        {
+            foreach (var s in ap.StaffClasses)
+            {
+                is_StaffClass sc = db.StaffClasses.First(x => x.badgeID == s.badgeID && x.classID == s.classID);
+                sc.approved = s.approved;
+                db.Entry(sc).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+           
+            return RedirectToAction("Home/ClassPortal");
+        }
+
+        public ActionResult Attendance(int? id)
+        {
+            ViewBag.ClassID = id;
+            ApprovingModel ap = new ApprovingModel();
+            ap.StaffClasses = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id).ToList();
+            return View(ap);
+        }
+
+        [HttpPost]
+        public ActionResult Attendance(ApprovingModel ap, int? id)
+        {
+            foreach (var s in ap.StaffClasses)
+            {
+                is_StaffClass sc = db.StaffClasses.First(x => x.badgeID == s.badgeID && x.classID == s.classID);
+                sc.approved = s.status;
+                db.Entry(sc).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Home/ClassPortal");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
