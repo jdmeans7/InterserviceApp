@@ -149,15 +149,11 @@ namespace InterserviceApp.Controllers
             string[] sArr = System.DateTime.Now.ToString().Split(' ');
             sArr = sArr = sArr[0].Split('/');
 
-            int month = Int32.Parse(sArr[0]) * 100;
-            int day = Int32.Parse(sArr[1]);
-
-            int currentMonthDay = month + day;
-            //end
+            int month = Int32.Parse(sArr[0]);
 
             List<is_staffDetails> staffList = db.StaffDetails.ToList();
             List<is_staffDetails> toNotify = new List<is_staffDetails>();
-            List<is_staffDetails> toRedFlag = new List<is_staffDetails>();
+            List<is_staffDetails> toFlag = new List<is_staffDetails>();
 
             foreach (is_staffDetails i in staffList)
             {
@@ -166,34 +162,32 @@ namespace InterserviceApp.Controllers
                 sArr = s.Split(' ');
                 sArr = sArr[0].Split('/');
 
-                //Combined birth month and day are turned into numeric value. 
-                //Ex: April 1st becomes 401
-                month = Int32.Parse(sArr[0]) * 100;
-                day = Int32.Parse(sArr[1]);
+                int bMonth = Int32.Parse(sArr[0]);
 
-                int bDay = month + day;
-
-                //If today is your birthday, receive email
-                if (bDay == currentMonthDay)
+                //If this month is your birth month, receive email
+                if (bMonth == month)
                 {
                     toNotify.Add(i);
                 }
-                //If you are a month overdue, get a warning email
-                else if (bDay <= (currentMonthDay - 100))
+                //If you are a month overdue, get a warning email and flagged
+                else if (bMonth < month && i.flag == false)
                 {
-                    toRedFlag.Add(i);
+                    toFlag.Add(i);
                 }
                 //If your birthday is in December, check for month overdue 
-                else if ((bDay - 1100) == currentMonthDay)
+                else if (bMonth == 12 && month == 1 && i.flag == false)
                 {
-                    toRedFlag.Add(i);
+                    toFlag.Add(i);
                 }
             }
 
-            return View(toNotify);
+            NotificationEmail(toNotify);
+            LateEmail(toFlag);
+
+            return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult SendEmail(int? id, string subject, string body)
         {
             if (id == null)
@@ -227,6 +221,81 @@ namespace InterserviceApp.Controllers
                 return HttpNotFound();
             }
             return View(x);
+        }
+
+        //Send notification email
+        private void NotificationEmail(List<is_staffDetails> staff)
+        {
+            //Really don't know how error prone this is
+            try
+            {
+                foreach (is_staffDetails i in staff)
+                {
+                    string email = i.email;
+                    MailMessage mail = new MailMessage();
+                    mail.To.Add(email);
+                    mail.From = new MailAddress("EncompassingSol@gmail.com");
+                    mail.Subject = "Notification for Required Classes";
+                    mail.Body = "Hello, " + i.fName + " " + i.lName + "\nThis is your birth month and as so, you need to retake your required classes for the year." +
+                        "\nPlease use the Interservice application to view your required courses and schedule to take them within the month.\nThank you, and have a nice day!";
+
+                    mail.IsBodyHtml = true;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                    smtp.Credentials = new System.Net.NetworkCredential
+                         ("InterserviceApplication@gmail.com", "Admin123!");
+
+
+                    //Or your Smtp Email ID and Password
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+            }
+            catch (Exception e)
+            {
+                //Literally just prints the error to the debug console in Visual Studio
+                System.Diagnostics.Debug.WriteLine(e);
+            }
+        }
+
+        private void LateEmail(List<is_staffDetails> staff)
+        {
+            //Try finally guarantees that even if an email doesn't get sent, or something goes wrong, the users are still flagged.
+            try
+            {
+                foreach (is_staffDetails i in staff)
+                {
+                    string email = i.email;
+                    MailMessage mail = new MailMessage();
+                    mail.To.Add(email);
+                    mail.From = new MailAddress("EncompassingSol@gmail.com");
+                    mail.Subject = "Notification for Required Classes";
+                    mail.Body = "Hello, " + i.fName + " " + i.lName + "\nLast month was your birth month and our records show that you didn't complete all of your required courses within the month." +
+                        "\nYour account will be flagged as having not taken the courses within the alloted time." +
+                        "\nYou need to retake your required classes for the year." +
+                        "\nPlease use the Interservice application to view your required courses and schedule to take them as soon as possible.\nThank you, and have a nice day!";
+
+                    mail.IsBodyHtml = true;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                    smtp.Credentials = new System.Net.NetworkCredential
+                         ("InterserviceApplication@gmail.com", "Admin123!");
+
+
+                    //Or your Smtp Email ID and Password
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+            }
+            finally
+            {
+                foreach (is_staffDetails i in staff)
+                {
+                    i.flag = true;
+                    db.SaveChanges();
+                }
+            }
+
         }
 
         protected override void Dispose(bool disposing)
