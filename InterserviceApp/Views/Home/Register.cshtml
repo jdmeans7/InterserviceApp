@@ -78,7 +78,7 @@
     {
         <input type="text" name="BadgeID" id="BadgeID" />
         <input type="hidden" value="@Model.classID" name="classID" id="classID" />
-        @Html.DropDownList("Supervisor", new SelectList(ViewBag.Supervisors))
+        @Html.DropDownList("selectedSup", new SelectList(ViewBag.Supervisors))
 
         <input type="submit" value="Submit" />
     }

@@ -74,7 +74,7 @@ namespace InterserviceApp.Controllers
 
         // POST: Home/Register
         [HttpPost]
-        public ActionResult Register(String BadgeID, int classID)
+        public ActionResult Register(String BadgeID, int classID, String selectedSup)
         {
             if (BadgeID == null)
             {
@@ -85,6 +85,11 @@ namespace InterserviceApp.Controllers
             is_staffDetails Staff = db.StaffDetails.Find(badge);
             is_Class Class = db.Classes.Find(classID);
 
+            String[] supname = selectedSup.Split(' ');
+            var first = supname[0];
+            var last = supname[1];
+            is_staffDetails Supervisor = db.StaffDetails.Where(x => x.fName == first && x.lName == last).First();
+            System.Diagnostics.Debug.WriteLine(Supervisor.badgeID);
             // TODO: Actually handle these errors instead of just returning HttpNotFound
             if (Staff == null)
             {
