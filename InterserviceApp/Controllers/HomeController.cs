@@ -62,6 +62,13 @@ namespace InterserviceApp.Controllers
             {
                 return HttpNotFound();
             }
+            var supervisors = db.StaffDetails.Where(x => x.supervisor == true).Select(a => new { a.fName, a.lName }).ToList();
+            var sups = new List<String>();
+            foreach (var s in supervisors)
+            {
+                sups.Add(s.fName + " " + s.lName);
+            }
+            ViewBag.Supervisors = sups;
             return View(is_Class);
         }
 
