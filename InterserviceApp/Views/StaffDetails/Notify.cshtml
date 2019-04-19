@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<InterserviceApp.Models.is_staffDetails>
+
 @{
     ViewBag.Title = "Notify";
 }
@@ -9,9 +10,65 @@
 </head>
 
 <div class="classPortalNav">
-    <span>All Necessary Users Were Notified!</span>
+    <span>These Users Were Notified!</span>
 </div>
 
 <div class="currentContentUser">
     @Html.ActionLink("Back to Staff List", "Index", null, new { @class = "btn btn-primary register createCourseBtn" })
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.badgeID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.lName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.dept)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.birthdate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.email)
+                </th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.badgeID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dept)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.birthdate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+            </tr>
+        }
+
+    </table>
 </div>

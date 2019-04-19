@@ -102,7 +102,7 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "detailsID,badgeID,fName,lName,email,dept,phone,birthdate")] is_staffDetails is_staffDetails)
+        public ActionResult Edit([Bind(Include = "detailsID,badgeID,fName,lName,email,dept,phone,birthdate,flag")] is_staffDetails is_staffDetails)
         {
             if (ModelState.IsValid)
             {
@@ -184,7 +184,7 @@ namespace InterserviceApp.Controllers
             NotificationEmail(toNotify);
             LateEmail(toFlag);
 
-            return View();
+            return View(toNotify);
         }
 
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
@@ -236,10 +236,10 @@ namespace InterserviceApp.Controllers
                     mail.To.Add(email);
                     mail.From = new MailAddress("EncompassingSol@gmail.com");
                     mail.Subject = "Notification for Required Classes";
-                    mail.Body = "Hello, " + i.fName + " " + i.lName + "\nThis is your birth month and as so, you need to retake your required classes for the year." +
-                        "\nPlease use the Interservice application to view your required courses and schedule to take them within the month.\nThank you, and have a nice day!";
+                    mail.Body = "Hello, " + i.fName + " " + i.lName + "\n\nThis is your birth month and as so, you need to retake your required classes for the year.\n" +
+                        "\nPlease use the Interservice application to view your required courses and schedule to take them within the month.\n\nThank you, and have a nice day!";
 
-                    mail.IsBodyHtml = true;
+                    mail.IsBodyHtml = false;
                     SmtpClient smtp = new SmtpClient();
                     smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
                     smtp.Credentials = new System.Net.NetworkCredential
@@ -270,12 +270,12 @@ namespace InterserviceApp.Controllers
                     mail.To.Add(email);
                     mail.From = new MailAddress("EncompassingSol@gmail.com");
                     mail.Subject = "Notification for Required Classes";
-                    mail.Body = "Hello, " + i.fName + " " + i.lName + "\nLast month was your birth month and our records show that you didn't complete all of your required courses within the month." +
-                        "\nYour account will be flagged as having not taken the courses within the alloted time." +
-                        "\nYou need to retake your required classes for the year." +
-                        "\nPlease use the Interservice application to view your required courses and schedule to take them as soon as possible.\nThank you, and have a nice day!";
+                    mail.Body = "Hello, " + i.fName + " " + i.lName + "\n\nLast month was your birth month and our records show that you didn't complete all of your required courses within the month.\n" +
+                        "\nYour account will be flagged as having not taken the courses within the alloted time.\n" +
+                        "\nYou need to retake your required classes for the year to get your account unflagged.\n" +
+                        "\nPlease use the Interservice application to view your required courses and schedule to take them as soon as possible.\n\nThank you, and have a nice day!";
 
-                    mail.IsBodyHtml = true;
+                    mail.IsBodyHtml = false;
                     SmtpClient smtp = new SmtpClient();
                     smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
                     smtp.Credentials = new System.Net.NetworkCredential
