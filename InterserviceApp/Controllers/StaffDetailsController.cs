@@ -153,7 +153,6 @@ namespace InterserviceApp.Controllers
 
             List<is_staffDetails> staffList = db.StaffDetails.ToList();
             List<is_staffDetails> toNotify = new List<is_staffDetails>();
-            List<is_staffDetails> toFlag = new List<is_staffDetails>();
 
             foreach (is_staffDetails i in staffList)
             {
@@ -167,22 +166,22 @@ namespace InterserviceApp.Controllers
                 //If this month is your birth month, receive email
                 if (bMonth == month)
                 {
+                    NotificationEmail(i);
                     toNotify.Add(i);
                 }
                 //If you are a month overdue, get a warning email and flagged
                 else if (bMonth < month && i.flag == false)
                 {
-                    toFlag.Add(i);
+                    FlagEmail(i);
+                    toNotify.Add(i);
                 }
                 //If your birthday is in December, check for month overdue 
                 else if (bMonth == 12 && month == 1 && i.flag == false)
                 {
-                    toFlag.Add(i);
+                    FlagEmail(i);
+                    toNotify.Add(i);
                 }
             }
-
-            NotificationEmail(toNotify);
-            LateEmail(toFlag);
 
             return View(toNotify);
         }
@@ -224,32 +223,29 @@ namespace InterserviceApp.Controllers
         }
 
         //Send notification email
-        private void NotificationEmail(List<is_staffDetails> staff)
+        private void NotificationEmail(is_staffDetails staff)
         {
             //Really don't know how error prone this is
             try
             {
-                foreach (is_staffDetails i in staff)
-                {
-                    string email = i.email;
-                    MailMessage mail = new MailMessage();
-                    mail.To.Add(email);
-                    mail.From = new MailAddress("EncompassingSol@gmail.com");
-                    mail.Subject = "Notification for Required Classes";
-                    mail.Body = "Hello, " + i.fName + " " + i.lName + "\n\nThis is your birth month and as so, you need to retake your required classes for the year.\n" +
-                        "\nPlease use the Interservice application to view your required courses and schedule to take them within the month.\n\nThank you, and have a nice day!";
+                string email = staff.email;
+                MailMessage mail = new MailMessage();
+                mail.To.Add(email);
+                mail.From = new MailAddress("EncompassingSol@gmail.com");
+                mail.Subject = "Notification for Required Classes";
+                mail.Body = "Hello, " + staff.fName + " " + staff.lName + "\n\nThis is your birth month and you need to retake your required classes for the year.\n" +
+                    "\nPlease use the Interservice application to view your required courses and schedule to take them within the month.\n\nThank you, and have a nice day!";
 
-                    mail.IsBodyHtml = false;
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
-                    smtp.Credentials = new System.Net.NetworkCredential
-                         ("InterserviceApplication@gmail.com", "Admin123!");
+                mail.IsBodyHtml = false;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                smtp.Credentials = new System.Net.NetworkCredential
+                     ("InterserviceApplication@gmail.com", "Admin123!");
 
 
-                    //Or your Smtp Email ID and Password
-                    smtp.EnableSsl = true;
-                    smtp.Send(mail);
-                }
+                //Or your Smtp Email ID and Password
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
             }
             catch (Exception e)
             {
@@ -258,42 +254,36 @@ namespace InterserviceApp.Controllers
             }
         }
 
-        private void LateEmail(List<is_staffDetails> staff)
+        private void FlagEmail(is_staffDetails staff)
         {
             //Try finally guarantees that even if an email doesn't get sent, or something goes wrong, the users are still flagged.
             try
             {
-                foreach (is_staffDetails i in staff)
-                {
-                    string email = i.email;
-                    MailMessage mail = new MailMessage();
-                    mail.To.Add(email);
-                    mail.From = new MailAddress("EncompassingSol@gmail.com");
-                    mail.Subject = "Notification for Required Classes";
-                    mail.Body = "Hello, " + i.fName + " " + i.lName + "\n\nLast month was your birth month and our records show that you didn't complete all of your required courses within the month.\n" +
-                        "\nYour account will be flagged as having not taken the courses within the alloted time.\n" +
-                        "\nYou need to retake your required classes for the year to get your account unflagged.\n" +
-                        "\nPlease use the Interservice application to view your required courses and schedule to take them as soon as possible.\n\nThank you, and have a nice day!";
+                string email = staff.email;
+                MailMessage mail = new MailMessage();
+                mail.To.Add(email);
+                mail.From = new MailAddress("EncompassingSol@gmail.com");
+                mail.Subject = "Notification for Required Classes";
+                mail.Body = "Hello, " + staff.fName + " " + staff.lName + "\n\nLast month was your birth month and our records show that you didn't complete all of your required courses within the month.\n" +
+                    "\nYour account will be flagged as having not taken the courses within the alloted time.\n" +
+                    "\nYou need to retake your required classes for the year to get your account unflagged.\n" +
+                    "\nPlease use the Interservice application to view your required courses and schedule to take them as soon as possible.\n\nThank you, and have a nice day!";
 
-                    mail.IsBodyHtml = false;
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
-                    smtp.Credentials = new System.Net.NetworkCredential
-                         ("InterserviceApplication@gmail.com", "Admin123!");
+                mail.IsBodyHtml = false;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                smtp.Credentials = new System.Net.NetworkCredential
+                        ("InterserviceApplication@gmail.com", "Admin123!");
 
 
-                    //Or your Smtp Email ID and Password
-                    smtp.EnableSsl = true;
-                    smtp.Send(mail);
-                }
+                //Or your Smtp Email ID and Password
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
             }
             finally
             {
-                foreach (is_staffDetails i in staff)
-                {
-                    i.flag = true;
-                    db.SaveChanges();
-                }
+                staff.flag = true;
+                db.SaveChanges();
             }
 
         }
