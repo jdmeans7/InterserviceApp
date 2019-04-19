@@ -102,7 +102,7 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "detailsID,badgeID,fName,lName,email,dept,phone,birthdate,flag")] is_staffDetails is_staffDetails)
+        public ActionResult Edit([Bind(Include = "detailsID,badgeID,fName,lName,email,dept,phone,birthdate,flag,supervisor")] is_staffDetails is_staffDetails)
         {
             if (ModelState.IsValid)
             {
@@ -198,7 +198,7 @@ namespace InterserviceApp.Controllers
             MailMessage mail = new MailMessage();
             mail.To.Add(email);
             //   mail.To.Add("Another Email ID where you wanna send same email");
-            mail.From = new MailAddress("EncompassingSol@gmail.com");
+            mail.From = new MailAddress("InterserviceApplication@gmail.com");
             // mail.Subject = staffDetails.EmailSubject;
             mail.Subject = subject;
             //string Body = staffDetails.SendEmail;
@@ -231,7 +231,7 @@ namespace InterserviceApp.Controllers
                 string email = staff.email;
                 MailMessage mail = new MailMessage();
                 mail.To.Add(email);
-                mail.From = new MailAddress("EncompassingSol@gmail.com");
+                mail.From = new MailAddress("InterserviceApplication@gmail.com");
                 mail.Subject = "Notification for Required Classes";
                 mail.Body = "Hello, " + staff.fName + " " + staff.lName + "\n\nThis is your birth month and you need to retake your required classes for the year.\n" +
                     "\nPlease use the Interservice application to view your required courses and schedule to take them within the month.\n\nThank you, and have a nice day!";
@@ -262,7 +262,7 @@ namespace InterserviceApp.Controllers
                 string email = staff.email;
                 MailMessage mail = new MailMessage();
                 mail.To.Add(email);
-                mail.From = new MailAddress("EncompassingSol@gmail.com");
+                mail.From = new MailAddress("InterserviceApplication@gmail.com");
                 mail.Subject = "Notification for Required Classes";
                 mail.Body = "Hello, " + staff.fName + " " + staff.lName + "\n\nLast month was your birth month and our records show that you didn't complete all of your required courses within the month.\n" +
                     "\nYour account will be flagged as having not taken the courses within the alloted time.\n" +
