@@ -7,9 +7,10 @@
 <head>
     <link href="~/Content/register.css" rel="stylesheet" type="text/css" />
 </head>
+<div class="regBackground"></div>
 
 <div class="registerContainer">
-    <h1 class="registerTitle" align="center">Register for the Following Class</h1>
+    <h1 class="registerTitle" align="center">Class Register</h1>
     <hr class="hrRegister"/>
 
     <div class="regLeft">
@@ -66,6 +67,15 @@
         }
     </div>
     <p>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to List", "HomeRegister")
     </p>
 </div>
+
+<style>
+    .footer, .navbar {
+        display: none;
+    }
+    body {
+        background-color: rgba(0,0,0,0.50);
+    }
+</style>
