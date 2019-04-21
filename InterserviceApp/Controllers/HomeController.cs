@@ -9,6 +9,13 @@ using System.Net;
 
 namespace InterserviceApp.Controllers
 {
+
+    using System.Configuration;
+    using System.Data.SqlClient;
+    using System.IO;
+    using System.Net.Mail;
+    using System.Web.UI;
+
     public class HomeController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
@@ -89,7 +96,7 @@ namespace InterserviceApp.Controllers
             var first = supname[0];
             var last = supname[1];
             is_staffDetails Supervisor = db.StaffDetails.Where(x => x.fName == first && x.lName == last).First();
-            System.Diagnostics.Debug.WriteLine(Supervisor.badgeID);
+
             // TODO: Actually handle these errors instead of just returning HttpNotFound
             if (Staff == null)
             {
@@ -111,6 +118,36 @@ namespace InterserviceApp.Controllers
             if (ModelState.IsValid)
             {
                 db.StaffClasses.Add(StaffClass);
+
+                String email = Supervisor.email;
+                MailMessage mail = new MailMessage();
+                mail.To.Add(email);
+                //   mail.To.Add("Another Email ID where you wanna send same email");
+                mail.From = new MailAddress("InterserviceApplication@gmail.com");
+                // mail.Subject = staffDetails.EmailSubject;
+                mail.Subject = Staff.fName + " " + Staff.lName + " is Requesting Your Approval to Take a Class";
+                //string Body = staffDetails.SendEmail;
+                String bodyText = Staff.fName + " " + Staff.lName + " would like to take the following class:" + "<br>" 
+                    + $"<b>Course ID: {StaffClass.Class.Course.courseID}" + $" | Course Description: {StaffClass.Class.Course.desc}" + "</b><br>"
+                    + "Approve the class here: "+ "http://localhost:54330/Class/ApproveStaffClassSingle?classID=" + StaffClass.classID + "&badgeID=" + Staff.badgeID;
+                mail.Body = bodyText;
+                //mail.Body = "<h1>Hello</h1>";
+                //mail.Attachments.Add(new Attachment("C:\\file.zip"));
+                mail.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                smtp.Credentials = new System.Net.NetworkCredential
+                     ("InterserviceApplication@gmail.com", "Admin123!");
+
+
+                //Or your Smtp Email ID and Password
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
+                if (Supervisor == null)
+                {
+                    return HttpNotFound();
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("HomeRegister");
             }

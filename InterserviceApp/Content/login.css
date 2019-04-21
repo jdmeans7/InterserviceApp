@@ -1,4 +1,8 @@
-﻿.navbar, .footer {
+﻿body {
+    background-color: rgba(0,0,0,0.50);
+}
+
+.navbar, .footer {
     display: none !important;
 }
 

@@ -7,6 +7,14 @@ tr, td, th {
     border-color: #455A64 !important;
 }
 
+tr:hover {
+    background-color: rgba(0,0,0,0.10);
+}
+
+thead tr:hover {
+    background-color: #455A64;
+}
+
 table {
     border: 4px solid #455A64;
     box-shadow: 1px 1px 10px rgba(0,0,0,0.3);

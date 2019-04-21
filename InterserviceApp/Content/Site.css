@@ -47,3 +47,93 @@ textarea {
     background-color: #337ab7 !important;
     color: white !important;
 }
+
+dd {
+    display: inline;
+}
+
+dt {
+    display: inline-block;
+}
+
+.badgeInput {
+    padding: 5px;
+    padding-bottom: 8px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.badgeInput:focus {
+    border: 1px solid #337ab7;
+}
+
+.select {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 6px;
+    -webkit-appearance: none;
+    text-indent: 0.01px; /*In Firefox*/
+    text-overflow: ''; /*In Firefox*/
+    width: 167px;
+}
+
+.registerContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 10px;
+    background-color: #E8E8E8;
+    -webkit-box-shadow: 1px 1px 12px rgba(0,0,0,0.6);
+    -moz-box-shadow: 1px 1px 12px rgba(0,0,0,0.6);
+    box-shadow: 1px 1px 12px rgba(0,0,0,0.6);
+    padding: 30px;
+    width: 450px;
+    margin: auto;
+    height: auto;
+}
+
+.regLeft, .regRight {
+    padding-bottom: 10px;
+    font-size: 15px;
+}
+
+.secondP {
+    padding-top: 8px !important;
+}
+
+    .regLeft span:nth-child(2n+1), .regRight span:nth-child(2n+1) {
+        font-weight: 800;
+    }
+
+.regHTML {
+    padding-top: 5px;
+}
+
+.regHTML p {
+    padding: 0px;
+    margin: 0px;
+}
+
+.regButton {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.registerTitle {
+    font-size: 26px;
+}
+
+.hrRegister {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: rgba(0,0,0,0.18);
+    -moz-use-text-color: rgba(0,0,0,0.18);
+    border-style: solid none;
+    border-width: 0.5px 0;
+    margin: 10px 0px;
+    margin-bottom: 20px;
+}

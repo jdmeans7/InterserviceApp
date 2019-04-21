@@ -7,82 +7,75 @@
 <head>
     <link href="~/Content/register.css" rel="stylesheet" type="text/css" />
 </head>
+<div class="regBackground"></div>
 
-<h2>Register</h2>
+<div class="registerContainer">
+    <h1 class="registerTitle" align="center">Class Register</h1>
+    <hr class="hrRegister"/>
 
-<div>
-    <h4>is_Class</h4>
-    <hr />
-    <dl>
-        <dt>
-            @Html.DisplayNameFor(model => model.Course.courseCode)
-        </dt>
+    <div class="regLeft">
+        <span>@Html.DisplayNameFor(model => model.Course.courseCode):</span>
+        <span>@Html.DisplayFor(model => model.Course.courseCode)</span>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Course.courseCode)
-        </dd>
+    <div class="regRight">
+        <span>@Html.DisplayNameFor(model => model.Course.desc):</span>
+        <span>@Html.DisplayFor(model => model.Course.desc)</span>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.date)
-        </dt>
+    <div class="regLeft">
+        <span>@Html.DisplayNameFor(model => model.date):</span>
+        <span>@Html.DisplayFor(model => model.date)</span>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.date)
-        </dd>
+    <div class="regRight">
+        <span>@Html.DisplayNameFor(model => model.startTime):</span>
+        <span>@Html.DisplayFor(model => model.startTime)</span>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.startTime)
-        </dt>
+    <div class="regLeft">
+        <span>@Html.DisplayNameFor(model => model.room):</span>
+        <span>@Html.DisplayFor(model => model.room)</span>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.startTime)
-        </dd>
+    <div class="regRight">
+        <span>@Html.DisplayNameFor(model => model.capacity):</span>
+        <span>@Html.DisplayFor(model => model.capacity)</span>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.room)
-        </dt>
+    <div class="regLeft">
+        <span>@Html.DisplayNameFor(model => model.justification):</span>
+        <span>@Html.DisplayFor(model => model.justification)</span>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.room)
-        </dd>
+    <div class="regRight">
+        <span>@Html.DisplayNameFor(model => model.fees):</span>
+        <span>@Html.DisplayFor(model => model.fees)</span>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.capacity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.capacity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.justification)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.justification)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.fees)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.fees)
-        </dd>
-
-    </dl>
+    <div class="regHTML">
+        @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+        {
+            <p>* Enter your Badge ID</p>
+            <input type="text" name="BadgeID" id="BadgeID" class="badgeInput" />
+            <input type="hidden" value="@Model.classID" name="classID" id="classID" />
+            <br />
+            <p class="secondP">* Select your Supervisor</p>
+            @Html.DropDownList("selectedSup", new SelectList(ViewBag.Supervisors), new { @class = "select" })
+            <br />
+            <input type="submit" value="Send Request to Register" class="btn btn-primary regButton" />
+        }
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "HomeRegister")
+    </p>
 </div>
 
-<div>
-    @using (Html.BeginForm("Register", "Home", FormMethod.Post))
-    {
-        <input type="text" name="BadgeID" id="BadgeID" />
-        <input type="hidden" value="@Model.classID" name="classID" id="classID" />
-        @Html.DropDownList("selectedSup", new SelectList(ViewBag.Supervisors))
-
-        <input type="submit" value="Submit" />
+<style>
+    .footer, .navbar {
+        display: none;
     }
-</div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    body {
+        background-color: rgba(0,0,0,0.50);
+    }
+</style>
