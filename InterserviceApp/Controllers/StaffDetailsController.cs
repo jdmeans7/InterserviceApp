@@ -170,13 +170,13 @@ namespace InterserviceApp.Controllers
                     toNotify.Add(i);
                 }
                 //If you are a month overdue, get a warning email and flagged
-                else if (bMonth < month && i.flag == false)
+                else if (bMonth < month)
                 {
                     FlagEmail(i);
                     toNotify.Add(i);
                 }
                 //If your birthday is in December, check for month overdue 
-                else if (bMonth == 12 && month == 1 && i.flag == false)
+                else if (bMonth == 12 && month == 1)
                 {
                     FlagEmail(i);
                     toNotify.Add(i);
@@ -256,36 +256,42 @@ namespace InterserviceApp.Controllers
 
         private void FlagEmail(is_staffDetails staff)
         {
-            //Try finally guarantees that even if an email doesn't get sent, or something goes wrong, the users are still flagged.
-            try
+            if (staff.flag == true)
             {
-                string email = staff.email;
-                MailMessage mail = new MailMessage();
-                mail.To.Add(email);
-                mail.From = new MailAddress("EncompassingSol@gmail.com");
-                mail.Subject = "Notification for Required Classes";
-                mail.Body = "Hello, " + staff.fName + " " + staff.lName + "\n\nLast month was your birth month and our records show that you didn't complete all of your required courses within the month.\n" +
-                    "\nYour account will be flagged as having not taken the courses within the alloted time.\n" +
-                    "\nYou need to retake your required classes for the year to get your account unflagged.\n" +
-                    "\nPlease use the Interservice application to view your required courses and schedule to take them as soon as possible.\n\nThank you, and have a nice day!";
-
-                mail.IsBodyHtml = false;
-                SmtpClient smtp = new SmtpClient();
-                smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
-                smtp.Credentials = new System.Net.NetworkCredential
-                        ("InterserviceApplication@gmail.com", "Admin123!");
-
-
-                //Or your Smtp Email ID and Password
-                smtp.EnableSsl = true;
-                smtp.Send(mail);
+                //If staff is already flagged, don't do anything
             }
-            finally
+            else
             {
-                staff.flag = true;
-                db.SaveChanges();
-            }
+                //Try finally guarantees that even if an email doesn't get sent, or something goes wrong, the users are still flagged.
+                try
+                {
+                    string email = staff.email;
+                    MailMessage mail = new MailMessage();
+                    mail.To.Add(email);
+                    mail.From = new MailAddress("EncompassingSol@gmail.com");
+                    mail.Subject = "Notification for Required Classes";
+                    mail.Body = "Hello, " + staff.fName + " " + staff.lName + "\n\nLast month was your birth month and our records show that you didn't complete all of your required courses within the month.\n" +
+                        "\nYour account will be flagged as having not taken the courses within the alloted time.\n" +
+                        "\nYou need to retake your required classes for the year to get your account unflagged.\n" +
+                        "\nPlease use the Interservice application to view your required courses and schedule to take them as soon as possible.\n\nThank you, and have a nice day!";
 
+                    mail.IsBodyHtml = false;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                    smtp.Credentials = new System.Net.NetworkCredential
+                            ("InterserviceApplication@gmail.com", "Admin123!");
+
+
+                    //Or your Smtp Email ID and Password
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+                finally
+                {
+                    staff.flag = true;
+                    db.SaveChanges();
+                }
+            }
         }
 
         protected override void Dispose(bool disposing)
