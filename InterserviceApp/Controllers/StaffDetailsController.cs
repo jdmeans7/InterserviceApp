@@ -152,6 +152,7 @@ namespace InterserviceApp.Controllers
             if (flagMonth == 0)
                 flagMonth = 12;
 
+            /*
             //Generate the staff users who need to be notified
             IQueryable<is_staffDetails> query = from sD in db.StaffDetails where sD.birthdate.Month == month || sD.birthdate.Month == flagMonth && sD.flag != true
                         join sC in db.StaffClasses on sD.badgeID equals sC.badgeID where sC.status == false
@@ -162,9 +163,19 @@ namespace InterserviceApp.Controllers
             //Remove duplicate entries from query and convert to list
             query = query.Distinct();
             List<is_staffDetails> staff = query.ToList();
+            */
+
+            //Get staff users who have a birthday that needs checked and aren't flagged
+            List<is_staffDetails> staff = db.StaffDetails.Where(i => i.birthdate.Month == month || i.birthdate.Month == flagMonth && i.flag != true).ToList();
+
+            //Select classes that are required
+            IQueryable<is_Class> query = from cl in db.Classes
+                        join co in db.Courses on cl.courseID equals co.courseID where co.required == true
+                        select cl;
 
 
-            List< is_staffDetails > toNotify = new List<is_staffDetails>();
+
+            List<is_staffDetails> toNotify = new List<is_staffDetails>();
 
             foreach (is_staffDetails i in staff)
             {

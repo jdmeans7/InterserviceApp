@@ -12,10 +12,23 @@
     -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.6);
     -moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.6);
     box-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-    min-height: 250px;
     position: relative;
     border-radius: 5px;
     overflow: hidden;
+    height: 40px;
+    transition: height 0.3s linear;
+}
+
+.reqClassDiv2 {
+    height: 250px;
+}
+
+.reqClassDiv:hover {
+    cursor: pointer;
+}
+
+.middleBar {
+    display: none;
 }
 
 .register {
@@ -62,12 +75,6 @@ h2 {
 
 .startTimeContainer {
 
-}
-
-.feesContainer {
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
