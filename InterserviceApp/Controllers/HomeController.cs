@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using InterserviceApp.Models;
 using System.Data.Entity;
 using System.Net;
+using System.Web.Services;
 
 namespace InterserviceApp.Controllers
 {
@@ -127,6 +128,7 @@ namespace InterserviceApp.Controllers
                 // mail.Subject = staffDetails.EmailSubject;
                 mail.Subject = Staff.fName + " " + Staff.lName + " is Requesting Your Approval to Take a Class";
                 //string Body = staffDetails.SendEmail;
+                //String url = System.Web.HttpContext.Current.Request.Url.AbsoluteUri;
                 String bodyText = Staff.fName + " " + Staff.lName + " would like to take the following class:" + "<br>" 
                     + $"<b>Course ID: {StaffClass.Class.Course.courseID}" + $" | Course Description: {StaffClass.Class.Course.desc}" + "</b><br>"
                     + "Approve the class here: "+ "http://localhost:54330/Class/ApproveStaffClassSingle?classID=" + StaffClass.classID + "&badgeID=" + Staff.badgeID;
