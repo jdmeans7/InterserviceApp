@@ -154,7 +154,7 @@ namespace InterserviceApp.Controllers
 
             //Generate the staff users who need to be notified
             IQueryable<is_staffDetails> query = from sD in db.StaffDetails where sD.birthdate.Month == month || sD.birthdate.Month == flagMonth && sD.flag != true
-                        join sC in db.StaffClasses on sD.badgeID equals sC.badgeID
+                        join sC in db.StaffClasses on sD.badgeID equals sC.badgeID where sC.status == false
                         join cl in db.Classes on sC.classID equals cl.classID
                         join co in db.Courses on cl.courseID equals co.courseID where co.required == true
                         select sD;
@@ -281,6 +281,10 @@ namespace InterserviceApp.Controllers
                 //Or your Smtp Email ID and Password
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
             }
             finally
             {
