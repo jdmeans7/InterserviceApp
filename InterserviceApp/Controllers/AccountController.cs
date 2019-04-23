@@ -356,7 +356,7 @@ namespace InterserviceApp.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Manage");
+                return RedirectToAction("HomeRegister", "Manage");
             }
 
             if (ModelState.IsValid)
@@ -449,7 +449,7 @@ namespace InterserviceApp.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("HomeRegister", "Home");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
