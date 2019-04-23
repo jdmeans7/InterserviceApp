@@ -9,6 +9,18 @@
     <link href="~/Content/classportal.css" rel="stylesheet" type="text/css" />
 </head>
 
+<script>
+    function divTurn(thisEle, cID) {
+        if (thisEle == cID && document.getElementById(thisEle).style.height == '40px') {
+            document.getElementById(thisEle).style.height = 'auto';
+            document.getElementById(thisEle).getElementsByClassName("middleBar")[0].style.display = 'inline-block';
+        } else {
+            document.getElementById(thisEle).style.height = '40px';
+            document.getElementById(thisEle).getElementsByClassName("middleBar")[0].style.display = 'none';
+        }
+    }
+</script>
+
 <div class="classPortalNav">
     <span>Home Register</span>
 </div>
@@ -21,7 +33,7 @@
     <div class="reqClassContainer">
         @foreach (var item in Model)
         {
-        <div class="reqClassDiv">
+        <div class="reqClassDiv" onclick="divTurn(this.id, @item.classID);" id="@item.classID">
             @*@Html.DisplayNameFor(model => model.Course.courseCode)*@
             @if (item.blackboard == true)
             {
@@ -42,8 +54,7 @@
                 </div>
             }
 
-
-                <div class="middleBar">
+                <div class="middleBar" id="middleBar">
                     @if (item.blackboard == true)
                     {
                         <div class="hyperlinkContainer">
