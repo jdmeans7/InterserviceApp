@@ -39,8 +39,10 @@ namespace InterserviceApp.Models
         [Display(Name = "Fees")]
         public double fees { get; set; }
 
+        [Display(Name = "Approved")]
         public bool? approved { get; set; }
 
+        [Display(Name = "Hyperlink")]
         public string hyperlink { get; set; }
 
         public bool? blackboard { get; set; }
