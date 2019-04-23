@@ -6,6 +6,19 @@
 
 <head>
     <link href="~/Content/tables.css" rel="stylesheet" type="text/css" />
+    <script>
+        function yesnoCheck() {
+            if (document.getElementById('Physical').checked) {
+                document.getElementById('physTable').style.display = 'block';
+                document.getElementById('bbTable').style.display = 'none';
+
+            } else {
+                document.getElementById('physTable').style.display = 'none';
+                document.getElementById('bbTable').style.display = 'block';
+
+            }
+        }
+    </script>
 </head>
 
 @Html.ActionLink("Create a New Class", "Create", null, new { @class = "btn btn-primary register createClassBtn" })
@@ -16,71 +29,132 @@
     <input type="submit" class="btn btn-primary asdasd" value="Search" />
 }
 
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Course.courseCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.startTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.room)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.capacity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.justification)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.fees)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.approved)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+Physical <input type="radio" onclick="yesnoCheck();" name="physblack" id="Physical" value="Physical" checked="checked"/> Blackboard
+<input type="radio" onclick="yesnoCheck();" name="physblack" id="Blackboard" value="Blackboard" /><br>
+
+<div id="physTable">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Course.courseCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.startTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.room)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.capacity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.justification)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fees)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.approved)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
         @foreach (var item in Model)
         {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Course.courseCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.startTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.room)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.capacity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.justification)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fees)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.approved)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.classID }) |
-            @Html.ActionLink("Approve Class", "Approve", new { id = item.classID }) |
-            @Html.ActionLink("Attendance", "Attendance", new { id = item.classID }) |
-            @Html.ActionLink("Approve Staff", "ApproveStaffClass", new { id=item.classID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.classID })
-        </td>
-    </tr>
+            if (item.blackboard == true)
+            {
+
+            }
+            else
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.courseCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.startTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.room)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.capacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.justification)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fees)
+                </td>
+                <td>
+                    @if(item.approved == true)
+                    {
+                        @String.Format("Approved");
+                    }
+                    else if(item.approved == false)
+                    {
+                        @String.Format("Denied")
+                    }
+                    else
+                    {
+                        @String.Format("Not Approved")
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.classID }) |
+                    @Html.ActionLink("Approve Class", "Approve", new { id = item.classID }) |
+                    @Html.ActionLink("Attendance", "Attendance", new { id = item.classID }) |
+                    @Html.ActionLink("Approve Staff", "ApproveStaffClass", new { id = item.classID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.classID })
+                </td>
+            </tr>
+                }
+            }
+
+    </table>
+</div>
+
+<div id="bbTable" style="display:none">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Course.courseCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.hyperlink)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            if (item.blackboard == true)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Course.courseCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.hyperlink)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.classID }) |
+                        @Html.ActionLink("Approve Class", "Approve", new { id = item.classID }) |
+                        @Html.ActionLink("Attendance", "Attendance", new { id = item.classID }) |
+                        @Html.ActionLink("Approve Staff", "ApproveStaffClass", new { id = item.classID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.classID })
+                    </td>
+                </tr>
+            }
         }
 
-</table>
+    </table>
+</div>

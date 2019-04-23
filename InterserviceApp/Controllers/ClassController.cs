@@ -81,14 +81,28 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "classID,date,startTime,room,capacity,justification,fees,courseID")] is_Class is_Class)
+        public ActionResult Create([Bind(Include = "classID,date,startTime,room,capacity,justification,fees,hyperlink,blackboard,courseID")] is_Class is_Class, String physblack)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
+                if(physblack == "Physical")
+                {
+                    is_Class.blackboard = false;
+                    db.Classes.Add(is_Class);
+                    db.SaveChanges();
+                    return RedirectToAction("ClassPortal", "Home");
+                }
+                else if (physblack == "Blackboard")
+                {
+                    is_Class.blackboard = true;
+                    db.Classes.Add(is_Class);
+                    db.SaveChanges();
+                    return RedirectToAction("ClassPortal", "Home");
+                }
                 db.Classes.Add(is_Class);
                 db.SaveChanges();
                 return RedirectToAction("ClassPortal", "Home");
-            }
+            //}
 
             ViewBag.courseID = new SelectList(db.Courses, "courseID", "courseCode", is_Class.courseID);
             return View(is_Class);

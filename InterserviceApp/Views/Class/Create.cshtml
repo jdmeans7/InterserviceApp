@@ -4,21 +4,94 @@
     ViewBag.Title = "Create";
 }
 
+<head>
+<script>
+    function yesnoCheck() {
+        if (document.getElementById('Physical').checked) {
+            document.getElementById('phys').style.display = 'block';
+            document.getElementById('black').style.display = 'none';
+
+        } else {
+            document.getElementById('phys').style.display = 'none';
+            document.getElementById('black').style.display = 'block';
+
+        }
+    }
+
+    function validate() {
+        if (document.getElementById('Physical').checked) {
+            var date = document.forms["classForm"]["date"].value;
+            var startTime = document.forms["classForm"]["startTime"].value;
+            var room = document.forms["classForm"]["room"].value;
+            var capacity = document.forms["classForm"]["capacity"].value;
+            var justification = document.forms["classForm"]["justification"].value;
+            var fees = document.forms["classForm"]["fees"].value;
+            if (date == "") {
+                document.getElementById('valDate').style.display = 'block';
+            } else {
+                document.getElementById('valDate').style.display = 'none';
+            }
+            if (startTime == "") {
+                document.getElementById('valStart').style.display = 'block';
+            } else {
+                document.getElementById('valStart').style.display = 'none';
+            }
+            if (room == "") {
+                document.getElementById('valRoom').style.display = 'block';
+            } else {
+                document.getElementById('valRoom').style.display = 'none';
+            }
+            if (capacity == "") {
+                document.getElementById('valCap').style.display = 'block';
+            } else {
+                document.getElementById('valCap').style.display = 'none';
+            }
+            if (justification == "") {
+                document.getElementById('valJust').style.display = 'block';
+            } else {
+                document.getElementById('valJust').style.display = 'none';
+            }
+            if (fees == "") {
+                document.getElementById('valFees').style.display = 'block';
+            } else {
+                document.getElementById('valFees').style.display = 'none';
+            }
+            if (date == "" || startTime == "" || room == "" || capacity == "" || justification == "" || fees == "") {
+                return false;
+            }
+        }
+        else if (document.getElementById("Blackboard").checked) {
+            var hyper = document.forms["classForm"]["hyperlink"].value;
+            if (hyper == "") {
+                document.getElementById('valHyper').style.display = 'block';
+                return false;
+            } else {
+                document.getElementById('valHyper').style.display = 'none';
+            }
+        }
+    }
+</script>
+</head>
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Class", FormMethod.Post, new { name = "classForm" }))
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>is_Class</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-horizontal">
+    <hr />
+    <!--Html.ValidationSummary(true, "", new { class = "text-danger" }) -->
+
+    Physical <input type="radio" onclick="yesnoCheck();" name="physblack" id="Physical" value="Physical" /> Blackboard 
+    <input type="radio" onclick="yesnoCheck();" name="physblack" id="Blackboard" value="Blackboard"/><br>
+
+    <div id="phys" style="display:none">
+
         <div class="form-group">
             @Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control", id = "date" } })
+                <div id="valDate" style="display:none"><span class="text-danger">Field Date is required</span></div>
             </div>
         </div>
 
@@ -26,7 +99,7 @@
             @Html.LabelFor(model => model.startTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.startTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.startTime, "", new { @class = "text-danger" })
+                <div id="valStart" style="display:none"><span class="text-danger">Field startTime is required</span></div>
             </div>
         </div>
 
@@ -34,7 +107,7 @@
             @Html.LabelFor(model => model.room, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.room, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.room, "", new { @class = "text-danger" })
+                <div id="valRoom" style="display:none"><span class="text-danger">Field Room is required</span></div>
             </div>
         </div>
 
@@ -42,7 +115,7 @@
             @Html.LabelFor(model => model.capacity, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.capacity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.capacity, "", new { @class = "text-danger" })
+                <div id="valCap" style="display:none"><span class="text-danger">Field Capacity is required</span></div>
             </div>
         </div>
 
@@ -50,7 +123,7 @@
             @Html.LabelFor(model => model.justification, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.justification, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.justification, "", new { @class = "text-danger" })
+                <div id="valJust" style="display:none"><span class="text-danger">Field Justification is required</span></div>
             </div>
         </div>
 
@@ -58,24 +131,35 @@
             @Html.LabelFor(model => model.fees, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.fees, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.fees, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.courseID, "courseID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("courseID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.courseID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <div id="valFees" style="display:none"><span class="text-danger">Field Fees is required</span></div>
             </div>
         </div>
     </div>
+
+    <div id="black" style="display:none">
+        <div class="form-group">
+            @Html.LabelFor(model => model.hyperlink, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.hyperlink, new { htmlAttributes = new { @class = "form-control" } })
+                <div id="valHyper" style="display:none"><span class="text-danger">Field Hyperlink is required</span></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.courseID, "courseID", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("courseID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.courseID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" onclick="return validate()" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
