@@ -77,6 +77,22 @@ dt {
     width: 167px;
 }
 
+.asdasd {
+    margin-top: -2px;
+}
+
+.searchInput {
+    height: 33px;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+    .searchInput:focus {
+        border-color: #337ab7;
+    }
+
 .registerContainer {
     position: absolute;
     top: 50%;

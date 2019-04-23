@@ -141,7 +141,6 @@ namespace InterserviceApp.Controllers
                 smtp.Credentials = new System.Net.NetworkCredential
                      ("InterserviceApplication@gmail.com", "Admin123!");
 
-
                 //Or your Smtp Email ID and Password
                 smtp.EnableSsl = true;
                 smtp.Send(mail);

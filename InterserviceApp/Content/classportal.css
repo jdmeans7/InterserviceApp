@@ -18,6 +18,11 @@
     display: inline;
 }
 
+.notifyBtn {
+    float: right;
+    margin-top: -34px;
+}
+
 .currentContentClass {
     margin-top: 20px;
     margin-left: -15px;

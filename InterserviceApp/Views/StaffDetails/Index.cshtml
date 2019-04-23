@@ -20,17 +20,14 @@
 
     @using (Html.BeginForm())
     {
-        <p>
-            <input type="text" name="searchString" value="" />
-            <input type="submit" value="Search" />
-        </p>
+        <input type="text" name="searchString" class="searchInput" value="" />
+        <input type="submit" class="btn btn-primary asdasd" value="Search" />
     }
-
 
     <input type="button"
            value="Alert users who need to take classes"
            onclick="location.href='@Url.Action("Notify", "StaffDetails")'" 
-           class = "btn btn-primary register" />
+           class = "btn btn-primary notifyBtn" />
 
     <table class="table">
         <thead class="thead-dark">
