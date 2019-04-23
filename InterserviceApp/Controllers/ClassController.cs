@@ -212,7 +212,7 @@ namespace InterserviceApp.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Home/ClassPortal");
+            return RedirectToAction("ClassPortal", "Home");
         }
 
         public ActionResult ApproveStaffClassSingle(int? classID, int? badgeID)
