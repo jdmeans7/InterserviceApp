@@ -145,38 +145,40 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Notify()
         {
-            //get current date, and convert to numeric value
-            string[] sArr = System.DateTime.Now.ToString().Split(' ');
-            sArr = sArr = sArr[0].Split('/');
 
-            int month = Int32.Parse(sArr[0]);
+            //Get current month and figure out birth month to check for flagging
+            int month = System.DateTime.Now.Month;
+            int flagMonth = month - 1;
+            if (flagMonth == 0)
+                flagMonth = 12;
 
-            List<is_staffDetails> staffList = db.StaffDetails.ToList();
-            List<is_staffDetails> toNotify = new List<is_staffDetails>();
+            //Generate the staff users who need to be notified
+            IQueryable<is_staffDetails> query = from sD in db.StaffDetails where sD.birthdate.Month == month || sD.birthdate.Month == flagMonth && sD.flag != true
+                        join sC in db.StaffClasses on sD.badgeID equals sC.badgeID
+                        join cl in db.Classes on sC.classID equals cl.classID
+                        join co in db.Courses on cl.courseID equals co.courseID where co.required == true
+                        select sD;
 
-            foreach (is_staffDetails i in staffList)
+            //Remove duplicate entries from query and convert to list
+            query = query.Distinct();
+            List<is_staffDetails> staff = query.ToList();
+
+
+            List< is_staffDetails > toNotify = new List<is_staffDetails>();
+
+            foreach (is_staffDetails i in staff)
             {
-                string s = i.birthdate.ToString();
 
-                sArr = s.Split(' ');
-                sArr = sArr[0].Split('/');
+                int bMonth = i.birthdate.Month;
 
-                int bMonth = Int32.Parse(sArr[0]);
-
-                //If this month is your birth month, receive email
+                //Notify users if their month is now
                 if (bMonth == month)
                 {
                     NotificationEmail(i);
                     toNotify.Add(i);
                 }
-                //If you are a month overdue, get a warning email and flagged
-                else if (bMonth < month)
-                {
-                    FlagEmail(i);
-                    toNotify.Add(i);
-                }
-                //If your birthday is in December, check for month overdue 
-                else if (bMonth == 12 && month == 1)
+                //If it isn't your birthmonth, you are overdue and will be flagged
+                else if (bMonth != month)
                 {
                     FlagEmail(i);
                     toNotify.Add(i);
@@ -256,41 +258,34 @@ namespace InterserviceApp.Controllers
 
         private void FlagEmail(is_staffDetails staff)
         {
-            if (staff.flag == true)
+            //Try finally guarantees that even if an email doesn't get sent, or something goes wrong, the users are still flagged.
+            try
             {
-                //If staff is already flagged, don't do anything
+                string email = staff.email;
+                MailMessage mail = new MailMessage();
+                mail.To.Add(email);
+                mail.From = new MailAddress("EncompassingSol@gmail.com");
+                mail.Subject = "Notification for Required Classes";
+                mail.Body = "Hello, " + staff.fName + " " + staff.lName + "\n\nLast month was your birth month and our records show that you didn't complete all of your required courses within the month.\n" +
+                    "\nYour account will be flagged as having not taken the courses within the alloted time.\n" +
+                    "\nYou need to retake your required classes for the year to get your account unflagged.\n" +
+                    "\nPlease use the Interservice application to view your required courses and schedule to take them as soon as possible.\n\nThank you, and have a nice day!";
+
+                mail.IsBodyHtml = false;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                smtp.Credentials = new System.Net.NetworkCredential
+                        ("InterserviceApplication@gmail.com", "Admin123!");
+
+
+                //Or your Smtp Email ID and Password
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
             }
-            else
+            finally
             {
-                //Try finally guarantees that even if an email doesn't get sent, or something goes wrong, the users are still flagged.
-                try
-                {
-                    string email = staff.email;
-                    MailMessage mail = new MailMessage();
-                    mail.To.Add(email);
-                    mail.From = new MailAddress("EncompassingSol@gmail.com");
-                    mail.Subject = "Notification for Required Classes";
-                    mail.Body = "Hello, " + staff.fName + " " + staff.lName + "\n\nLast month was your birth month and our records show that you didn't complete all of your required courses within the month.\n" +
-                        "\nYour account will be flagged as having not taken the courses within the alloted time.\n" +
-                        "\nYou need to retake your required classes for the year to get your account unflagged.\n" +
-                        "\nPlease use the Interservice application to view your required courses and schedule to take them as soon as possible.\n\nThank you, and have a nice day!";
-
-                    mail.IsBodyHtml = false;
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
-                    smtp.Credentials = new System.Net.NetworkCredential
-                            ("InterserviceApplication@gmail.com", "Admin123!");
-
-
-                    //Or your Smtp Email ID and Password
-                    smtp.EnableSsl = true;
-                    smtp.Send(mail);
-                }
-                finally
-                {
-                    staff.flag = true;
-                    db.SaveChanges();
-                }
+                staff.flag = true;
+                db.SaveChanges();
             }
         }
 
