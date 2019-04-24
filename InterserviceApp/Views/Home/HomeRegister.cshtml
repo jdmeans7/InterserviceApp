@@ -44,33 +44,18 @@
     <div class="reqClassContainer">
         @foreach (var item in Model)
         {
-        <div class="reqClassDiv" onclick="divTurn(this.id, @item.classID, item.blackboard);" id="@item.classID">
+            if (item.blackboard != true)
+            {
+                <div class="reqClassDiv" onclick="divTurn(this.id, @item.classID, 'false');" id="@item.classID">
 
-            @if (item.blackboard == true)
-            {
-                <div class="topBar" style="background-color:orangered" onclick="openInNewTab('@item.hyperlink')">
-                    <p style="text-align:center;">
-                        @Html.DisplayFor(modelItem => item.Course.desc) - @Html.DisplayFor(modelItem => item.Course.courseCode)
-                    </p>
-                </div>
-            }
-            else
-            {
                 <div class="topBar">
                     <p style="text-align:left;">
                         @Html.DisplayFor(modelItem => item.Course.desc) - @Html.DisplayFor(modelItem => item.Course.courseCode)                        
                         <span style="float:right;">Date: @Html.DisplayFor(modelItem => item.date)</span>
                     </p>
                 </div>
-            }
 
                 <div class="middleBar" id="middleBar">
-                    @if (item.blackboard == true)
-                    {
-                        
-                    }
-                    else
-                    {
                         <div class="dateContainer">
                             @Html.DisplayNameFor(model => model.date):
                             @Html.DisplayFor(modelItem => item.date)
@@ -100,13 +85,22 @@
                             @Html.DisplayFor(modelItem => item.fees)$
                         </div>
                         @Html.ActionLink("Register", "Register", new { id = item.classID }, new { @class = "btn btn-primary register" })
-
-                    }
-                    @*@Html.ActionLink("Details", "Details", new { id = item.classID }, new { @class = "btn btn-primary btn-large" })*@
+                    </div>
                 </div>
-        </div>
+            }
+            else
+            {
+                <div class="reqClassDiv" onclick="divTurn(this.id, @item.classID, 'true');" id="@item.classID">
+                    <div class="topBar" style="background-color:orangered" onclick="openInNewTab('@item.hyperlink')">
+                        <p style="text-align:center;">
+                            @Html.DisplayFor(modelItem => item.Course.desc) - @Html.DisplayFor(modelItem => item.Course.courseCode)
+                        </p>
+                    </div>
+                </div>
+            }
         }
     </div>
+
 
     @{
         Html.RenderAction("Classes", "Home");
