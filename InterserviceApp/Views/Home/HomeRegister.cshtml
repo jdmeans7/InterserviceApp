@@ -10,14 +10,20 @@
 </head>
 
 <script>
-    function divTurn(thisEle, cID) {
-        if (thisEle == cID && document.getElementById(thisEle).style.height == '40px') {
-            document.getElementById(thisEle).style.height = 'auto';
-            document.getElementById(thisEle).getElementsByClassName("middleBar")[0].style.display = 'inline-block';
-        } else {
-            document.getElementById(thisEle).style.height = '40px';
-            document.getElementById(thisEle).getElementsByClassName("middleBar")[0].style.display = 'none';
+    function divTurn(thisEle, cID, b) {
+        if (b == "true") { return; } else {
+            if (thisEle == cID && document.getElementById(thisEle).clientHeight == "40") {
+                document.getElementById(thisEle).style.height = '200px';
+                document.getElementById(thisEle).getElementsByClassName("middleBar")[0].style.display = 'inline-block';
+            } else {
+                document.getElementById(thisEle).style.height = '40px';
+                document.getElementById(thisEle).getElementsByClassName("middleBar")[0].style.display = 'none';
+            }
         }
+    }
+
+    function openInNewTab(url) {
+        window.open(url, '_blank');
     }
 </script>
 
@@ -26,45 +32,30 @@
 </div>
 
 <div class="currentContentClass currentContentCourse">
-
     <h2>Required Classes</h2>
+
+     <div class="noteCont">
+        <div class="bbClass"></div><span style="position: absolute; width: 200px; margin-left: 10px; margin-top: 3px;"> = Blackboard Classes</span>
+        <div class="pClass"></div><span style="position: absolute; width: 200px; margin-left: 10px; margin-top: 3px;"> = Physical Classes</span>
+    </div>
+
     <hr class="topHR" />
 
     <div class="reqClassContainer">
         @foreach (var item in Model)
         {
-        <div class="reqClassDiv" onclick="divTurn(this.id, @item.classID);" id="@item.classID">
-            @*@Html.DisplayNameFor(model => model.Course.courseCode)*@
-            @if (item.blackboard == true)
+            if (item.blackboard != true)
             {
-                <div class="topBar" style="background-color:orangered">
-                    <p style="text-align:left;">
-                        @Html.DisplayFor(modelItem => item.Course.desc)
-                        <span style="float:right;">@Html.DisplayFor(modelItem => item.Course.courseCode)</span>
-                    </p>
-                </div>
-            }
-            else
-            {
+                <div class="reqClassDiv" onclick="divTurn(this.id, @item.classID, 'false');" id="@item.classID">
+
                 <div class="topBar">
                     <p style="text-align:left;">
-                        @Html.DisplayFor(modelItem => item.Course.desc)
-                        <span style="float:right;">@Html.DisplayFor(modelItem => item.Course.courseCode)</span>
+                        @Html.DisplayFor(modelItem => item.Course.desc) - @Html.DisplayFor(modelItem => item.Course.courseCode)                        
+                        <span style="float:right;">Date: @Html.DisplayFor(modelItem => item.date)</span>
                     </p>
                 </div>
-            }
 
                 <div class="middleBar" id="middleBar">
-                    @if (item.blackboard == true)
-                    {
-                        <div class="hyperlinkContainer">
-
-                            <a href="@item.hyperlink">@item.hyperlink</a>
-
-                        </div>
-                    }
-                    else
-                    {
                         <div class="dateContainer">
                             @Html.DisplayNameFor(model => model.date):
                             @Html.DisplayFor(modelItem => item.date)
@@ -94,13 +85,22 @@
                             @Html.DisplayFor(modelItem => item.fees)$
                         </div>
                         @Html.ActionLink("Register", "Register", new { id = item.classID }, new { @class = "btn btn-primary register" })
-
-                    }
-                    @*@Html.ActionLink("Details", "Details", new { id = item.classID }, new { @class = "btn btn-primary btn-large" })*@
+                    </div>
                 </div>
-        </div>
+            }
+            else
+            {
+                <div class="reqClassDiv" onclick="divTurn(this.id, @item.classID, 'true');" id="@item.classID">
+                    <div class="topBar" style="background-color:orangered" onclick="openInNewTab('@item.hyperlink')">
+                        <p style="text-align:center;">
+                            @Html.DisplayFor(modelItem => item.Course.desc) - @Html.DisplayFor(modelItem => item.Course.courseCode)
+                        </p>
+                    </div>
+                </div>
+            }
         }
     </div>
+
 
     @{
         Html.RenderAction("Classes", "Home");

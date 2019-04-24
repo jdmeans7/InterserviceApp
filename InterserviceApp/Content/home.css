@@ -1,4 +1,4 @@
-﻿p.reqClassContainer {
+﻿.reqClassContainer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 10px;
@@ -17,10 +17,6 @@
     overflow: hidden;
     height: 40px;
     transition: height 0.3s linear;
-}
-
-.reqClassDiv2 {
-    height: 250px;
 }
 
 .reqClassDiv:hover {
@@ -65,16 +61,45 @@ h2 {
     color: white;
 }
 
+.noteCont {
+    position: absolute;
+    margin-top: -33px;
+    margin-left: 200px;
+}
+
+.bbClass {
+    border-radius: 5px;
+    width: 50px;
+    height: 25px;
+    background-color: orangered;
+    display: inline-block;
+}
+
+.pClass {
+    border-radius: 5px;
+    width: 50px;
+    height: 25px;
+    background-color: #337ab7;
+    display: inline-block;
+    margin-left: 160px;
+}
+
+.hyperLinkContainer {
+    margin-top: 10px;
+}
+
 .middleBar {
     margin-top: 30px;
 }
 
+.dateTop {
+    margin-left: 10px;
+}
+
 .dateContainer {
-    
 }
 
 .startTimeContainer {
-
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {

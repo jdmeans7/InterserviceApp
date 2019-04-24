@@ -340,6 +340,31 @@ namespace InterserviceApp.Controllers
             }
         }
 
+        public ActionResult StaffUpdate(int? id, string year)
+        {
+            int intyear;
+            if (String.IsNullOrEmpty(year))
+            {
+                intyear = System.DateTime.Now.Year;
+            }
+            else
+            {
+               intyear = Int32.Parse(year);
+            }
+            ViewBag.TakenReq = db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear && x.Class.Course.required == true && x.status == true).ToList();
+            ViewBag.NeededReq = db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear && x.Class.Course.required == true && x.status == false).ToList();
+            return View(db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear).ToList());
+        }
+
+        /*
+         [HttpPost]
+        public ActionResult StaffUpdate(int? badgeID, string year)
+        {
+            int intyear = Int32.Parse(year);
+            return View(db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == badgeID && x.Class.date.Year == intyear).ToList());
+        }
+        */
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
