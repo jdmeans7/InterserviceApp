@@ -168,31 +168,67 @@ namespace InterserviceApp.Controllers
             //Get staff users who have a birthday that needs checked and aren't flagged
             List<is_staffDetails> staff = db.StaffDetails.Where(i => i.birthdate.Month == month || i.birthdate.Month == flagMonth && i.flag != true).ToList();
 
-            //Select classes that are required
-            IQueryable<is_Class> query = from cl in db.Classes
-                        join co in db.Courses on cl.courseID equals co.courseID where co.required == true
-                        select cl;
+            //HashMap of required courses 
+            //Had to cast from ILookup to Lookup
+            Dictionary <int, is_Course > requiredCourses = db.Courses.Where(i => i.required == true).ToDictionary(i => i.courseID, i => i);
 
+            foreach (KeyValuePair<int, is_Course> pair in requiredCourses.ToList()) {
+                System.Diagnostics.Debug.WriteLine(pair.Value.courseID);
+            }
 
-
+            //List to contain users who will get notified
             List<is_staffDetails> toNotify = new List<is_staffDetails>();
 
-            foreach (is_staffDetails i in staff)
+            foreach (is_staffDetails sD in staff)
             {
+                //Counter to check the number of courses they have taken
+                int counter = 0;
 
-                int bMonth = i.birthdate.Month;
+                //List of classes a staff member has taken
+                //List<is_StaffClass> staffClasses = db.StaffClasses.Where(i => i.badgeID == sD.badgeID && i.status == true).ToList();
 
-                //Notify users if their month is now
-                if (bMonth == month)
+                /*Find out which courses were taken from the list of classes taken
+                List<is_Course> coursesTaken = new List<is_Course>();
+                foreach (is_StaffClass s in staffClasses)
                 {
-                    NotificationEmail(i);
-                    toNotify.Add(i);
+                    is_Class c = db.Classes.Find(s.classID);
+                    coursesTaken.Add(db.Courses.Find(c.courseID));
                 }
-                //If it isn't your birthmonth, you are overdue and will be flagged
-                else if (bMonth != month)
+                */
+
+                //Get courses that a user has taken
+                IQueryable<is_Course> query = from c in db.Courses
+                                              join cl in db.Classes on c.courseID equals cl.courseID
+                                              join sC in db.StaffClasses on cl.classID equals sC.classID
+                                              where sD.badgeID == sC.badgeID && sC.status == true
+                                              select c;
+                List<is_Course> courses = query.ToList();
+
+                //Count courses taken and email or flag appropriately
+                foreach (is_Course c in courses)
                 {
-                    FlagEmail(i);
-                    toNotify.Add(i);
+                    System.Diagnostics.Debug.WriteLine(c.courseID);
+                    if (requiredCourses.ContainsKey(c.courseID))
+                    {
+                        counter++;
+                    }
+                }
+
+                System.Diagnostics.Debug.WriteLine(sD.badgeID + ": " + counter);
+
+                if (requiredCourses.Count > counter)
+                {
+
+                    toNotify.Add(sD);
+
+                    if (sD.birthdate.Month == month)
+                    {
+                        NotificationEmail(sD);
+                    }
+                    else
+                    {
+                        FlagEmail(sD);
+                    }
                 }
             }
 
