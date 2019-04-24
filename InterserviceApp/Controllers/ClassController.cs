@@ -197,7 +197,7 @@ namespace InterserviceApp.Controllers
         {
             ViewBag.ClassID = id;
             ApprovingModel ap = new ApprovingModel();
-            ap.StaffClasses = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id).ToList();
+            ap.StaffClasses = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id).OrderBy(z => z.status).ToList();
             return View(ap);
         }
 
@@ -207,7 +207,7 @@ namespace InterserviceApp.Controllers
             foreach (var s in ap.StaffClasses)
             {
                 is_StaffClass sc = db.StaffClasses.First(x => x.badgeID == s.badgeID && x.classID == s.classID);
-                sc.approved = s.status;
+                sc.status = s.status;
                 db.Entry(sc).State = EntityState.Modified;
                 db.SaveChanges();
             }
