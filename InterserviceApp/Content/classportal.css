@@ -86,3 +86,90 @@
 .fr{
     padding-left: 10px;
 }
+
+.classContainer {
+    height: 45px;
+    overflow: hidden;
+    background-color: #E8E8E8;
+    margin-top: 15px;
+    border-radius: 5px;
+    -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    -moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    transition: height 0.3s linear;
+}
+
+.secondBar {
+    display: none;
+    width: 100%;
+}
+
+.bbTop {
+    background-color: orangered !important;
+}
+
+.topBarClass {
+    background-color: #337ab7;
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+    height: 45px;
+    transition: height 0.3s linear;
+    color: white;
+}
+
+.topBarClass:hover {
+    cursor: pointer;
+}
+
+.thirdBarStat {
+    padding-top: 13px;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .secondBarStat {
+        width: 100%;
+        display: -ms-grid;
+        -ms-grid-columns: 1fr 1fr 1fr 1fr 1fr;
+        background-color: rgba(0,0,0,0.12);
+        padding: 10px;
+    }
+
+    .secondBarStat div:nth-child(2) {
+        -ms-grid-column: 2;
+        margin-left: 10px;
+    }
+
+    .secondBarStat div:nth-child(3) {
+        -ms-grid-column: 3;
+        margin-left: 10px;
+    }
+
+    .secondBarStat div:nth-child(4) {
+        -ms-grid-column: 4;
+        margin-left: 10px;
+    }
+
+    .secondBarStat div:nth-child(5) {
+        -ms-grid-column: 5;
+        margin-left: 10px;
+    }
+
+    .topBarClass {
+        width: 100%;
+        display: -ms-grid;
+        -ms-grid-columns: 1fr 1fr 1fr;
+        -ms-grid-row-align: center;
+    }
+
+    .topBarSmall:nth-child(2) {
+        -ms-grid-column: 2;
+        margin-left: 10px;
+    }
+
+    .topBarSmall:nth-child(3) {
+        -ms-grid-column: 3;
+        margin-left: 10px;
+    }
+
+}

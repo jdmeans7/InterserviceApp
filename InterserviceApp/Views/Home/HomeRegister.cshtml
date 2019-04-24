@@ -10,13 +10,15 @@
 </head>
 
 <script>
-    function divTurn(thisEle, cID, blackboard) {
-        if (thisEle == cID && document.getElementById(thisEle).style.height == '40px' && blackboard != true) {
-            document.getElementById(thisEle).style.height = 'auto';
-            document.getElementById(thisEle).getElementsByClassName("middleBar")[0].style.display = 'inline-block';
-        } else {
-            document.getElementById(thisEle).style.height = '40px';
-            document.getElementById(thisEle).getElementsByClassName("middleBar")[0].style.display = 'none';
+    function divTurn(thisEle, cID, b) {
+        if (b == "true") { return; } else {
+            if (thisEle == cID && document.getElementById(thisEle).clientHeight == "40") {
+                document.getElementById(thisEle).style.height = '200px';
+                document.getElementById(thisEle).getElementsByClassName("middleBar")[0].style.display = 'inline-block';
+            } else {
+                document.getElementById(thisEle).style.height = '40px';
+                document.getElementById(thisEle).getElementsByClassName("middleBar")[0].style.display = 'none';
+            }
         }
     }
 
@@ -30,7 +32,6 @@
 </div>
 
 <div class="currentContentClass currentContentCourse">
-
     <h2>Required Classes</h2>
 
      <div class="noteCont">
@@ -44,7 +45,7 @@
         @foreach (var item in Model)
         {
         <div class="reqClassDiv" onclick="divTurn(this.id, @item.classID, item.blackboard);" id="@item.classID">
-            @*@Html.DisplayNameFor(model => model.Course.courseCode)*@
+
             @if (item.blackboard == true)
             {
                 <div class="topBar" style="background-color:orangered" onclick="openInNewTab('@item.hyperlink')">
@@ -66,11 +67,7 @@
                 <div class="middleBar" id="middleBar">
                     @if (item.blackboard == true)
                     {
-                        @*<div class="hyperlinkContainer">
-
-                            <a href="@item.hyperlink">@item.hyperlink</a>
-
-                        </div>*@
+                        
                     }
                     else
                     {
