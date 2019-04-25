@@ -65,7 +65,7 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "badgeID,fName,lName,email,dept,phone,birthdate")] is_staffDetails is_staffDetails)
+        public ActionResult Create([Bind(Include = "badgeID,fName,lName,email,dept,phone,birthdate,supervisor")] is_staffDetails is_staffDetails)
         {
             if (ModelState.IsValid)
             {

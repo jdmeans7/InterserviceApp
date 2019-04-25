@@ -55,7 +55,7 @@ namespace InterserviceApp.Controllers
         [ChildActionOnly]
         public ActionResult Classes()
         {
-            return PartialView(db.Classes.Include(i => i.Course).ToList());
+            return PartialView(db.Classes.Include(i => i.Course).Where(a => a.Course.required == false).ToList());
         }
 
         // GET: Home/Register
