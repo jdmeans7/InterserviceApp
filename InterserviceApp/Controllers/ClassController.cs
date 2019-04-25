@@ -15,6 +15,9 @@ namespace InterserviceApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Class
+        /** ClassController/Index
+         * Index method for Classes.
+         */
         public ActionResult Index(string searchString)
         {
             var classes = from s in db.Classes.Include(i => i.Course).OrderBy(x => x.approved) select s;
@@ -28,6 +31,9 @@ namespace InterserviceApp.Controllers
         }
 
         // GET: Class/Details/5
+        /**
+         * Method for approving classes. Used by secretaries to approve or deny a class. Approved classes can be registered for by students.
+         */
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Approve(int? id)
         {
