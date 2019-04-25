@@ -1,47 +1,47 @@
 ﻿@model IEnumerable<InterserviceApp.Models.is_StaffClass>
 
 
-@using (Html.BeginForm())
-{
+    @using (Html.BeginForm())
+    {
     <input type="text" name="year" class="searchInput" value="" />
     <input type="submit" class="btn btn-primary asdasd" value="Year" />
-}
-Required Classes Completed:
+    }
+    Required Classes Completed:
 
-@foreach (var a in ViewBag.TakenReq)
-{
-    @a.Class.Course.desc
-}
-
-Required Classes Needed:
-
-@foreach (var a in ViewBag.NeededReq)
-{
-    @a.Class.Course.desc
-}
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Class.courseID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Class.Course.desc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.approved)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.endDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.status)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
+    @foreach (var a in ViewBag.TakenReq)
     {
+    @a.Class.Course.desc
+    }
+
+    Required Classes Needed:
+
+    @foreach (var a in ViewBag.NeededReq)
+    {
+    @a.Class.Course.desc
+    }
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Class.courseID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class.Course.desc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.approved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.endDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Class.courseID)
@@ -59,11 +59,9 @@ Required Classes Needed:
                 @Html.DisplayFor(modelItem => item.status)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                @Html.ActionLink("Edit", "EditStaffClass", new { id = item.id }) 
             </td>
         </tr>
-    }
+        }
 
-</table>
+    </table>

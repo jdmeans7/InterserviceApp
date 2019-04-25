@@ -145,25 +145,11 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Notify()
         {
-
             //Get current month and figure out birth month to check for flagging
             int month = System.DateTime.Now.Month;
             int flagMonth = month - 1;
             if (flagMonth == 0)
                 flagMonth = 12;
-
-            /*
-            //Generate the staff users who need to be notified
-            IQueryable<is_staffDetails> query = from sD in db.StaffDetails where sD.birthdate.Month == month || sD.birthdate.Month == flagMonth && sD.flag != true
-                        join sC in db.StaffClasses on sD.badgeID equals sC.badgeID where sC.status == false
-                        join cl in db.Classes on sC.classID equals cl.classID
-                        join co in db.Courses on cl.courseID equals co.courseID where co.required == true
-                        select sD;
-
-            //Remove duplicate entries from query and convert to list
-            query = query.Distinct();
-            List<is_staffDetails> staff = query.ToList();
-            */
 
             //Get staff users who have a birthday that needs checked and aren't flagged
             List<is_staffDetails> staff = db.StaffDetails.Where(i => i.birthdate.Month == month || i.birthdate.Month == flagMonth && i.flag != true).ToList();
@@ -171,10 +157,6 @@ namespace InterserviceApp.Controllers
             //HashMap of required courses 
             //Had to cast from ILookup to Lookup
             Dictionary <int, is_Course > requiredCourses = db.Courses.Where(i => i.required == true).ToDictionary(i => i.courseID, i => i);
-
-            foreach (KeyValuePair<int, is_Course> pair in requiredCourses.ToList()) {
-                System.Diagnostics.Debug.WriteLine(pair.Value.courseID);
-            }
 
             //List to contain users who will get notified
             List<is_staffDetails> toNotify = new List<is_staffDetails>();
@@ -184,25 +166,13 @@ namespace InterserviceApp.Controllers
                 //Counter to check the number of courses they have taken
                 int counter = 0;
 
-                //List of classes a staff member has taken
-                //List<is_StaffClass> staffClasses = db.StaffClasses.Where(i => i.badgeID == sD.badgeID && i.status == true).ToList();
-
-                /*Find out which courses were taken from the list of classes taken
-                List<is_Course> coursesTaken = new List<is_Course>();
-                foreach (is_StaffClass s in staffClasses)
-                {
-                    is_Class c = db.Classes.Find(s.classID);
-                    coursesTaken.Add(db.Courses.Find(c.courseID));
-                }
-                */
-
                 //Get courses that a user has taken
                 IQueryable<is_Course> query = from c in db.Courses
                                               join cl in db.Classes on c.courseID equals cl.courseID
                                               join sC in db.StaffClasses on cl.classID equals sC.classID
                                               where sD.badgeID == sC.badgeID && sC.status == true
                                               select c;
-                List<is_Course> courses = query.ToList();
+                List<is_Course> courses = query.Distinct().ToList();
 
                 //Count courses taken and email or flag appropriately
                 foreach (is_Course c in courses)
@@ -340,6 +310,36 @@ namespace InterserviceApp.Controllers
             }
         }
 
+        //Display view with editable approve and status for a particular staffclass
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
+        public ActionResult EditStaffClass(int id) {
+            try
+            {
+                return View(db.StaffClasses.Find(id));
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return RedirectToAction("Index");
+            }
+        }
+
+        //Method for saving changes to staffclass from staffupdate view
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditStaffClass([Bind(Include = "id,badgeID,classID,approved,endDate,status")] is_StaffClass staffClass)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(staffClass).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(staffClass);
+        }
+
+        [Authorize(Roles ="IS_Admin, IS_Secretary")]
         public ActionResult StaffUpdate(int? id, string year)
         {
             int intyear;

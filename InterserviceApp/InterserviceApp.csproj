@@ -305,6 +305,7 @@
     <Content Include="Views\StaffDetails\SendEmail.cshtml" />
     <Content Include="Views\Class\ApproveStaffClassSingle.cshtml" />
     <Content Include="Views\StaffDetails\StaffUpdate.cshtml" />
+    <Content Include="Views\StaffDetails\EditStaffClass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
