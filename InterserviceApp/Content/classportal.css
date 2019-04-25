@@ -124,36 +124,48 @@
 
 .thirdBarStat {
     padding-top: 13px;
+    padding-bottom: 10px;
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     .secondBarStat {
         width: 100%;
         display: -ms-grid;
-        -ms-grid-columns: 1fr 1fr 1fr 1fr 1fr;
+        -ms-grid-columns: 1fr 1fr 1fr 1fr;
+        -ms-grid-row: 1fr 1fr;
         background-color: rgba(0,0,0,0.12);
         padding: 10px;
     }
+        .secondBarStat div:first-child {
+            -ms-grid-row: 1;
+            -ms-grid-column-span: 4;
+            margin-left: 10px;
+            padding-bottom: 10px;
+        }
 
-    .secondBarStat div:nth-child(2) {
-        -ms-grid-column: 2;
-        margin-left: 10px;
-    }
+        .secondBarStat div:nth-child(2) {
+            -ms-grid-row: 2;
+            -ms-grid-column: 1;
+            margin-left: 10px;
+        }
 
-    .secondBarStat div:nth-child(3) {
-        -ms-grid-column: 3;
-        margin-left: 10px;
-    }
+        .secondBarStat div:nth-child(3) {
+            -ms-grid-row: 2;
+            -ms-grid-column: 2;
+            margin-left: 10px;
+        }
 
-    .secondBarStat div:nth-child(4) {
-        -ms-grid-column: 4;
-        margin-left: 10px;
-    }
+        .secondBarStat div:nth-child(4) {
+            -ms-grid-column: 3;
+            -ms-grid-row: 2;
+            margin-left: 10px;
+        }
 
-    .secondBarStat div:nth-child(5) {
-        -ms-grid-column: 5;
-        margin-left: 10px;
-    }
+        .secondBarStat div:nth-child(5) {
+            -ms-grid-column: 4;
+            -ms-grid-row: 2;
+            margin-left: 10px;
+        }
 
     .topBarClass {
         width: 100%;
