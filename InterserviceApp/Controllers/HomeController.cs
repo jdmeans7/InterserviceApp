@@ -48,7 +48,7 @@ namespace InterserviceApp.Controllers
         public ActionResult HomeRegister()
         {
             
-            var classes = db.Classes.Include(i => i.Course).Where(a => a.Course.required == true);
+            var classes = db.Classes.Include(i => i.Course).Where(a => a.Course.required == true && a.approved == true);
             return View(classes);
         }
 
