@@ -16,11 +16,13 @@ namespace InterserviceApp.Models
         //[Required]
         [Display(Name = "Date", Description = "Date of Class")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode=true ,DataFormatString = "{0:MM-dd-yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM-dd-yyyy}")]
         public DateTime date { get; set; }
 
         //[Required]
-        //[Display(Name = "Start Time")]
+        [Display(Name = "Start Time")]
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
         public TimeSpan? startTime { get; set; }
 
         //[Required]

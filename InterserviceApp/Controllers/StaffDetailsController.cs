@@ -352,7 +352,20 @@ namespace InterserviceApp.Controllers
                intyear = Int32.Parse(year);
             }
             ViewBag.TakenReq = db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear && x.Class.Course.required == true && x.status == true).ToList();
-            ViewBag.NeededReq = db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear && x.Class.Course.required == true && x.status == false).ToList();
+            //ViewBag.NeededReq = db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear && x.Class.Course.required == true && x.status == false).ToList();
+            List<is_Course> reqCourses = db.Courses.Include(a => a.Classes).Where(x => x.required == true).ToList();
+            List<is_Course> needToTake = new List<is_Course>();
+            foreach (var c in reqCourses)
+            {
+                if (db.StaffClasses.Where(x => x.badgeID == id && x.Class.date.Year == intyear && x.Class.Course.courseID == c.courseID && x.status == true).Any())
+                {
+                }
+                else
+                {
+                    needToTake.Add(c);
+                }
+            }
+            ViewBag.NeededReq = needToTake;
             return View(db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear).ToList());
         }
 

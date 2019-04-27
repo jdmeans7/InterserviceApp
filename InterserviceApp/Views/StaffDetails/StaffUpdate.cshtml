@@ -8,18 +8,80 @@
     }
     Required Classes Completed:
 
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Class.courseID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Class.Course.desc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.approved)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.endDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th></th>
+    </tr>
+
     @foreach (var a in ViewBag.TakenReq)
     {
-    @a.Class.Course.desc
+        <tr>
+            <td>
+                @a.Class.courseID
+            </td>
+            <td>
+                @a.Class.Course.desc
+            </td>
+            <td>
+                @a.approved
+            </td>
+            <td>
+                @a.endDate.Date.ToString("d")
+            </td>
+            <td>
+                @a.status
+            </td>
+        </tr>
     }
+
+
+    </table>
+ 
 
     Required Classes Needed:
 
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Class.courseID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Class.Course.desc)
+        </th>
+        <th></th>
+    </tr>
+
     @foreach (var a in ViewBag.NeededReq)
     {
-    @a.Class.Course.desc
+        <tr>
+            <td>
+                @a.courseID
+            </td>
+            <td>
+                @a.desc
+            </td>
+        </tr>
     }
 
+
+</table>
+
+Other:
     <table class="table">
         <tr>
             <th>

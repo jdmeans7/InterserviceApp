@@ -1,7 +1,7 @@
 ﻿@model InterserviceApp.Models.is_Course
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Require";
 }
 
 <h2>Details</h2>
@@ -28,9 +28,9 @@
 
     </dl>
 </div>
-@using (Html.BeginForm("Approve", "Class", FormMethod.Post))
+@using (Html.BeginForm("Require", "Course", FormMethod.Post))
 {
-    <input type="hidden" name="classID" value="@Model.classID" />
-    <input type="submit" name="approve" id="approve" value="Approve" />
-    <input type="submit" name="deny" id="deny" value="Deny" />
+    <input type="hidden" name="courseID" value="@Model.courseID" />
+    <input type="submit" name="yes" id="yes" value="Yes" />
+    <input type="submit" name="no" id="no" value="No" />
 }

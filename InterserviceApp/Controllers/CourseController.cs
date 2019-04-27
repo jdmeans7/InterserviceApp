@@ -27,9 +27,9 @@ namespace InterserviceApp.Controllers
             return View(courses.ToList());
         }
 
-        // GET: Course/Details/5
+        // GET: Course/Require/5
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
-        public ActionResult Details(int? id)
+        public ActionResult Require(int? id)
         {
             if (id == null)
             {
@@ -41,6 +41,30 @@ namespace InterserviceApp.Controllers
                 return HttpNotFound();
             }
             return View(is_Course);
+        }
+
+        // POST: Course/Require/5
+        [HttpPost]
+        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
+        public ActionResult Require(int courseID, String yes, String no)
+        {
+            if (yes != null)
+            {
+                is_Course co = db.Courses.Find(courseID);
+                co.required = true;
+                db.Entry(co).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ClassPortal", "Home");
+            }
+            if (no != null)
+            {
+                is_Course co = db.Courses.Find(courseID);
+                co.required = false;
+                db.Entry(co).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ClassPortal", "Home");
+            }
+            return View();
         }
 
         // GET: Course/Create
@@ -128,6 +152,7 @@ namespace InterserviceApp.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         protected override void Dispose(bool disposing)
         {
