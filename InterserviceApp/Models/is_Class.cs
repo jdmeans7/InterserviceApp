@@ -49,6 +49,8 @@ namespace InterserviceApp.Models
 
         public bool? blackboard { get; set; }
 
+        public bool? MOA { get; set; }
+
         public int courseID { get; set; }
         public virtual is_Course Course { get; set; }
 
