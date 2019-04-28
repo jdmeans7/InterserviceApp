@@ -127,6 +127,11 @@
     padding-bottom: 10px;
 }
 
+.viewOld {
+    position: absolute;
+    margin-left: 255px;
+}
+
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     .secondBarStat {
         width: 100%;
