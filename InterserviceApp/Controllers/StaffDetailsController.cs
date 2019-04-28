@@ -22,6 +22,11 @@ namespace InterserviceApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: StaffDetails
+        /// <summary>
+        /// Index to populate user table for secretaries
+        /// </summary>
+        /// <param name="searchString">String entered for searching</param>
+        /// <returns></returns>
         [Authorize]
         public ActionResult Index(string searchString)
         {

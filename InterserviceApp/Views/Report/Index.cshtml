@@ -1,0 +1,6 @@
+﻿@model InterserviceApp.Models.is_StaffClass
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.DropDownList("Report", new SelectList(ViewBag.Reports), "Select Report", new { @class = "form-control"})

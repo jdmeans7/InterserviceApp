@@ -37,10 +37,12 @@
                 document.getElementById(thisEle).getElementsByClassName("secondBar")[0].style.display = 'none';
             }
         }
-    </script>
+
+/**/</script>
 </head>
 
-@Html.ActionLink("Create a New Class", "Create", null, new { @class = "btn btn-primary register createClassBtn" })
+@Html.ActionLink("Create a New Class", "Create", null, new { @class = "btn btn-primary register createClassBtn" }) 
+@Html.ActionLink("View Old Classes", "OldClasses", null, new { @class = "btn btn-primary register" })
 
 @using (Html.BeginForm())
 {
@@ -82,7 +84,7 @@
                         }
                     </div>
                 </div>
-                <div class="secondBar" align="center")>
+                <div class="secondBar" align="center" )>
                     <div class="secondBarStat">
                         <div><b>Justification:</b> @Html.DisplayFor(modelItem => item.justification)</div>
                         <div><b>Room:</b> @Html.DisplayFor(modelItem => item.room)</div>
@@ -118,11 +120,11 @@
                     </div>
                     <div class="topBarSmall">
                         @if (item.approved == true)
-                    {
+                        {
                             @String.Format("Approved");
-                    }
-                    else if (item.approved == false)
-                    {
+                        }
+                        else if (item.approved == false)
+                        {
                             @String.Format("Denied")
                         }
                         else
@@ -147,91 +149,91 @@
 </div>
 
 @*<div id="physTable">
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Course.courseCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.startTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.room)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.capacity)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.justification)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.fees)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.approved)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        @foreach (var item in Model)
-        {
-            if (item.blackboard == true)
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Course.courseCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.startTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.room)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.capacity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.justification)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fees)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.approved)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
             {
+                if (item.blackboard == true)
+                {
 
-            }
-            else
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Course.courseCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.startTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.room)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.capacity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.justification)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.fees)
-                </td>
-                <td>
-                    @if(item.approved == true)
-                    {
-                        @String.Format("Approved");
-                    }
-                    else if(item.approved == false)
-                    {
-                        @String.Format("Denied")
-                    }
-                    else
-                    {
-                        @String.Format("Not Approved")
-                    }
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.classID }) |
-                    @Html.ActionLink("Approve Class", "Approve", new { id = item.classID }) |
-                    @Html.ActionLink("Attendance", "Attendance", new { id = item.classID }) |
-                    @Html.ActionLink("Approve Staff", "ApproveStaffClass", new { id = item.classID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.classID })
-                </td>
-            </tr>
                 }
-            }
+                else
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Course.courseCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.startTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.room)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.capacity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.justification)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fees)
+                    </td>
+                    <td>
+                        @if(item.approved == true)
+                        {
+                            @String.Format("Approved");
+                        }
+                        else if(item.approved == false)
+                        {
+                            @String.Format("Denied")
+                        }
+                        else
+                        {
+                            @String.Format("Not Approved")
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.classID }) |
+                        @Html.ActionLink("Approve Class", "Approve", new { id = item.classID }) |
+                        @Html.ActionLink("Attendance", "Attendance", new { id = item.classID }) |
+                        @Html.ActionLink("Approve Staff", "ApproveStaffClass", new { id = item.classID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.classID })
+                    </td>
+                </tr>
+                    }
+                }
 
-    </table>
-</div>*@
+        </table>
+    </div>*@
 

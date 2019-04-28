@@ -20,7 +20,20 @@ namespace InterserviceApp.Controllers
          */
         public ActionResult Index(string searchString)
         {
-            var classes = from s in db.Classes.Include(i => i.Course).OrderBy(x => x.approved) select s;
+            var nullDate = DateTime.Parse("0001-01-01"); //Date auto-inserted when field is null, used to get blackboard classes
+            var classes = from s in db.Classes.Include(i => i.Course).Where(a => a.date >= System.DateTime.Today || a.date == nullDate).OrderBy(x => x.approved) select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                classes = classes.Where(s => s.Course.courseCode.ToString().Contains(searchString)
+                                        || s.justification.Contains(searchString)
+                                        || s.room.Contains(searchString));
+            }
+            return View(classes.ToList());
+        }
+
+        public ActionResult OldClasses(string searchString)
+        {
+            var classes = from s in db.Classes.Include(i => i.Course).OrderBy(x => x.date) select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 classes = classes.Where(s => s.Course.courseCode.ToString().Contains(searchString)
