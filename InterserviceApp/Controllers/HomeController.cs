@@ -47,15 +47,16 @@ namespace InterserviceApp.Controllers
 
         public ActionResult HomeRegister()
         {
-            
-            var classes = db.Classes.Include(i => i.Course).Where(a => a.Course.required == true && a.approved == true);
+            var nullDate = DateTime.Parse("0001-01-01"); //Date auto-inserted when field is null, used to get blackboard classes
+            var classes = db.Classes.Include(i => i.Course).Where(a => a.Course.required == true && a.approved == true && a.date >= System.DateTime.Today || a.date == nullDate);
             return View(classes);
         }
 
         [ChildActionOnly]
         public ActionResult Classes()
         {
-            return PartialView(db.Classes.Include(i => i.Course).Where(a => a.Course.required == false).ToList());
+            var nullDate = DateTime.Parse("0001-01-01"); //Date auto-inserted when field is null, used to get blackboard classes
+            return PartialView(db.Classes.Include(i => i.Course).Where(a => a.Course.required == false && a.approved == true && a.date >= System.DateTime.Today || a.date == nullDate).ToList());
         }
 
         // GET: Home/Register

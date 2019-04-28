@@ -195,6 +195,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StaffDetailsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -306,6 +307,9 @@
     <Content Include="Views\Class\ApproveStaffClassSingle.cshtml" />
     <Content Include="Views\StaffDetails\StaffUpdate.cshtml" />
     <Content Include="Views\StaffDetails\EditStaffClass.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\TakeClasses.cshtml" />
+    <Content Include="Views\Class\OldClasses.cshtml" />
     <Content Include="Views\StaffDetails\AddStaffClass.cshtml" />
   </ItemGroup>
   <ItemGroup>
