@@ -1,0 +1,51 @@
+﻿@model InterserviceApp.Models.is_StaffClass
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>This page is to manually add completed course credit to user and should only be used when the user has taken a class but has no mention of registering for this course on their staff update page.</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>is_StaffClass</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.badgeID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ValueFor(model => model.badgeID)
+                @Html.HiddenFor(model => model.badgeID)
+                @Html.ValidationMessageFor(model => model.badgeID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Course ID</label>
+            <div class="col-md-10">
+                <input type="number" name="CourseID" min="0" value="0" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.endDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.endDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.endDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("View Users", "Index")
+</div>

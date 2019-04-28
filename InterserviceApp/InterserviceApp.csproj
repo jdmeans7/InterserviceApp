@@ -306,6 +306,7 @@
     <Content Include="Views\Class\ApproveStaffClassSingle.cshtml" />
     <Content Include="Views\StaffDetails\StaffUpdate.cshtml" />
     <Content Include="Views\StaffDetails\EditStaffClass.cshtml" />
+    <Content Include="Views\StaffDetails\AddStaffClass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
