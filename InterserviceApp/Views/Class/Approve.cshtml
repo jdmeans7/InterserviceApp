@@ -4,74 +4,74 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="regBackground"></div>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Course.courseCode)
-        </dt>
+<div class="registerContainer">
+    <h1 class="registerTitle" align="center">Approve Class</h1>
+    <hr class="hrRegister" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Course.courseCode)
-        </dd>
+    <div class="regLeft">
+        <span>@Html.DisplayNameFor(model => model.Course.courseCode):</span>
+        <span>@Html.DisplayFor(model => model.Course.courseCode)</span>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.date)
-        </dt>
+    <div class="regRight">
+        <span>@Html.DisplayNameFor(model => model.Course.desc):</span>
+        <span>@Html.DisplayFor(model => model.Course.desc)</span>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.date)
-        </dd>
+    <div class="regLeft">
+        <span>@Html.DisplayNameFor(model => model.date):</span>
+        <span>@Html.DisplayFor(model => model.date)</span>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.startTime)
-        </dt>
+    <div class="regRight">
+        <span>@Html.DisplayNameFor(model => model.startTime):</span>
+        <span>@Html.DisplayFor(model => model.startTime)</span>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.startTime)
-        </dd>
+    <div class="regLeft">
+        <span>@Html.DisplayNameFor(model => model.room):</span>
+        <span>@Html.DisplayFor(model => model.room)</span>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.room)
-        </dt>
+    <div class="regRight">
+        <span>@Html.DisplayNameFor(model => model.capacity):</span>
+        <span>@Html.DisplayFor(model => model.capacity)</span>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.room)
-        </dd>
+    <div class="regLeft">
+        <span>@Html.DisplayNameFor(model => model.justification):</span>
+        <span>@Html.DisplayFor(model => model.justification)</span>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.capacity)
-        </dt>
+    <div class="regRight">
+        <span>@Html.DisplayNameFor(model => model.fees):</span>
+        <span>@Html.DisplayFor(model => model.fees)</span>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.capacity)
-        </dd>
+    <div class="regHTML">
+        @using (Html.BeginForm("Approve", "Class", FormMethod.Post))
+        {
+            <input type="hidden" name="classID" value="@Model.classID" />
+            <input type="submit" class="btn btn-primary" name="approve" id="approve" value="Approve" />
+            <input type="submit" class="btn btn-danger" name="deny" id="deny" value="Deny" />
+        }
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.justification)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.justification)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.fees)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.fees)
-        </dd>
-
-    </dl>
+    <div class="back-label">
+        @Html.ActionLink("Back to List", "ClassPortal", "Home")
+    </div>
 </div>
 
-@using (Html.BeginForm("Approve", "Class", FormMethod.Post))
-{
-    <input type="hidden" name ="classID" value="@Model.classID"/>
-    <input type="submit" name="approve" id="approve" value="Approve" />
-    <input type="submit" name="deny" id="deny" value="Deny"/>
-}
-
+    <style>
+        .back-label {
+            padding-top: 15px;
+        }
+        .footer, .navbar {
+            display: none;
+        }
+        body {
+            background-color: rgba(0,0,0,0.50);
+        }
+    </style>
