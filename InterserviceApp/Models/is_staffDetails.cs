@@ -20,6 +20,7 @@ namespace InterserviceApp.Models
         [Display(Name = "Last Name")]
         public string lName { get; set; }
 
+        [Display(Name = "Email")]
         public string email { get; set; }
 
         [Required]
