@@ -45,11 +45,18 @@ namespace InterserviceApp.Controllers
             return View();
         }
 
-        public ActionResult HomeRegister()
+        public ActionResult HomeRegister(string searchString)
         {
             var nullDate = DateTime.Parse("0001-01-01"); //Date auto-inserted when field is null, used to get blackboard classes
             var classes = db.Classes.Include(i => i.Course).Where(a => a.Course.required == true && a.approved == true && a.MOA != true && a.date >= System.DateTime.Today || a.date == nullDate);
-            return View(classes);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                classes = classes.Where(s => s.Course.courseCode.ToString().Contains(searchString)
+                                        || s.Course.desc.Contains(searchString)
+                                        || s.justification.Contains(searchString)
+                                        || s.room.Contains(searchString));
+            }
+            return View(classes.ToList());
         }
 
         [ChildActionOnly]

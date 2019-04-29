@@ -25,6 +25,7 @@ namespace InterserviceApp.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 classes = classes.Where(s => s.Course.courseCode.ToString().Contains(searchString)
+                                        || s.Course.desc.Contains(searchString)
                                         || s.justification.Contains(searchString)
                                         || s.room.Contains(searchString));
             }

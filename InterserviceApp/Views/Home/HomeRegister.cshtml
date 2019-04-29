@@ -31,7 +31,17 @@
     <span>Home Register</span>
 </div>
 
+
 <div class="currentContentClass currentContentCourse">
+
+    <div class="fl">
+        @using (Html.BeginForm())
+        {
+            <input type="text" name="searchString" class="searchInput" value="" />
+            <input type="submit" class="btn btn-primary" value="Search" />
+        }
+    </div>
+
     <h2>Required Classes</h2>
 
      <div class="noteCont">
@@ -105,3 +115,10 @@
         Html.RenderAction("Classes", "Home");
     }
 </div>
+
+<style>
+    .fl {
+        float: right;
+        margin-top: -5px;
+    }
+</style>

@@ -44,6 +44,7 @@
     border-style: solid none;
     border-width: 0.5px 0;
     margin: 10px 0px;
+    margin-top: 15px;
 }
 
 h2 {
@@ -94,12 +95,6 @@ h2 {
 
 .dateTop {
     margin-left: 10px;
-}
-
-.dateContainer {
-}
-
-.startTimeContainer {
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {

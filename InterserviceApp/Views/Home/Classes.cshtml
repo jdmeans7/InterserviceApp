@@ -8,60 +8,63 @@
 <h2>Additional Classes</h2>
 
 <hr class="topHR" />
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Course.courseCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.startTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.room)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.capacity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.justification)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.fees)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-        @foreach (var item in Model)
+
+<div class="reqClassContainer">
+    @foreach (var item in Model)
+    {
+        if (item.blackboard != true)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Course.courseCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.startTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.room)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.capacity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.justification)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.fees)
-                </td>
-                <td>
-                    @Html.ActionLink("Register", "Register", new { id = item.classID })
-                </td>
-            </tr>
+            <div class="reqClassDiv" onclick="divTurn(this.id, @item.classID, 'false');" id="@item.classID">
+
+                <div class="topBar">
+                    <p style="text-align:left;">
+                        @Html.DisplayFor(modelItem => item.Course.desc) - @Html.DisplayFor(modelItem => item.Course.courseCode)
+                        <span style="float:right;">Date: @Html.DisplayFor(modelItem => item.date)</span>
+                    </p>
+                </div>
+
+                <div class="middleBar" id="middleBar">
+                    <div class="dateContainer">
+                        @Html.DisplayNameFor(model => model.date):
+                        @Html.DisplayFor(modelItem => item.date)
+                    </div>
+                    <div class="startTimeContainer">
+                        @Html.DisplayNameFor(model => model.startTime):
+                        @Html.DisplayFor(modelItem => item.startTime)
+                    </div>
+
+                    <div class="roomContainer">
+                        @Html.DisplayNameFor(model => model.room):
+                        @Html.DisplayFor(modelItem => item.room)
+                    </div>
+
+                    <div class="capacityContainer">
+                        @Html.DisplayNameFor(model => model.capacity):
+                        @Html.DisplayFor(modelItem => item.capacity)
+                    </div>
+
+                    <div class="justificationContainer">
+                        @Html.DisplayNameFor(model => model.justification):
+                        @Html.DisplayFor(modelItem => item.justification)
+                    </div>
+
+                    <div class="feesContainer">
+                        @Html.DisplayNameFor(model => model.fees):
+                        @Html.DisplayFor(modelItem => item.fees)$
+                    </div>
+                    @Html.ActionLink("Register", "Register", new { id = item.classID }, new { @class = "btn btn-primary register" })
+                </div>
+            </div>
         }
-</table>
+        else
+        {
+            <div class="reqClassDiv" onclick="divTurn(this.id, @item.classID, 'true');" id="@item.classID">
+                <div class="topBar" style="background-color:orangered" onclick="openInNewTab('@item.hyperlink')">
+                    <p style="text-align:center;">
+                        @Html.DisplayFor(modelItem => item.Course.desc) - @Html.DisplayFor(modelItem => item.Course.courseCode)
+                    </p>
+                </div>
+            </div>
+        }
+    }
+</div>
