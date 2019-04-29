@@ -373,7 +373,8 @@ namespace InterserviceApp.Controllers
             {
                 courseID = Int32.Parse(Request["CourseID"]),
                 approved = true,
-                date = staffClass.endDate
+                date = staffClass.endDate,
+                MOA = true
             };
 
             //Try to add class to database, then attach class to staff class
