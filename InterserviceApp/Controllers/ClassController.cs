@@ -209,14 +209,14 @@ namespace InterserviceApp.Controllers
                 db.SaveChanges();
             }
            
-            return RedirectToAction("Home/ClassPortal");
+            return RedirectToAction("ClassPortal", "Home");
         }
 
         public ActionResult Attendance(int? id)
         {
             ViewBag.ClassID = id;
             ApprovingModel ap = new ApprovingModel();
-            ap.StaffClasses = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id).OrderBy(z => z.status).ToList();
+            ap.StaffClasses = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id && x.approved == true).OrderBy(z => z.status).ToList();
             return View(ap);
         }
 

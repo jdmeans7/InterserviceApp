@@ -310,6 +310,7 @@
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Report\TakeClasses.cshtml" />
     <Content Include="Views\Class\OldClasses.cshtml" />
+    <Content Include="Views\StaffDetails\AddStaffClass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -81,7 +81,7 @@
 
 </table>
 
-Other:
+Registered to take:
     <table class="table">
         <tr>
             <th>
@@ -99,7 +99,7 @@ Other:
             <th>
                 @Html.DisplayNameFor(model => model.status)
             </th>
-            <th></th>
+            <th>Mark Attendance or Approval</th>
         </tr>
 
         @foreach (var item in Model)
@@ -127,3 +127,5 @@ Other:
         }
 
     </table>
+
+@Html.ActionLink("Manually Add Course Attendance", "AddStaffClass", new { id = Model.First().badgeID })

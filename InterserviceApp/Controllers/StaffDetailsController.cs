@@ -339,9 +339,68 @@ namespace InterserviceApp.Controllers
             {
                 db.Entry(staffClass).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("StaffUpdate", staffClass.badgeID);
             }
             return View(staffClass);
+        }
+
+        //Display view used to manually add course credit to user
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
+        public ActionResult AddStaffClass(int id = Int32.MinValue)
+        {
+            //If there was no ID sent return to index
+            if (id == Int32.MinValue)
+            {
+                return RedirectToAction("Index");
+            }
+
+            //Create StaffClass with default values
+            is_StaffClass staffClass = new is_StaffClass
+            {
+                badgeID = id,
+                endDate = System.DateTime.Now
+            };
+            return View(staffClass);
+        }
+
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddStaffClass(is_StaffClass staffClass)
+        {
+            //Add class to DB before adding to staff class
+            is_Class c = new is_Class
+            {
+                courseID = Int32.Parse(Request["CourseID"]),
+                approved = true,
+                date = staffClass.endDate,
+                MOA = true
+            };
+
+            //Try to add class to database, then attach class to staff class
+            //then add the staffclass to the database
+            try
+            {
+                db.Classes.Add(c);
+                db.SaveChanges();
+
+                //Get class that was just added to DB to use for staff class
+                staffClass.approved = true;
+                staffClass.status = true;
+                staffClass.Staff = db.StaffDetails.Find(staffClass.badgeID);
+                staffClass.Class = db.Classes.ToList().Last();
+                staffClass.classID = staffClass.Class.classID;
+
+                db.StaffClasses.Add(staffClass);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return View(staffClass);
+            }
         }
 
         [Authorize(Roles ="IS_Admin, IS_Secretary")]
