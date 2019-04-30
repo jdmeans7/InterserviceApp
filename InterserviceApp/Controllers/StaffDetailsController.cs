@@ -430,6 +430,7 @@ namespace InterserviceApp.Controllers
                 }
             }
             ViewBag.NeededReq = needToTake;
+            ViewBag.BadgeID = id;
             return View(db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear).ToList());
         }
 
