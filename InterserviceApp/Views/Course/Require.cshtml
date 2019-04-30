@@ -4,32 +4,63 @@
     ViewBag.Title = "Require";
 }
 
-<h2>Details</h2>
+<div class="regBackground"></div>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.courseCode)
-        </dt>
+<div class="registerContainer">
+    <h1 class="registerTitle" align="center">Require Course</h1>
+    <hr class="hrRegister" />
 
-        <dd>
-            @Html.DisplayFor(model => model.courseCode)
-        </dd>
+    <div class="regLeft">
+        <span>@Html.DisplayNameFor(model => model.courseCode): </span>
+        <span>@Html.DisplayFor(model => model.courseCode)</span>
+    </div>
+    <div class="regRight">
+        <span>@Html.DisplayNameFor(model => model.desc): </span>
+        <span>@Html.DisplayFor(model => model.desc)</span>
+    </div>
+    <div class="regHTML">
+        @using (Html.BeginForm("Require", "Course", FormMethod.Post))
+        {
+            <input type="hidden" name="courseID" value="@Model.courseID" />
+            <input type="submit" class="btn btn-primary" name="yes" id="yes" value="Yes" />
+            <input type="submit" class="btn btn-danger" name="no" id="no" value="No" />
+        }
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.desc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.desc)
-        </dd>
-
-    </dl>
+    <div class="back-label">
+        @Html.ActionLink("Back to List", "Index", "Course")
+    </div>
 </div>
-@using (Html.BeginForm("Require", "Course", FormMethod.Post))
-{
-    <input type="hidden" name="courseID" value="@Model.courseID" />
-    <input type="submit" name="yes" id="yes" value="Yes" />
-    <input type="submit" name="no" id="no" value="No" />
-}
+
+<style>
+    .form-group {
+        width: 380px;
+    }
+
+    .back-label {
+        margin-top: 15px;
+        margin-left: 20px;
+        float: left;
+    }
+
+    .regLeft, .regRight, .regHTML {
+        margin-left: 20px !important;
+    }
+
+    .btn-con {
+        margin-left: 20px;
+    }
+
+    .col-md-10 {
+        float: right;
+        width: 240px !important;
+    }
+
+    .footer, .navbar {
+        display: none;
+    }
+
+    body {
+        background-color: rgba(0,0,0,0.50);
+    }
+</style>

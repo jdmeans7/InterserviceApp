@@ -4,36 +4,43 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.courseCode)
-        </dt>
+<div class="registerContainer">
+    <h1 class="registerTitle" align="center">Delete Course</h1>
+    <hr class="hrRegister" />
 
-        <dd>
-            @Html.DisplayFor(model => model.courseCode)
-        </dd>
+    <div class="regLeft">
+        <span>@Html.DisplayNameFor(model => model.courseCode): </span>
+        <span>@Html.DisplayFor(model => model.courseCode)</span>
+    </div>
+    <div class="regRight">
+        <span>@Html.DisplayNameFor(model => model.desc): </span>
+        <span>@Html.DisplayFor(model => model.desc)</span>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.desc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.desc)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-danger" />
         </div>
     }
+    <div class="back-label">
+        @Html.ActionLink("Back to List", "Index", "Course")
+    </div>
 </div>
+
+<style>
+    .back-label {
+        padding-top: 15px;
+    }
+
+    .footer, .navbar {
+        display: none;
+    }
+
+    body {
+        background-color: rgba(0,0,0,0.50);
+    }
+</style>
