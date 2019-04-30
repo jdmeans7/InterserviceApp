@@ -71,6 +71,10 @@
                 </table>
             <input type="submit" class="btn btn-primary" value="Submit Attendance" />
         }
+
+        <div class="back-label">
+            @Html.ActionLink("Back to List", "ClassPortal", "Home")
+        </div>
     </div>
 </body>
 </html>  
@@ -78,6 +82,12 @@
 <style>
     .footer, .navbar {
         display: none;
+    }
+
+
+    .back-label {
+        margin-top: 15px;
+        float: left;
     }
 
     td {
