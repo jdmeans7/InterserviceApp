@@ -15,6 +15,7 @@ namespace InterserviceApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Course
+        [Authorize(Roles = "IS_Admin, IS_Secretary, IS_Training")]
         public ActionResult Index(string searchString)
         {
             var courses = from s in db.Courses select s;

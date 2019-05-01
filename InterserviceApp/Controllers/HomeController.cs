@@ -40,6 +40,7 @@ namespace InterserviceApp.Controllers
             return View();
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary, IS_Training")]
         public ActionResult ClassPortal()
         {
             return View();

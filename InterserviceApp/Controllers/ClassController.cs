@@ -18,6 +18,7 @@ namespace InterserviceApp.Controllers
         /** ClassController/Index
          * Index method for Classes.
          */
+        [Authorize(Roles ="IS_Admin, IS_Secretary, IS_Training")]
         public ActionResult Index(string searchString)
         {
             var nullDate = DateTime.Parse("0001-01-01"); //Date auto-inserted when field is null, used to get blackboard classes
@@ -32,6 +33,7 @@ namespace InterserviceApp.Controllers
             return View(classes.ToList());
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary, IS_Training")]
         public ActionResult OldClasses(string searchString)
         {
             var classes = from s in db.Classes.Include(i => i.Course).OrderBy(x => x.date) select s;
@@ -191,6 +193,7 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("ClassPortal", "Home");
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult ApproveStaffClass(int? id)
         {
             ViewBag.ClassID = id;
@@ -199,6 +202,7 @@ namespace InterserviceApp.Controllers
             return View(ap);
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         public ActionResult ApproveStaffClass(ApprovingModel ap, int? id)
         {
@@ -213,6 +217,7 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("ClassPortal", "Home");
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Attendance(int? id)
         {
             ViewBag.ClassID = id;
@@ -221,6 +226,7 @@ namespace InterserviceApp.Controllers
             return View(ap);
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         public ActionResult Attendance(ApprovingModel ap, int? id)
         {
@@ -235,6 +241,7 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("ClassPortal", "Home");
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult ApproveStaffClassSingle(int? classID, int? badgeID)
         {
             //var scid = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == classID && x.badgeID == badgeID).Select(i => i.id).ToList()[0];
@@ -242,6 +249,7 @@ namespace InterserviceApp.Controllers
             return View(db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == classID && x.badgeID == badgeID).ToList()[0]);
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         public ActionResult ApproveStaffClassSingle(String approve, String deny, int? id)
         {

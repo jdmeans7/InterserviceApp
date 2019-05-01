@@ -27,7 +27,7 @@ namespace InterserviceApp.Controllers
         /// </summary>
         /// <param name="searchString">String entered for searching</param>
         /// <returns></returns>
-        [Authorize]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Index(string searchString)
         {
             var staffDetails = from s in db.StaffDetails select s;
