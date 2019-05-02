@@ -1,131 +1,170 @@
 ﻿@model IEnumerable<InterserviceApp.Models.is_StaffClass>
 
+<head>
+    <link href="~/Content/tables.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/classportal.css" rel="stylesheet" type="text/css" />
+</head>
+
+<div class="classPortalNav">
+    <span>User Portal</span>
+</div>
+
+<div class="currentContentUser">
 
     @using (Html.BeginForm())
     {
-    <input type="text" name="year" class="searchInput" value="" />
-    <input type="submit" class="btn btn-primary asdasd" value="Year" />
-    }
-    Required Classes Completed:
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Class.courseID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Class.Course.desc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.approved)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.endDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.status)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var a in ViewBag.TakenReq)
-    {
-        <tr>
-            <td>
-                @a.Class.courseID
-            </td>
-            <td>
-                @a.Class.Course.desc
-            </td>
-            <td>
-                @a.approved
-            </td>
-            <td>
-                @a.endDate.Date.ToString("d")
-            </td>
-            <td>
-                @a.status
-            </td>
-        </tr>
+        <input type="text" name="year" class="searchInput" value="" />
+        <input type="submit" class="btn btn-primary asdasd" value="Search Year" />
     }
 
+    @Html.ActionLink("Manually Add Course Attendance", "AddStaffClass", new { id = ViewBag.BadgeID }, new { @class = "btn btn-primary attend" })
 
-    </table>
- 
-
-    Required Classes Needed:
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Class.courseID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Class.Course.desc)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var a in ViewBag.NeededReq)
-    {
-        <tr>
-            <td>
-                @a.courseID
-            </td>
-            <td>
-                @a.desc
-            </td>
-        </tr>
-    }
-
-
-</table>
-
-Registered to take:
+    <p class="title">Required Courses Completed:</p>
+    <hr class="topHR"/>
     <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Class.courseID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Class.Course.desc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.approved)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.endDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.status)
-            </th>
-            <th>Mark Attendance or Approval</th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class.courseID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class.Course.desc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.approved)
-            </td>
-            <td>
-                @item.endDate.Date.ToString("d")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.status)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditStaffClass", new { id = item.id }) 
-            </td>
-        </tr>
-        }
-
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class.courseID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class.Course.desc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.approved)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.endDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.status)
+                </th>
+            </tr>
+       </thead>
+       
+        @foreach (var a in ViewBag.TakenReq)
+            {
+                <tr>
+                    <td>
+                        @a.Class.courseID
+                    </td>
+                    <td>
+                        @a.Class.Course.desc
+                    </td>
+                    <td>
+                        @a.approved
+                    </td>
+                    <td>
+                        @a.endDate.Date.ToString("d")
+                    </td>
+                    <td>
+                        @a.status
+                    </td>
+                </tr>
+            }
     </table>
 
-@Html.ActionLink("Manually Add Course Attendance", "AddStaffClass", new { id = ViewBag.BadgeID})
+    <p class="title">Required Courses Needed:</p>
+    <hr class="topHR"/>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class.courseID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class.Course.desc)
+                </th>
+            </tr>
+        </thead>
+
+            @foreach (var a in ViewBag.NeededReq)
+            {
+                <tr>
+                    <td>
+                        @a.courseID
+                    </td>
+                    <td>
+                        @a.desc
+                    </td>
+                </tr>
+            }
+    </table>
+
+    <p class="title">Currently Registered to Take:</p>
+    <hr class="topHR"/>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class.courseID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class.Course.desc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.approved)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.endDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.status)
+                </th>
+                <th>Mark Attendance or Approval</th>
+            </tr>
+        </thead>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Class.courseID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Class.Course.desc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.approved)
+                    </td>
+                    <td>
+                        @item.endDate.Date.ToString("d")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.status)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditStaffClass", new { id = item.id })
+                    </td>
+                </tr>
+            }
+
+    </table>
+</div>
+
+<style>
+    .title {
+        font-size: 20px;
+        padding: 0px;
+        margin: 0px;
+        margin-top: 30px;
+        margin-bottom: -10px;
+    }
+    .topHR {
+        -moz-border-bottom-colors: none;
+        -moz-border-image: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        border-color: rgba(0,0,0,0.18);
+        -moz-use-text-color: rgba(0,0,0,0.18);
+        border-style: solid none;
+        border-width: 0.5px 0;
+        margin: 10px 0px;
+        margin-top: 15px;
+    }
+    .attend {
+        float: right;
+        margin-top: -34px;
+    }
+</style>

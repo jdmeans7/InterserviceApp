@@ -4,48 +4,91 @@
     ViewBag.Title = "View";
 }
 
-<h2>This page is to manually add completed course credit to user and should only be used when the user has taken a class but has no mention of registering for this course on their staff update page.</h2>
+<div class="regBackground"></div>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<div class="registerContainer" align="center">
+    <h1 class="registerTitle" align="center">Edit Staff Class</h1>
+    <hr class="hrRegister" />
+    <h2 class="title">* This page is to manually add completed course credit to user and should only be used when the user has taken a class but has no mention of registering for this course on their staff update page.</h2>
 
-    <div class="form-horizontal">
-        <h4>is_StaffClass</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.badgeID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.ValueFor(model => model.badgeID)
-                @Html.HiddenFor(model => model.badgeID)
-                @Html.ValidationMessageFor(model => model.badgeID, "", new { @class = "text-danger" })
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.badgeID, htmlAttributes: new { @class = "control-label" })
+                <div class="col-md-10">
+                    @Html.ValueFor(model => model.badgeID)
+                    @Html.HiddenFor(model => model.badgeID)
+                    @Html.ValidationMessageFor(model => model.badgeID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Course ID</label>
+                <div class="col-md-10">
+                    <input type="number" name="CourseID" min="0" value="0" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.endDate, htmlAttributes: new { @class = "control-label" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.endDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.endDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label">
+                    <input type="submit" value="Create Completed Course" class="btn btn-primary" />
+                </div>
             </div>
         </div>
+    }
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Course ID</label>
-            <div class="col-md-10">
-                <input type="number" name="CourseID" min="0" value="0" class="form-control">
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.endDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.endDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.endDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+    <div class="back-label">
+        @Html.ActionLink("Back to List", "Index")
     </div>
-}
-
-<div>
-    @Html.ActionLink("View Users", "Index")
 </div>
+
+    <style>
+        .title {
+            font-size: 14px;
+            padding-bottom: 20px;
+            color: rgba(0,0,0,0.75); 
+        }
+
+        .form-group {
+            width: 380px;
+        }
+
+        .control-label {
+            margin-left: 20px;
+            float: left;
+        }
+
+        .back-label {
+            margin-left: 25px;
+            float: left;
+        }
+
+        .btn-con {
+            margin-left: 20px;
+        }
+
+        .col-md-10 {
+            float: right;
+            width: 240px !important;
+        }
+
+        .footer, .navbar {
+            display: none;
+        }
+
+        body {
+            background-color: rgba(0,0,0,0.50);
+        }
+    </style>
