@@ -18,12 +18,14 @@ namespace InterserviceApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         /// <summary>
-        /// Index method for Classes to show 
+        /// Page to show all classes that have not already occurred
         /// </summary>
+        /// <param name="searchString">String used to filter results</param>
+        /// <returns></returns>
+        [Authorize(Roles ="IS_Admin, IS_Secretary, IS_Training")]
         public ActionResult Index(string searchString)
         {
-            var nullDate = DateTime.Parse("0001-01-01"); //Date auto-inserted when field is null, used to get blackboard classes
-            var classes = from s in db.Classes.Include(i => i.Course).Where(a => a.date >= System.DateTime.Today || a.date == nullDate).OrderBy(x => x.approved) select s;
+            var classes = from s in db.Classes.Include(i => i.Course).Where(a => a.date >= System.DateTime.Today || a.blackboard == true).OrderBy(x => x.approved) select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 classes = classes.Where(s => s.Course.courseCode.ToString().Contains(searchString)
@@ -34,6 +36,12 @@ namespace InterserviceApp.Controllers
             return View(classes.ToList());
         }
 
+        /// <summary>
+        /// Page to show all classes that have ever been created
+        /// </summary>
+        /// <param name="searchString">String used to filter results</param>
+        /// <returns></returns>
+        [Authorize(Roles = "IS_Admin, IS_Secretary, IS_Training")]
         public ActionResult OldClasses(string searchString)
         {
             var classes = from s in db.Classes.Include(i => i.Course).OrderBy(x => x.date) select s;
@@ -46,7 +54,6 @@ namespace InterserviceApp.Controllers
             return View(classes.ToList());
         }
 
-        // GET: Class/Details/5
         /**
          * Method for approving classes. Used by secretaries to approve or deny a class. Approved classes can be registered for by students.
          */
@@ -93,7 +100,7 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles = "IS_Admin, IS_Training, IS_Secretary")]
         public ActionResult Create()
         {
-            ViewBag.courseID = new SelectList(db.Courses, "courseID", "desc");
+            ViewBag.courseID = new SelectList(db.Courses.Where(x => x.active == true), "courseID", "desc");
             return View();
         }
 
@@ -105,29 +112,23 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "classID,date,startTime,room,capacity,justification,fees,hyperlink,blackboard,courseID")] is_Class is_Class, String physblack)
         {
-            //if (ModelState.IsValid)
-            //{
-                if(physblack == "Physical")
-                {
-                    is_Class.blackboard = false;
-                    db.Classes.Add(is_Class);
-                    db.SaveChanges();
-                    return RedirectToAction("ClassPortal", "Home");
-                }
-                else if (physblack == "Blackboard")
-                {
-                    is_Class.blackboard = true;
-                    db.Classes.Add(is_Class);
-                    db.SaveChanges();
-                    return RedirectToAction("ClassPortal", "Home");
-                }
+            if(physblack == "Physical")
+            {
+                is_Class.blackboard = false;
                 db.Classes.Add(is_Class);
                 db.SaveChanges();
                 return RedirectToAction("ClassPortal", "Home");
-            //}
-
-            ViewBag.courseID = new SelectList(db.Courses, "courseID", "courseCode", is_Class.courseID);
-            return View(is_Class);
+            }
+            else if (physblack == "Blackboard")
+            {
+                is_Class.blackboard = true;
+                db.Classes.Add(is_Class);
+                db.SaveChanges();
+                return RedirectToAction("ClassPortal", "Home");
+            }
+            db.Classes.Add(is_Class);
+            db.SaveChanges();
+            return RedirectToAction("ClassPortal", "Home");
         }
 
         // GET: Class/Edit/5
@@ -193,6 +194,7 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("ClassPortal", "Home");
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult ApproveStaffClass(int? id)
         {
             ViewBag.ClassID = id;
@@ -201,6 +203,7 @@ namespace InterserviceApp.Controllers
             return View(ap);
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         public ActionResult ApproveStaffClass(ApprovingModel ap, int? id)
         {
@@ -215,6 +218,7 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("ClassPortal", "Home");
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Attendance(int? id)
         {
             ViewBag.ClassID = id;
@@ -223,6 +227,7 @@ namespace InterserviceApp.Controllers
             return View(ap);
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         public ActionResult Attendance(ApprovingModel ap, int? id)
         {
@@ -237,6 +242,7 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("ClassPortal", "Home");
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult ApproveStaffClassSingle(int? classID, int? badgeID)
         {
             //var scid = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == classID && x.badgeID == badgeID).Select(i => i.id).ToList()[0];
@@ -244,6 +250,7 @@ namespace InterserviceApp.Controllers
             return View(db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == classID && x.badgeID == badgeID).ToList()[0]);
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         public ActionResult ApproveStaffClassSingle(String approve, String deny, int? id)
         {

@@ -3,15 +3,42 @@
     ViewBag.Title = "SendEmail";
 }
 
-<h2>Send Email</h2>
+<div class="regBackground"></div>
 
-@using (Html.BeginForm())
-{
-    <span>Subject</span>
-    <input type="text" name="subject" value=""/>
-    <br />
-    <span>Body</span>
-    <input type="text" name="body" />
-    <br />
-    <input type="submit" value="Send Email"/>
-}
+<div class="registerContainer">
+    <h1 class="registerTitle" align="center">Send Email</h1>
+    <hr class="hrRegister" />
+
+    @using (Html.BeginForm())
+    {
+        <span>Subject</span>
+        <input class="form-control" type="text" name="subject" value="" />
+        <br />
+        <span>Body</span>
+        <textarea class="form-control" rows="6" type="text" name="body" ></textarea>
+        <br />
+        <input class="btn btn-primary" type="submit" value="Send Email" />
+    }
+
+    <div class="back-label">
+        @Html.ActionLink("Back to List", "Index", "StaffDetails")
+    </div>
+</div>
+
+<style>
+    .registerContainer {
+        width: 340px !important;
+    }
+
+    .back-label {
+        padding-top: 15px;
+    }
+
+    .footer, .navbar {
+        display: none;
+    }
+
+    body {
+        background-color: rgba(0,0,0,0.50);
+    }
+</style>

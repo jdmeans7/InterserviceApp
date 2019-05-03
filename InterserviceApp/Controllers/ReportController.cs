@@ -19,6 +19,7 @@ namespace InterserviceApp.Controllers
             return View();
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         public ActionResult Index(string Report)
         {
@@ -29,6 +30,7 @@ namespace InterserviceApp.Controllers
             else return View();
         }
 
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult TakeClasses()
         {
             int month = System.DateTime.Now.Month;

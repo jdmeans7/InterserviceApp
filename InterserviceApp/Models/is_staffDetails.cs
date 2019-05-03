@@ -37,8 +37,10 @@ namespace InterserviceApp.Models
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime birthdate { get; set; }
 
+        [Display(Name = "Supervisor")]
         public bool? supervisor { get; set; }
 
+        [Display(Name = "Flag")]
         public bool? flag { get; set; }
 
         public ICollection<is_StaffClass> staffClasses { get; set; }

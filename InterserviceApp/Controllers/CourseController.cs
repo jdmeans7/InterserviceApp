@@ -15,9 +15,10 @@ namespace InterserviceApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Course
+        [Authorize(Roles = "IS_Admin, IS_Secretary, IS_Training")]
         public ActionResult Index(string searchString)
         {
-            var courses = from s in db.Courses select s;
+            var courses = from s in db.Courses where s.active == true select s;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -148,7 +149,8 @@ namespace InterserviceApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             is_Course is_Course = db.Courses.Find(id);
-            db.Courses.Remove(is_Course);
+            is_Course.active = false;
+            db.Entry(is_Course).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

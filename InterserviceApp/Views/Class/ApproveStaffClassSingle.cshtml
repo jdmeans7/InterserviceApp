@@ -4,55 +4,85 @@
     ViewBag.Title = "ApproveStaffClassSingle";
 }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Class.room)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Staff.fName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.approved)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.endDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.status)
-        </th>
-        <th></th>
-    </tr>
+<head>
+    <link href="~/Content/tables.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/classportal.css" rel="stylesheet" type="text/css" />
+</head>
 
+<div class="registerContainer">
+    <h1 class="registerTitle" align="center">Class Attendance</h1>
+    <hr class="hrRegister" />
+    <table class="table">
+        <thead class="thead-dark">
 
-    <tr>
-        <td>
-            @Html.DisplayFor(model => model.Class.Course.courseCode)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.Staff.fName)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.approved)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.endDate)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.status)
-        </td>
-    </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class.room)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Staff.fName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.approved)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.endDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.status)
+                </th>
+            </tr>
+        </thead>
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Class.Course.courseCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Staff.fName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.approved)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.endDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.status)
+                </td>
+            </tr>
 
 
 </table>
 
 
-@using (Html.BeginForm("ApproveStaffClassSingle", "Class", FormMethod.Post))
-{
-    <input type="hidden" name="id" value="@Model.id" />
-    <input type="submit" name="approve" id="approve" value="Approve" />
-    <input type="submit" name="deny" id="deny" value="Deny" />
-}
+    @using (Html.BeginForm("ApproveStaffClassSingle", "Class", FormMethod.Post))
+    {
+        <input type="hidden" name="id" value="@Model.id" />
+        <input type="submit" class="btn btn-primary" name="approve" id="approve" value="Approve" />
+        <input type="submit" class="btn btn-danger" name="deny" id="deny" value="Deny" />
+    }
+</div>
+
+<style>
+    .footer, .navbar {
+        display: none;
+    }
+
+    .back-label {
+        margin-top: 15px;
+        float: left;
+    }
+
+    td {
+        background-color: #fff !important;
+    }
+
+    body {
+        background-color: rgba(0,0,0,0.50);
+    }
+
+    .registerContainer {
+        width: auto;
+    }
+</style>

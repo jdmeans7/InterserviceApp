@@ -27,7 +27,7 @@ namespace InterserviceApp.Controllers
         /// </summary>
         /// <param name="searchString">String entered for searching</param>
         /// <returns></returns>
-        [Authorize]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Index(string searchString)
         {
             var staffDetails = from s in db.StaffDetails select s;
@@ -430,6 +430,7 @@ namespace InterserviceApp.Controllers
                 }
             }
             ViewBag.NeededReq = needToTake;
+            ViewBag.BadgeID = id;
             return View(db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear).ToList());
         }
 
