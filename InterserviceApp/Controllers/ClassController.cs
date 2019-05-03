@@ -10,14 +10,16 @@ using InterserviceApp.Models;
 
 namespace InterserviceApp.Controllers
 {
+    /// <summary>
+    /// Controller dealing with all class functionality
+    /// </summary>
     public class ClassController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Class
-        /** ClassController/Index
-         * Index method for Classes.
-         */
+        /// <summary>
+        /// Index method for Classes to show 
+        /// </summary>
         public ActionResult Index(string searchString)
         {
             var nullDate = DateTime.Parse("0001-01-01"); //Date auto-inserted when field is null, used to get blackboard classes
