@@ -25,6 +25,8 @@ namespace InterserviceApp.Models
         [Display(Name = "Required")]
         public bool required { get; set; }
 
+        public bool active { get; set; }
+
         public ICollection<is_Class> Classes { get; set; }
     }
 }
