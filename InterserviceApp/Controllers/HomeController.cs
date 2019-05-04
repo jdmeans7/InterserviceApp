@@ -46,10 +46,14 @@ namespace InterserviceApp.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Method for displaying home register page. This page is shown to all users and is used to register for classes
+        /// </summary>
+        /// <param name="searchString">String entered by user to filter results</param>
+        /// <returns></returns>
         public ActionResult HomeRegister(string searchString)
         {
-            var nullDate = DateTime.Parse("0001-01-01"); //Date auto-inserted when field is null, used to get blackboard classes
-            var classes = db.Classes.Include(i => i.Course).Where(a => a.Course.required == true && a.approved == true && a.MOA != true && a.date >= System.DateTime.Today || a.date == nullDate);
+            var classes = db.Classes.Include(i => i.Course).Where(a => a.Course.required == true && a.approved == true && a.MOA != true && a.date >= System.DateTime.Today || a.blackboard == true);
             if (!String.IsNullOrEmpty(searchString))
             {
                 classes = classes.Where(s => s.Course.courseCode.ToString().Contains(searchString)
@@ -60,14 +64,22 @@ namespace InterserviceApp.Controllers
             return View(classes.ToList());
         }
 
+        /// <summary>
+        /// Partial view to show a list of classes
+        /// </summary>
+        /// <returns></returns>
         [ChildActionOnly]
         public ActionResult Classes()
         {
             var nullDate = DateTime.Parse("0001-01-01"); //Date auto-inserted when field is null, used to get blackboard classes
-            return PartialView(db.Classes.Include(i => i.Course).Where(a => a.Course.required == false && a.approved == true && a.MOA != true && a.date >= System.DateTime.Today || a.date == nullDate).ToList());
+            return PartialView(db.Classes.Include(i => i.Course).Where(a => a.Course.required == false && a.approved == true && a.MOA != true && a.date >= System.DateTime.Today || a.blackboard == true).ToList());
         }
 
-        // GET: Home/Register
+        /// <summary>
+        /// Method for displaying view to register for a class
+        /// </summary>
+        /// <param name="id">Class ID</param>
+        /// <returns></returns>
         public ActionResult Register(int? id)
         {
             if (id == null)
@@ -89,7 +101,13 @@ namespace InterserviceApp.Controllers
             return View(is_Class);
         }
 
-        // POST: Home/Register
+        /// <summary>
+        /// Method for handling the registration for a class by a staff
+        /// </summary>
+        /// <param name="BadgeID">Badge ID of staff member</param>
+        /// <param name="classID">Class Id of class</param>
+        /// <param name="selectedSup">Supervisor that is emailed</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Register(String BadgeID, int classID, String selectedSup)
         {

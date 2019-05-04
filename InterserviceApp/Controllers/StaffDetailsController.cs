@@ -21,7 +21,6 @@ namespace InterserviceApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: StaffDetails
         /// <summary>
         /// Index to populate user table for secretaries
         /// </summary>
@@ -41,7 +40,11 @@ namespace InterserviceApp.Controllers
             return View(staffDetails.ToList());
         }
 
-        // GET: StaffDetails/Details/5
+        /// <summary>
+        /// Method for displaying details of a staff
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Details(int? id)
         {
@@ -57,16 +60,21 @@ namespace InterserviceApp.Controllers
             return View(is_staffDetails);
         }
 
-        // GET: StaffDetails/Create
+        /// <summary>
+        /// Method for displaying create form for staff
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: StaffDetails/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Method for handling the create form for a staff
+        /// </summary>
+        /// <param name="is_staffDetails">The staff that is being created</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -85,7 +93,11 @@ namespace InterserviceApp.Controllers
             return View(is_staffDetails);
         }
 
-        // GET: StaffDetails/Edit/5
+        /// <summary>
+        /// Method for displaying the edit form to edit a staff
+        /// </summary>
+        /// <param name="id">Badge ID for staff</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Edit(int? id)
         {
@@ -101,9 +113,11 @@ namespace InterserviceApp.Controllers
             return View(is_staffDetails);
         }
 
-        // POST: StaffDetails/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Methoid for handling the edit form to edit a staff
+        /// </summary>
+        /// <param name="is_staffDetails">The staff to be edited</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -118,7 +132,11 @@ namespace InterserviceApp.Controllers
             return View(is_staffDetails);
         }
 
-        // GET: StaffDetails/Delete/5
+        /// <summary>
+        /// Method for displaying the delete prompt for a staff
+        /// </summary>
+        /// <param name="id">Badge ID for staff</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Delete(int? id)
         {
@@ -134,7 +152,11 @@ namespace InterserviceApp.Controllers
             return View(is_staffDetails);
         }
 
-        // POST: StaffDetails/Delete/5
+        /// <summary>
+        /// Method for handling the deletion of a staff.
+        /// </summary>
+        /// <param name="id">Badge ID for staff</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -146,7 +168,10 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("Index");
         }
 
-        //Find users that need to take classes
+        /// <summary>
+        /// Method used to display all of the staff who have been notfiied that they need to take a class
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Notify()
         {
@@ -210,6 +235,13 @@ namespace InterserviceApp.Controllers
             return View(toNotify);
         }
 
+        /// <summary>
+        /// General method used when sending an email
+        /// </summary>
+        /// <param name="id">Badge ID for staff</param>
+        /// <param name="subject">Subject of the email</param>
+        /// <param name="body">Body text of the email</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult SendEmail(int? id, string subject, string body)
         {
@@ -246,7 +278,10 @@ namespace InterserviceApp.Controllers
             return View(x);
         }
 
-        //Send notification email
+        /// <summary>
+        /// Method used to send a notification email to a staff
+        /// </summary>
+        /// <param name="staff">Staff that is being notified</param>
         private void NotificationEmail(is_staffDetails staff)
         {
             //Really don't know how error prone this is
@@ -278,6 +313,10 @@ namespace InterserviceApp.Controllers
             }
         }
 
+        /// <summary>
+        /// Method used to send email when a staff is flagged
+        /// </summary>
+        /// <param name="staff">Staff that email is sent to</param>
         private void FlagEmail(is_staffDetails staff)
         {
             //Try finally guarantees that even if an email doesn't get sent, or something goes wrong, the users are still flagged.
@@ -315,7 +354,11 @@ namespace InterserviceApp.Controllers
             }
         }
 
-        //Display view with editable approve and status for a particular staffclass
+        /// <summary>
+        /// Display view with editable approve and status for a particular staffclass
+        /// </summary>
+        /// <param name="id">Staff Class ID</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult EditStaffClass(int id) {
             try
@@ -329,7 +372,11 @@ namespace InterserviceApp.Controllers
             }
         }
 
-        //Method for saving changes to staffclass from staffupdate view
+        /// <summary>
+        /// Method for saving changes to staffclass from staffupdate view
+        /// </summary>
+        /// <param name="staffClass"></param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -344,7 +391,11 @@ namespace InterserviceApp.Controllers
             return View(staffClass);
         }
 
-        //Display view used to manually add course credit to user
+        /// <summary>
+        /// Display view used to manually add course credit to user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult AddStaffClass(int id = Int32.MinValue)
         {
@@ -363,6 +414,11 @@ namespace InterserviceApp.Controllers
             return View(staffClass);
         }
 
+        /// <summary>
+        /// Method for handling the staff update page if there is no class for the course that is being added to a staff
+        /// </summary>
+        /// <param name="staffClass"></param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -403,6 +459,12 @@ namespace InterserviceApp.Controllers
             }
         }
 
+        /// <summary>
+        /// Method for displaying a staff's staff update page
+        /// </summary>
+        /// <param name="id">Badge ID of staff</param>
+        /// <param name="year">Year that is being queried</param>
+        /// <returns></returns>
         [Authorize(Roles ="IS_Admin, IS_Secretary")]
         public ActionResult StaffUpdate(int? id, string year)
         {
@@ -434,14 +496,6 @@ namespace InterserviceApp.Controllers
             return View(db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear).ToList());
         }
 
-        /*
-         [HttpPost]
-        public ActionResult StaffUpdate(int? badgeID, string year)
-        {
-            int intyear = Int32.Parse(year);
-            return View(db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == badgeID && x.Class.date.Year == intyear).ToList());
-        }
-        */
 
         protected override void Dispose(bool disposing)
         {

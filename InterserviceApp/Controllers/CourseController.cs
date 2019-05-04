@@ -10,11 +10,18 @@ using InterserviceApp.Models;
 
 namespace InterserviceApp.Controllers
 {
+    /// <summary>
+    /// Controller for handling all course functionality
+    /// </summary>
     public class CourseController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Course
+        /// <summary>
+        /// Page to show all courses that are active
+        /// </summary>
+        /// <param name="searchString">String used to filter results</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary, IS_Training")]
         public ActionResult Index(string searchString)
         {
@@ -28,7 +35,11 @@ namespace InterserviceApp.Controllers
             return View(courses.ToList());
         }
 
-        // GET: Course/Require/5
+        /// <summary>
+        /// Get method for setting a course to required
+        /// </summary>
+        /// <param name="id">Course ID</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         public ActionResult Require(int? id)
         {
@@ -44,12 +55,18 @@ namespace InterserviceApp.Controllers
             return View(is_Course);
         }
 
-        // POST: Course/Require/5
+        /// <summary>
+        /// Post method for setting a course to required
+        /// </summary>
+        /// <param name="courseID"></param>
+        /// <param name="yes">This will be equal to "Yes" if the yes button is clicked</param>
+        /// <param name="no">This will be equal to "No" if the no button is clicked</param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         public ActionResult Require(int courseID, String yes, String no)
         {
-            if (yes != null)
+            if (yes != null) //If yes is selected
             {
                 is_Course co = db.Courses.Find(courseID);
                 co.required = true;
@@ -57,7 +74,7 @@ namespace InterserviceApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("ClassPortal", "Home");
             }
-            if (no != null)
+            if (no != null) //If no is selected
             {
                 is_Course co = db.Courses.Find(courseID);
                 co.required = false;
@@ -68,16 +85,21 @@ namespace InterserviceApp.Controllers
             return View();
         }
 
-        // GET: Course/Create
+        /// <summary>
+        /// Get method for creating a course
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Course/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Handles the form submit for the creation of courses
+        /// </summary>
+        /// <param name="is_Course">Course that is being created</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -93,7 +115,11 @@ namespace InterserviceApp.Controllers
             return View(is_Course);
         }
 
-        // GET: Course/Edit/5
+        /// <summary>
+        /// Get method for editing a course
+        /// </summary>
+        /// <param name="id">Course ID</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         public ActionResult Edit(int? id)
         {
@@ -109,9 +135,11 @@ namespace InterserviceApp.Controllers
             return View(is_Course);
         }
 
-        // POST: Course/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Post method for editing a course
+        /// </summary>
+        /// <param name="is_Course">Course to be edited</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -126,7 +154,11 @@ namespace InterserviceApp.Controllers
             return View(is_Course);
         }
 
-        // GET: Course/Delete/5
+        /// <summary>
+        /// Get method for deleting a course
+        /// </summary>
+        /// <param name="id">Course ID</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         public ActionResult Delete(int? id)
         {
@@ -142,14 +174,18 @@ namespace InterserviceApp.Controllers
             return View(is_Course);
         }
 
-        // POST: Course/Delete/5
+        /// <summary>
+        /// Post method for handling the deletion of a course. Delete is a soft delete
+        /// </summary>
+        /// <param name="id">Course ID</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             is_Course is_Course = db.Courses.Find(id);
-            is_Course.active = false;
+            is_Course.active = false; //Soft delete
             db.Entry(is_Course).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");

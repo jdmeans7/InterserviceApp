@@ -54,9 +54,11 @@ namespace InterserviceApp.Controllers
             return View(classes.ToList());
         }
 
-        /**
-         * Method for approving classes. Used by secretaries to approve or deny a class. Approved classes can be registered for by students.
-         */
+        /// <summary>
+        /// Method for approving classes. Used by secretaries to approve or deny a class. Approved classes can be registered for by students.
+        /// </summary>
+        /// <param name="id">Class ID passed from view</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Approve(int? id)
         {
@@ -72,6 +74,13 @@ namespace InterserviceApp.Controllers
             return View(is_Class);
         }
 
+        /// <summary>
+        /// Class to handle the post for approving classes
+        /// </summary>
+        /// <param name="approve">String passed from button on view, will be null if deny is clicked</param>
+        /// <param name="deny">String passed from button on view, will be null if approve is clicked</param>
+        /// <param name="classID"></param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         public ActionResult Approve(String approve, String deny, int classID)
@@ -96,7 +105,10 @@ namespace InterserviceApp.Controllers
             return View();
         }
 
-        // GET: Class/Create
+        /// <summary>
+        /// Handles the get view for the creation of classes
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Training, IS_Secretary")]
         public ActionResult Create()
         {
@@ -104,9 +116,12 @@ namespace InterserviceApp.Controllers
             return View();
         }
 
-        // POST: Class/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Handles the form submit for the creation of classes
+        /// </summary>
+        /// <param name="is_Class">Class that is being created</param>
+        /// <param name="physblack">String passed from view to differentiate between different types of classes. Will be "Physical" if physical class is selected, "Blackboard" if blackboard is selected</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -131,7 +146,11 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("ClassPortal", "Home");
         }
 
-        // GET: Class/Edit/5
+        /// <summary>
+        /// Get method for editing a class
+        /// </summary>
+        /// <param name="id">Class id for getting the class to edit</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         public ActionResult Edit(int? id)
         {
@@ -148,9 +167,11 @@ namespace InterserviceApp.Controllers
             return View(is_Class);
         }
 
-        // POST: Class/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Post method for editing a class
+        /// </summary>
+        /// <param name="is_Class">Class to be edited</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -166,7 +187,11 @@ namespace InterserviceApp.Controllers
             return View(is_Class);
         }
 
-        // GET: Class/Delete/5
+        /// <summary>
+        /// Get method for deleting a class
+        /// </summary>
+        /// <param name="id">Class id to be deleted</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Delete(int? id)
         {
@@ -182,7 +207,11 @@ namespace InterserviceApp.Controllers
             return View(is_Class);
         }
 
-        // POST: Class/Delete/5
+        /// <summary>
+        /// Post method for deleting a class
+        /// </summary>
+        /// <param name="id">Class id to be deleted</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -194,23 +223,34 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("ClassPortal", "Home");
         }
 
+        /// <summary>
+        /// Get method for approving a staff to take a class
+        /// </summary>
+        /// <param name="id">Class id for class</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult ApproveStaffClass(int? id)
         {
             ViewBag.ClassID = id;
             ApprovingModel ap = new ApprovingModel();
-            ap.StaffClasses = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id).ToList();
+            ap.StaffClasses = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == id).ToList(); //Get all staff classes that relate to this class
             return View(ap);
         }
 
+        /// <summary>
+        /// Post method for approving a staff to take a class
+        /// </summary>
+        /// <param name="ap">List of staff classes and users together</param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         public ActionResult ApproveStaffClass(ApprovingModel ap, int? id)
         {
             foreach (var s in ap.StaffClasses)
             {
-                is_StaffClass sc = db.StaffClasses.First(x => x.badgeID == s.badgeID && x.classID == s.classID);
-                sc.approved = s.approved;
+                is_StaffClass sc = db.StaffClasses.First(x => x.badgeID == s.badgeID && x.classID == s.classID); //Find individual staff class
+                sc.approved = s.approved; //Set staff classes approved column to reflect the user's action
                 db.Entry(sc).State = EntityState.Modified;
                 db.SaveChanges();
             }
@@ -218,6 +258,11 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("ClassPortal", "Home");
         }
 
+        /// <summary>
+        /// Get method for taking attendance for a class
+        /// </summary>
+        /// <param name="id">Class ID for class taking attendance</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Attendance(int? id)
         {
@@ -227,6 +272,12 @@ namespace InterserviceApp.Controllers
             return View(ap);
         }
 
+        /// <summary>
+        /// Post method for taking attendance for a class
+        /// </summary>
+        /// <param name="ap">List of staff classes with staff</param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         public ActionResult Attendance(ApprovingModel ap, int? id)
@@ -234,7 +285,7 @@ namespace InterserviceApp.Controllers
             foreach (var s in ap.StaffClasses)
             {
                 is_StaffClass sc = db.StaffClasses.First(x => x.badgeID == s.badgeID && x.classID == s.classID);
-                sc.status = s.status;
+                sc.status = s.status; //Set staff classes status column to reflect the user's action
                 db.Entry(sc).State = EntityState.Modified;
                 db.SaveChanges();
             }
@@ -242,14 +293,26 @@ namespace InterserviceApp.Controllers
             return RedirectToAction("ClassPortal", "Home");
         }
 
+        /// <summary>
+        /// Get method for a supervisor to approve a single staff for a class. This is what is sent in a link to supervisors
+        /// </summary>
+        /// <param name="classID"></param>
+        /// <param name="badgeID"></param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult ApproveStaffClassSingle(int? classID, int? badgeID)
         {
-            //var scid = db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == classID && x.badgeID == badgeID).Select(i => i.id).ToList()[0];
-            //is_StaffClass sc = db.StaffClasses.Find(scid);
+
             return View(db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == classID && x.badgeID == badgeID).ToList()[0]);
         }
 
+        /// <summary>
+        /// Post method for a supervisor to approve a single staff for a class. THis is what is sent in a link to supervisors
+        /// </summary>
+        /// <param name="approve">This will be equal to "Approve" if the approve button was clicked</param>
+        /// <param name="deny">This will be equal to "Deny" if the approve button was clicked</param>
+        /// <param name="id">StaffClass id</param>
+        /// <returns></returns>
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         public ActionResult ApproveStaffClassSingle(String approve, String deny, int? id)
