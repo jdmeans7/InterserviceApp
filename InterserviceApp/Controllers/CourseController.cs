@@ -40,7 +40,7 @@ namespace InterserviceApp.Controllers
         /// </summary>
         /// <param name="id">Course ID</param>
         /// <returns></returns>
-        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Require(int? id)
         {
             if (id == null)
@@ -63,7 +63,7 @@ namespace InterserviceApp.Controllers
         /// <param name="no">This will be equal to "No" if the no button is clicked</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Require(int courseID, String yes, String no)
         {
             if (yes != null) //If yes is selected
@@ -89,7 +89,7 @@ namespace InterserviceApp.Controllers
         /// Get method for creating a course
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Create()
         {
             return View();
@@ -100,7 +100,7 @@ namespace InterserviceApp.Controllers
         /// </summary>
         /// <param name="is_Course">Course that is being created</param>
         /// <returns></returns>
-        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "courseID,courseCode,desc")] is_Course is_Course)
@@ -120,7 +120,7 @@ namespace InterserviceApp.Controllers
         /// </summary>
         /// <param name="id">Course ID</param>
         /// <returns></returns>
-        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -140,7 +140,7 @@ namespace InterserviceApp.Controllers
         /// </summary>
         /// <param name="is_Course">Course to be edited</param>
         /// <returns></returns>
-        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "courseID,courseCode,desc")] is_Course is_Course)
@@ -159,7 +159,7 @@ namespace InterserviceApp.Controllers
         /// </summary>
         /// <param name="id">Course ID</param>
         /// <returns></returns>
-        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -179,7 +179,7 @@ namespace InterserviceApp.Controllers
         /// </summary>
         /// <param name="id">Course ID</param>
         /// <returns></returns>
-        [Authorize(Roles = "IS_Training, IS_Admin, IS_Secretary")]
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

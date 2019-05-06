@@ -29,7 +29,7 @@
             <div class="form-group">
                 <label class="control-label">Course ID</label>
                 <div class="col-md-10">
-                    <input type="number" name="CourseID" min="0" value="0" class="form-control">
+                    @Html.DropDownList("courseID", new SelectList(ViewBag.CourseList), new { @class = "form-control" })
                 </div>
             </div>
 

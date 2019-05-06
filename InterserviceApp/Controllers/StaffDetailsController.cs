@@ -411,6 +411,8 @@ namespace InterserviceApp.Controllers
                 badgeID = id,
                 endDate = System.DateTime.Now
             };
+            IQueryable<int> query = from c in db.Courses select c.courseID;
+            ViewBag.CourseList = query.ToList();
             return View(staffClass);
         }
 
@@ -427,7 +429,7 @@ namespace InterserviceApp.Controllers
             //Add class to DB before adding to staff class
             is_Class c = new is_Class
             {
-                courseID = Int32.Parse(Request["CourseID"]),
+                courseID = Int32.Parse(Request["courseID"]),
                 approved = true,
                 date = staffClass.endDate,
                 MOA = true
