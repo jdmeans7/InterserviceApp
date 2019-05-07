@@ -53,7 +53,7 @@ namespace InterserviceApp.Controllers
         /// <returns></returns>
         public ActionResult HomeRegister(string searchString)
         {
-            var classes = db.Classes.Include(i => i.Course).Where(a => a.Course.required == true && a.approved == true && a.MOA != true && a.date >= System.DateTime.Today || a.blackboard == true);
+            var classes = db.Classes.Include(i => i.Course).Where(a => a.Course.required == true && a.approved == true && a.MOA != true && (a.date >= System.DateTime.Today || a.blackboard == true));
             if (!String.IsNullOrEmpty(searchString))
             {
                 classes = classes.Where(s => s.Course.courseCode.ToString().Contains(searchString)
@@ -72,7 +72,7 @@ namespace InterserviceApp.Controllers
         public ActionResult Classes()
         {
             var nullDate = DateTime.Parse("0001-01-01"); //Date auto-inserted when field is null, used to get blackboard classes
-            return PartialView(db.Classes.Include(i => i.Course).Where(a => a.Course.required == false && a.approved == true && a.MOA != true && a.date >= System.DateTime.Today || a.blackboard == true).ToList());
+            return PartialView(db.Classes.Include(i => i.Course).Where(a => a.Course.required == false && a.approved == true && a.MOA != true && (a.date >= System.DateTime.Today || a.blackboard == true)).ToList());
         }
 
         /// <summary>
