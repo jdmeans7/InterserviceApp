@@ -25,7 +25,7 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles ="IS_Admin, IS_Secretary, IS_Training")]
         public ActionResult Index(string searchString)
         {
-            var classes = from s in db.Classes.Include(i => i.Course).Where(a => a.date >= System.DateTime.Today || a.blackboard == true).OrderBy(x => x.approved) select s;
+            var classes = from s in db.Classes.Include(i => i.Course).Where(a => a.MOA != true && (a.date >= System.DateTime.Today || a.blackboard == true)).OrderBy(x => x.approved) select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 classes = classes.Where(s => s.Course.courseCode.ToString().Contains(searchString)
@@ -44,7 +44,7 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles = "IS_Admin, IS_Secretary, IS_Training")]
         public ActionResult OldClasses(string searchString)
         {
-            var classes = from s in db.Classes.Include(i => i.Course).OrderBy(x => x.date) select s;
+            var classes = from s in db.Classes.Include(i => i.Course).OrderBy(x => x.date).Where(a => a.MOA != true) select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 classes = classes.Where(s => s.Course.courseCode.ToString().Contains(searchString)
@@ -85,23 +85,29 @@ namespace InterserviceApp.Controllers
         [HttpPost]
         public ActionResult Approve(String approve, String deny, int classID)
         {
-            if(approve != null) //If the approve button was selected
+            try
             {
-                is_Class cl = db.Classes.Find(classID);
-                cl.approved = true;
-                db.Entry(cl).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("ClassPortal", "Home");
+                if (approve != null) //If the approve button was selected
+                {
+                    is_Class cl = db.Classes.Find(classID);
+                    cl.approved = true;
+                    db.Entry(cl).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("ClassPortal", "Home");
+                }
+                else if (deny != null) //If the deny button was selected
+                {
+                    is_Class cl = db.Classes.Find(classID);
+                    cl.approved = false;
+                    db.Entry(cl).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("ClassPortal", "Home");
+                }
             }
-            else if (deny != null) //If the deny button was selected
+            catch (Exception e)
             {
-                is_Class cl = db.Classes.Find(classID);
-                cl.approved = false;
-                db.Entry(cl).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("ClassPortal", "Home");
+                System.Diagnostics.Debug.WriteLine(e);
             }
-
             return View();
         }
 
@@ -127,22 +133,31 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "classID,date,startTime,room,capacity,justification,fees,hyperlink,blackboard,courseID")] is_Class is_Class, String physblack)
         {
-            if(physblack == "Physical")
+            try
             {
-                is_Class.blackboard = false;
+                if (physblack == "Physical")
+                {
+                    is_Class.blackboard = false;
+                    db.Classes.Add(is_Class);
+                    db.SaveChanges();
+                    return RedirectToAction("ClassPortal", "Home");
+                }
+                else if (physblack == "Blackboard")
+                {
+                    is_Class.blackboard = true;
+                    db.Classes.Add(is_Class);
+                    db.SaveChanges();
+                    return RedirectToAction("ClassPortal", "Home");
+                }
                 db.Classes.Add(is_Class);
                 db.SaveChanges();
                 return RedirectToAction("ClassPortal", "Home");
             }
-            else if (physblack == "Blackboard")
+            catch (Exception e)
             {
-                is_Class.blackboard = true;
-                db.Classes.Add(is_Class);
-                db.SaveChanges();
-                return RedirectToAction("ClassPortal", "Home");
+                System.Diagnostics.Debug.WriteLine(e);
+
             }
-            db.Classes.Add(is_Class);
-            db.SaveChanges();
             return RedirectToAction("ClassPortal", "Home");
         }
 
@@ -177,11 +192,18 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "classID,date,startTime,room,capacity,justification,fees,courseID")] is_Class is_Class)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(is_Class).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("ClassPortal", "Home");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(is_Class).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("ClassPortal", "Home");
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
             }
             ViewBag.courseID = new SelectList(db.Courses, "courseID", "courseCode", is_Class.courseID);
             return View(is_Class);
@@ -217,9 +239,16 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            is_Class is_Class = db.Classes.Find(id);
-            db.Classes.Remove(is_Class);
-            db.SaveChanges();
+            try
+            {
+                is_Class is_Class = db.Classes.Find(id);
+                db.Classes.Remove(is_Class);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
             return RedirectToAction("ClassPortal", "Home");
         }
 
@@ -249,10 +278,17 @@ namespace InterserviceApp.Controllers
         {
             foreach (var s in ap.StaffClasses)
             {
-                is_StaffClass sc = db.StaffClasses.First(x => x.badgeID == s.badgeID && x.classID == s.classID); //Find individual staff class
-                sc.approved = s.approved; //Set staff classes approved column to reflect the user's action
-                db.Entry(sc).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    is_StaffClass sc = db.StaffClasses.First(x => x.badgeID == s.badgeID && x.classID == s.classID); //Find individual staff class
+                    sc.approved = s.approved; //Set staff classes approved column to reflect the user's action
+                    db.Entry(sc).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e);
+                }
             }
            
             return RedirectToAction("ClassPortal", "Home");
@@ -284,10 +320,17 @@ namespace InterserviceApp.Controllers
         {
             foreach (var s in ap.StaffClasses)
             {
-                is_StaffClass sc = db.StaffClasses.First(x => x.badgeID == s.badgeID && x.classID == s.classID);
-                sc.status = s.status; //Set staff classes status column to reflect the user's action
-                db.Entry(sc).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    is_StaffClass sc = db.StaffClasses.First(x => x.badgeID == s.badgeID && x.classID == s.classID);
+                    sc.status = s.status; //Set staff classes status column to reflect the user's action
+                    db.Entry(sc).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch(Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e);
+                }
             }
 
             return RedirectToAction("ClassPortal", "Home");
@@ -302,7 +345,6 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult ApproveStaffClassSingle(int? classID, int? badgeID)
         {
-
             return View(db.StaffClasses.Include(a => a.Class).Include(b => b.Staff).Where(x => x.classID == classID && x.badgeID == badgeID).ToList()[0]);
         }
 
@@ -317,21 +359,28 @@ namespace InterserviceApp.Controllers
         [HttpPost]
         public ActionResult ApproveStaffClassSingle(String approve, String deny, int? id)
         {
-            if (approve != null) //If the approve button was selected
+            try
             {
-                is_StaffClass sc = db.StaffClasses.Find(id);
-                sc.approved = true;
-                db.Entry(sc).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("ClassPortal", "Home");
+                if (approve != null) //If the approve button was selected
+                {
+                    is_StaffClass sc = db.StaffClasses.Find(id);
+                    sc.approved = true;
+                    db.Entry(sc).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("ClassPortal", "Home");
+                }
+                else if (deny != null) //If the deny button was selected
+                {
+                    is_StaffClass sc = db.StaffClasses.Find(id);
+                    sc.approved = false;
+                    db.Entry(sc).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("ClassPortal", "Home");
+                }
             }
-            else if (deny != null) //If the deny button was selected
+            catch (Exception e)
             {
-                is_StaffClass sc = db.StaffClasses.Find(id);
-                sc.approved = false;
-                db.Entry(sc).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("ClassPortal", "Home");
+                System.Diagnostics.Debug.WriteLine(e);
             }
 
             return View();

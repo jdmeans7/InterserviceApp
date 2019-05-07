@@ -80,14 +80,22 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "badgeID,fName,lName,email,dept,phone,birthdate,supervisor")] is_staffDetails is_staffDetails)
         {
-            if (ModelState.IsValid)
+            try
             {
-                //If database doesn't already have the user, add the user
-                if (db.StaffDetails.Find(is_staffDetails.badgeID) == null) {
-                    db.StaffDetails.Add(is_staffDetails);
-                    db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    //If database doesn't already have the user, add the user
+                    if (db.StaffDetails.Find(is_staffDetails.badgeID) == null)
+                    {
+                        db.StaffDetails.Add(is_staffDetails);
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction("Index");
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
             }
 
             return View(is_staffDetails);
@@ -123,11 +131,18 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "detailsID,badgeID,fName,lName,email,dept,phone,birthdate,flag,supervisor")] is_staffDetails is_staffDetails)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(is_staffDetails).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(is_staffDetails).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
             }
             return View(is_staffDetails);
         }
@@ -162,9 +177,16 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            is_staffDetails is_staffDetails = db.StaffDetails.Find(id);
-            db.StaffDetails.Remove(is_staffDetails);
-            db.SaveChanges();
+            try
+            {
+                is_staffDetails is_staffDetails = db.StaffDetails.Find(id);
+                db.StaffDetails.Remove(is_staffDetails);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
             return RedirectToAction("Index");
         }
 
@@ -245,37 +267,45 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult SendEmail(int? id, string subject, string body)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            is_staffDetails x = db.StaffDetails.Find(id);
-            String email = x.email;
-            MailMessage mail = new MailMessage();
-            mail.To.Add(email);
-            //   mail.To.Add("Another Email ID where you wanna send same email");
-            mail.From = new MailAddress("InterserviceApplication@gmail.com");
-            // mail.Subject = staffDetails.EmailSubject;
-            mail.Subject = subject;
-            //string Body = staffDetails.SendEmail;
-            mail.Body = body;
-            //mail.Body = "<h1>Hello</h1>";
-            //mail.Attachments.Add(new Attachment("C:\\file.zip"));
-            mail.IsBodyHtml = true;
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
-            smtp.Credentials = new System.Net.NetworkCredential
-                 ("InterserviceApplication@gmail.com", "Admin123!");
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                is_staffDetails x = db.StaffDetails.Find(id);
+                String email = x.email;
+                MailMessage mail = new MailMessage();
+                mail.To.Add(email);
+                //   mail.To.Add("Another Email ID where you wanna send same email");
+                mail.From = new MailAddress("InterserviceApplication@gmail.com");
+                // mail.Subject = staffDetails.EmailSubject;
+                mail.Subject = subject;
+                //string Body = staffDetails.SendEmail;
+                mail.Body = body;
+                //mail.Body = "<h1>Hello</h1>";
+                //mail.Attachments.Add(new Attachment("C:\\file.zip"));
+                mail.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                smtp.Credentials = new System.Net.NetworkCredential
+                     ("InterserviceApplication@gmail.com", "Admin123!");
 
 
-            //Or your Smtp Email ID and Password
-            smtp.EnableSsl = true;
-            smtp.Send(mail);
-            if (x == null)
-            {
-                return HttpNotFound();
+                //Or your Smtp Email ID and Password
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
+                if (x == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(x);
             }
-            return View(x);
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return RedirectToAction("Index");
+            }
         }
 
         /// <summary>
@@ -382,13 +412,21 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditStaffClass([Bind(Include = "id,badgeID,classID,approved,endDate,status")] is_StaffClass staffClass)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(staffClass).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("StaffUpdate", staffClass.badgeID);
+                if (ModelState.IsValid)
+                {
+                    db.Entry(staffClass).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("StaffUpdate", staffClass.badgeID);
+                }
+                return View(staffClass);
             }
-            return View(staffClass);
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return RedirectToAction("Index");
+            }
         }
 
         /// <summary>
@@ -411,7 +449,7 @@ namespace InterserviceApp.Controllers
                 badgeID = id,
                 endDate = System.DateTime.Now
             };
-            IQueryable<int> query = from c in db.Courses select c.courseID;
+            IQueryable<string> query = from c in db.Courses select c.desc;
             ViewBag.CourseList = query.ToList();
             return View(staffClass);
         }
@@ -426,10 +464,14 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddStaffClass(is_StaffClass staffClass)
         {
+            //Get first course 
+            string s = Request["courseDesc"];
+            is_Course course = db.Courses.Where(i => i.desc == s).First();
+            
             //Add class to DB before adding to staff class
             is_Class c = new is_Class
             {
-                courseID = Int32.Parse(Request["courseID"]),
+                courseID = course.courseID,
                 approved = true,
                 date = staffClass.endDate,
                 MOA = true
@@ -470,32 +512,40 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles ="IS_Admin, IS_Secretary")]
         public ActionResult StaffUpdate(int? id, string year)
         {
-            int intyear;
-            if (String.IsNullOrEmpty(year))
+            try
             {
-                intyear = System.DateTime.Now.Year;
-            }
-            else
-            {
-               intyear = Int32.Parse(year);
-            }
-            ViewBag.TakenReq = db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear && x.Class.Course.required == true && x.status == true).ToList();
-            //ViewBag.NeededReq = db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear && x.Class.Course.required == true && x.status == false).ToList();
-            List<is_Course> reqCourses = db.Courses.Include(a => a.Classes).Where(x => x.required == true).ToList();
-            List<is_Course> needToTake = new List<is_Course>();
-            foreach (var c in reqCourses)
-            {
-                if (db.StaffClasses.Where(x => x.badgeID == id && x.Class.date.Year == intyear && x.Class.Course.courseID == c.courseID && x.status == true).Any())
+                int intyear;
+                if (String.IsNullOrEmpty(year))
                 {
+                    intyear = System.DateTime.Now.Year;
                 }
                 else
                 {
-                    needToTake.Add(c);
+                    intyear = Int32.Parse(year);
                 }
+                ViewBag.TakenReq = db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear && x.Class.Course.required == true && x.status == true).ToList();
+                //ViewBag.NeededReq = db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear && x.Class.Course.required == true && x.status == false).ToList();
+                List<is_Course> reqCourses = db.Courses.Include(a => a.Classes).Where(x => x.required == true).ToList();
+                List<is_Course> needToTake = new List<is_Course>();
+                foreach (var c in reqCourses)
+                {
+                    if (db.StaffClasses.Where(x => x.badgeID == id && x.Class.date.Year == intyear && x.Class.Course.courseID == c.courseID && x.status == true).Any())
+                    {
+                    }
+                    else
+                    {
+                        needToTake.Add(c);
+                    }
+                }
+                ViewBag.NeededReq = needToTake;
+                ViewBag.BadgeID = id;
+                return View(db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear).ToList());
             }
-            ViewBag.NeededReq = needToTake;
-            ViewBag.BadgeID = id;
-            return View(db.StaffClasses.Include(a => a.Staff).Include(b => b.Class).Where(x => x.badgeID == id && x.Class.date.Year == intyear).ToList());
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return RedirectToAction("Index");
+            }
         }
 
 

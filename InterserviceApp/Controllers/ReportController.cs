@@ -12,6 +12,7 @@ namespace InterserviceApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Report
+        [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Index()
         {
             List<String> reports = new List<String>(new string[] { "All staff that have required classes that need taken", "Option 2" });

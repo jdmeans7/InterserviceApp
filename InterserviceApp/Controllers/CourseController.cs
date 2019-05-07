@@ -66,21 +66,28 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles = "IS_Admin, IS_Secretary")]
         public ActionResult Require(int courseID, String yes, String no)
         {
-            if (yes != null) //If yes is selected
+            try
             {
-                is_Course co = db.Courses.Find(courseID);
-                co.required = true;
-                db.Entry(co).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("ClassPortal", "Home");
+                if (yes != null) //If yes is selected
+                {
+                    is_Course co = db.Courses.Find(courseID);
+                    co.required = true;
+                    db.Entry(co).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("ClassPortal", "Home");
+                }
+                if (no != null) //If no is selected
+                {
+                    is_Course co = db.Courses.Find(courseID);
+                    co.required = false;
+                    db.Entry(co).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("ClassPortal", "Home");
+                }
             }
-            if (no != null) //If no is selected
+            catch (Exception e)
             {
-                is_Course co = db.Courses.Find(courseID);
-                co.required = false;
-                db.Entry(co).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("ClassPortal", "Home");
+                System.Diagnostics.Debug.WriteLine(e);
             }
             return View();
         }
@@ -105,13 +112,23 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "courseID,courseCode,desc")] is_Course is_Course)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Courses.Add(is_Course);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    //If there is no course with a matching description, add the new course
+                    if (db.Courses.Where(i => i.desc == is_Course.desc).ToList().Count() == 0)
+                    {
+                        db.Courses.Add(is_Course);
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("Index");
+                }
             }
-
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
             return View(is_Course);
         }
 
@@ -145,11 +162,18 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "courseID,courseCode,desc")] is_Course is_Course)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(is_Course).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(is_Course).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
             }
             return View(is_Course);
         }
@@ -184,10 +208,17 @@ namespace InterserviceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            is_Course is_Course = db.Courses.Find(id);
-            is_Course.active = false; //Soft delete
-            db.Entry(is_Course).State = EntityState.Modified;
-            db.SaveChanges();
+            try
+            {
+                is_Course is_Course = db.Courses.Find(id);
+                is_Course.active = false; //Soft delete
+                db.Entry(is_Course).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
             return RedirectToAction("Index");
         }
 
