@@ -1,0 +1,41 @@
+﻿@model InterserviceApp.Models.is_StaffClass
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Class.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Staff.fName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Staff.lName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+    </tr>
+
+    @if (ViewBag.SC != null){
+
+    
+    foreach (var item in ViewBag.SC)
+    {
+        <tr>
+            <td>
+                @item.endDate.Date.ToString("d")
+            </td>
+            <td>
+                @item.Staff.fName
+            </td>
+            <td>
+                @item.Staff.lName
+            </td>
+            <td>
+                @item.status
+            </td>
+        </tr>
+    }
+    }
+</table>

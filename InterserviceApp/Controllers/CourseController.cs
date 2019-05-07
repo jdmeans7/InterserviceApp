@@ -119,6 +119,7 @@ namespace InterserviceApp.Controllers
                     //If there is no course with a matching description, add the new course
                     if (db.Courses.Where(i => i.desc == is_Course.desc).ToList().Count() == 0)
                     {
+                        is_Course.active = true;
                         db.Courses.Add(is_Course);
                         db.SaveChanges();
                     }

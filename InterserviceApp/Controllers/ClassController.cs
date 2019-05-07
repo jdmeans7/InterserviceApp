@@ -25,7 +25,7 @@ namespace InterserviceApp.Controllers
         [Authorize(Roles ="IS_Admin, IS_Secretary, IS_Training")]
         public ActionResult Index(string searchString)
         {
-            var classes = from s in db.Classes.Include(i => i.Course).Where(a => a.MOA != true && (a.date >= System.DateTime.Today || a.blackboard == true)).OrderBy(x => x.approved) select s;
+            var classes = from s in db.Classes.Include(i => i.Course).Where(a => a.MOA != true && (a.date >= System.DateTime.Today || a.blackboard == true)).OrderByDescending(x => x.approved) select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 classes = classes.Where(s => s.Course.courseCode.ToString().Contains(searchString)
@@ -384,6 +384,26 @@ namespace InterserviceApp.Controllers
             }
 
             return View();
+        }
+
+        public ActionResult ClassReportForm()
+        {
+            ViewBag.Courses = db.Courses.Select(x => x.desc).ToList();
+            return View();
+        }
+
+        public ActionResult StaffTakenClass(string syear, string coursedesc)
+        {
+            if (syear != null)
+            {
+                var year = Int32.Parse(syear);
+                is_Course C = db.Courses.First(x => x.desc == coursedesc);
+                var courseID = C.courseID;
+                var StaffClasses = db.StaffClasses.Include(a=> a.Class).Include(b => b.Staff).Where(x => x.endDate.Year == year && x.Class.courseID == courseID).ToList();
+                ViewBag.SC = StaffClasses;
+                return View();
+            }
+            else return View();
         }
 
         protected override void Dispose(bool disposing)

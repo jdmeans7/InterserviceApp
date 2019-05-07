@@ -43,6 +43,10 @@
 
 @Html.ActionLink("Create a New Class", "Create", null, new { @class = "btn btn-primary register createClassBtn" }) 
 @Html.ActionLink("View Old Classes", "OldClasses", null, new { @class = "btn btn-primary register viewOld" })
+<input type="button"
+       value="Generate Report"
+       onclick="location.href='@Url.Action("ClassReportForm", "Class")'"
+       class="btn btn-primary report" />
 
 @using (Html.BeginForm())
 {
@@ -147,3 +151,10 @@
         }
     }
 </div>
+
+<style>
+    .report {
+        float: right;
+        margin-left: 20px;
+    }
+</style>

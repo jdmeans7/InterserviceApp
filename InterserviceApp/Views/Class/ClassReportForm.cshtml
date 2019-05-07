@@ -1,0 +1,8 @@
+﻿@model IEnumerable<InterserviceApp.Models.is_Course>
+
+@using (Html.BeginForm("StaffTakenClass", "Class"))
+{
+    <input type="text" name="syear" class="searchInput" value="syear" />
+    @Html.DropDownList("coursedesc", new SelectList(ViewBag.Courses), new { @class = "select" })
+    <input type="submit" class="btn btn-primary asdasd" />
+}
