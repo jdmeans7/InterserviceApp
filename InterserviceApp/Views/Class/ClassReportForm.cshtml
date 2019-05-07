@@ -2,7 +2,7 @@
 
 @using (Html.BeginForm("StaffTakenClass", "Class"))
 {
-    <input type="text" name="syear" class="searchInput" value="syear" />
+    <input type="text" name="syear" class="searchInput" placeholder="Year" />
     @Html.DropDownList("coursedesc", new SelectList(ViewBag.Courses), new { @class = "select" })
     <input type="submit" class="btn btn-primary asdasd" />
 }

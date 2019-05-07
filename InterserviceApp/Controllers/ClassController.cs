@@ -397,9 +397,9 @@ namespace InterserviceApp.Controllers
             if (syear != null)
             {
                 var year = Int32.Parse(syear);
-                is_Course C = db.Courses.First(x => x.desc == coursedesc);
+                is_Course C = db.Courses.First(x => x.desc == coursedesc && x.active == true);
                 var courseID = C.courseID;
-                var StaffClasses = db.StaffClasses.Include(a=> a.Class).Include(b => b.Staff).Where(x => x.endDate.Year == year && x.Class.courseID == courseID).ToList();
+                var StaffClasses = db.StaffClasses.Include(a=> a.Class).Include(b => b.Staff).Where(x => x.endDate.Year == year && x.Class.courseID == courseID && x.approved == true && x.status == true).ToList();
                 ViewBag.SC = StaffClasses;
                 return View();
             }
