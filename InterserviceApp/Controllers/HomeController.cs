@@ -162,7 +162,7 @@ namespace InterserviceApp.Controllers
                         //String url = System.Web.HttpContext.Current.Request.Url.AbsoluteUri;
                         String bodyText = Staff.fName + " " + Staff.lName + " would like to take the following class:" + "<br>"
                             + $"<b>Course ID: {StaffClass.Class.Course.courseID}" + $" | Course Description: {StaffClass.Class.Course.desc}" + "</b><br>"
-                            + "Approve the class here: " + "http://localhost:54330/Class/ApproveStaffClassSingle?classID=" + StaffClass.classID + "&badgeID=" + Staff.badgeID;
+                            + "Approve the class here: " + "http://mbintranet/Class/ApproveStaffClassSingle?classID=" + StaffClass.classID + "&badgeID=" + Staff.badgeID;
                         mail.Body = bodyText;
                         //mail.Body = "<h1>Hello</h1>";
                         //mail.Attachments.Add(new Attachment("C:\\file.zip"));

@@ -1,8 +1,52 @@
 ﻿@model IEnumerable<InterserviceApp.Models.is_Course>
 
-@using (Html.BeginForm("StaffTakenClass", "Class"))
-{
-    <input type="text" name="syear" class="searchInput" placeholder="Year" />
-    @Html.DropDownList("coursedesc", new SelectList(ViewBag.Courses), new { @class = "select" })
-    <input type="submit" class="btn btn-primary asdasd" />
-}
+
+<div class="regBackground"></div>
+
+<div class="registerContainer" align="center">
+    <h1 class="registerTitle" align="center">Class Report</h1>
+    <hr class="hrRegister" />
+    @using (Html.BeginForm("StaffTakenClass", "Class"))
+    {
+        <input type="text" name="syear" class="searchInput" placeholder="Year" />
+        @Html.DropDownList("coursedesc", new SelectList(ViewBag.Courses), new { @class = "select" })
+        <input type="submit" class="btn btn-primary query" />
+    }
+</div>
+
+    <style>
+        .query {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            width: 380px;
+        }
+
+        .control-label {
+            margin-left: 20px;
+            float: left;
+        }
+
+        .back-label {
+            margin-left: 25px;
+            float: left;
+        }
+
+        .btn-con {
+            margin-left: 20px;
+        }
+
+        .col-md-10 {
+            float: right;
+            width: 240px !important;
+        }
+
+        .footer, .navbar {
+            display: none;
+        }
+
+        body {
+            background-color: rgba(0,0,0,0.50);
+        }
+    </style>
