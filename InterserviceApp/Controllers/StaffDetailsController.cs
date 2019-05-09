@@ -384,6 +384,90 @@ namespace InterserviceApp.Controllers
             }
         }
 
+        //Email staff letting them know the class has been updated
+        internal void UpdatedClassEmail(is_Class c)
+        {
+            List<is_StaffClass> staffClass = db.StaffClasses.Where(i => i.classID == c.classID).ToList();
+
+            //Get course for course description in email
+            is_Course course = db.Courses.Find(c.courseID);
+
+            foreach (is_StaffClass sC in staffClass)
+            {
+                //Inner try/catch to catch any email error for a specific user
+                try
+                {
+                    is_staffDetails staff = db.StaffDetails.Find(sC.badgeID);
+
+                    string email = staff.email;
+                    MailMessage mail = new MailMessage();
+                    mail.To.Add(email);
+                    mail.From = new MailAddress("InterserviceApplication@gmail.com");
+                    mail.Subject = "Notification for Class Information Update";
+                    mail.Body = "Hello, " + staff.fName + " " + staff.lName + "\n\nThe " + course.desc + " class with ID: " + c.classID + " you signed up for has been updated.\n" +
+                        "\nPlease use the Interservice application to view the updated class listing whenever the class is approved.\n\nThank you, and have a nice day!";
+
+                    mail.IsBodyHtml = false;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                    smtp.Credentials = new System.Net.NetworkCredential
+                         ("InterserviceApplication@gmail.com", "Admin123!");
+
+
+                    //Or your Smtp Email ID and Password
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e);
+                }
+
+            }
+        }
+
+        //Email staff letting them know the class has been cancelled
+        internal void DeletedClassEmail(is_Class c)
+        {
+            List<is_StaffClass> staffClass = db.StaffClasses.Where(i => i.classID == c.classID).ToList();
+
+            //Get course for course description in email
+            is_Course course = db.Courses.Find(c.courseID);
+
+            foreach (is_StaffClass sC in staffClass)
+            {
+                //Inner try/catch to catch any email error for a specific user
+                try
+                {
+                    is_staffDetails staff = db.StaffDetails.Find(sC.badgeID);
+
+                    string email = staff.email;
+                    MailMessage mail = new MailMessage();
+                    mail.To.Add(email);
+                    mail.From = new MailAddress("InterserviceApplication@gmail.com");
+                    mail.Subject = "Notification for Cancelled Class";
+                    mail.Body = "Hello, " + staff.fName + " " + staff.lName + "\n\nThe " + course.desc + " class with ID: " + c.classID + " you signed up for has been cancelled.\n" +
+                        "\nPlease use the Interservice application to check for another time to take the class.\n\nThank you, and have a nice day!";
+
+                    mail.IsBodyHtml = false;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                    smtp.Credentials = new System.Net.NetworkCredential
+                         ("InterserviceApplication@gmail.com", "Admin123!");
+
+
+                    //Or your Smtp Email ID and Password
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e);
+                }
+
+            }
+        }
+
         /// <summary>
         /// Display view with editable approve and status for a particular staffclass
         /// </summary>

@@ -198,6 +198,12 @@ namespace InterserviceApp.Controllers
                 {
                     db.Entry(is_Class).State = EntityState.Modified;
                     db.SaveChanges();
+
+                    //Create object and call function
+                    //Doing this way because there is no need to include mailmessage in this controller
+                    StaffDetailsController SDC = new StaffDetailsController();
+                    SDC.UpdatedClassEmail(is_Class);
+
                     return RedirectToAction("ClassPortal", "Home");
                 }
             }
@@ -242,6 +248,13 @@ namespace InterserviceApp.Controllers
             try
             {
                 is_Class is_Class = db.Classes.Find(id);
+
+                //Create object and call function
+                //Doing this way because there is no need to include mailmessage in this controller
+                StaffDetailsController SDC = new StaffDetailsController();
+                SDC.DeletedClassEmail(is_Class);
+
+                //Remove class after emailing staff
                 db.Classes.Remove(is_Class);
                 db.SaveChanges();
             }
